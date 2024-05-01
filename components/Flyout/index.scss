@@ -1,0 +1,24 @@
+.canvas-backdrop {
+  z-index: 1040;
+}
+
+.offcanvas {
+  background-color: white !important;
+
+  &-xl {
+    --bs-offcanvas-width: min(95vw, 1140px);
+  }
+  &-xxl {
+    --bs-offcanvas-width: min(95vw, 1140px);
+  }
+  &-lg {
+    --bs-offcanvas-width: min(95vw, 70.5rem);
+  }
+  &-md {
+    /* add Responsivenes to default offcanvas */
+    --bs-offcanvas-width: min(95vw, 48rem);
+  }
+  &-sm {
+    --bs-offcanvas-width: min(95vw, 22.5rem);
+  }
+}

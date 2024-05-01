@@ -1,0 +1,117 @@
+%radio {
+  .form-check-input[type='radio'] {
+    --bs-border-color: rgba(0, 87, 88, 1);
+    --bs-border-width: 0.12em;
+
+    &:hover {
+      background-color: rgba(0, 87, 88, 0.1);
+      box-shadow: 0px 0px 0px 3px rgba(0, 87, 88, 0.1);
+      border-color: rgba(0, 87, 88, 0.8);
+    }
+
+    &:checked {
+      --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2.8' fill='%23005758'/%3e%3c/svg%3e");
+      background-color: #fff;
+      border-color: #005758;
+      --bs-border-width: 2px;
+    }
+
+    &:disabled {
+      border-color: var(--Cool-Gray-8, #888b8d);
+      filter: none;
+      opacity: 1;
+      pointer-events: none;
+      color: var(--Cool-Gray-8, #888b8d);
+
+      &:checked,
+      &:indeterminate {
+        --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2.8' fill='%23888b8d'/%3e%3c/svg%3e");
+        background-color: #fff;
+        border-color: #888b8d;
+
+        &:hover {
+          color: var(--Cool-Gray-8, #888b8d);
+          border-color: var(--Cool-Gray-8, #888b8d);
+          box-shadow: none;
+        }
+      }
+
+      &:hover {
+        color: var(--Cool-Gray-8, #888b8d);
+        border-color: var(--Cool-Gray-8, #888b8d);
+        background: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+body {
+  //@extend %radio;
+}
+
+[data-bs-theme='light'],
+[data-theme='light'] {
+  @extend %radio;
+}
+
+[data-bs-theme='dark'],
+[data-theme='dark'] {
+  .form-check-input[type='radio'] {
+    .form-check-label {
+      color: var(--White, #ffffff);
+    }
+
+    &.form-check-input {
+      --bs-form-check-bg: transparent;
+      --bs-border-color: rgba(255, 255, 255, 1);
+
+      -webkit-appearance: none;
+      appearance: none;
+      background: {
+        color: var(--bs-form-check-bg);
+        image: var(--bs-form-check-bg-image);
+      }
+      border: var(--bs-border-width) solid #fff;
+
+      &:focus {
+        border-color: rgba(255, 255, 255, 1);
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0px 0px 0px 3px rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.8);
+      }
+
+      &:checked {
+        background-color: transparent;
+        border-color: rgba(255, 255, 255, 1);
+
+        &[type='radio'] {
+          --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2.8' fill='%23fff'/%3e%3c/svg%3e");
+        }
+      }
+
+      &:disabled {
+        border-color: var(--Cool-Gray-8, #888b8d);
+
+        &:checked,
+        &:indeterminate {
+          background-color: var(--Cool-Gray-8, #888b8d);
+          border-color: var(--Cool-Gray-8, #888b8d);
+
+          &:hover {
+            color: var(--Cool-Gray-8, #888b8d);
+          }
+        }
+      }
+
+      &:disabled ~ .form-check-label,
+      [disabled] ~ .form-check-label & {
+        cursor: default;
+        opacity: 0.5;
+      }
+    }
+  }
+}
