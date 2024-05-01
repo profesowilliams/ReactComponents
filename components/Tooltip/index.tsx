@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import r2wc from "@r2wc/react-to-web-component";
+import r2wc from '@r2wc/react-to-web-component';
 import PropTypes from 'prop-types';
 import { Tooltip as BTooltip, OverlayTrigger } from 'react-bootstrap';
 import './index.scss';
@@ -42,16 +42,16 @@ const Tooltip: React.FC<TooltipProps> = ({
   const tooltip = (
     <BTooltip id="tooltip" show={showTooltip} data-bs-variation={variant}>
       {/* Render HTML content if variant is 'rich' */}
-      {variant === 'rich' ? <div dangerouslySetInnerHTML={{ __html: title }} /> : title}
+      {variant === 'rich' ? (
+        <div dangerouslySetInnerHTML={{ __html: title }} />
+      ) : (
+        title
+      )}
     </BTooltip>
   );
 
   return (
-    <OverlayTrigger
-      overlay={tooltip}
-      show={showTooltip}
-      {...props}
-    >
+    <OverlayTrigger overlay={tooltip} show={showTooltip} {...props}>
       <div className={`${containerClassName}`}>{children}</div>
     </OverlayTrigger>
   );
@@ -75,8 +75,8 @@ Tooltip.propTypes = {
   variant: PropTypes.string,
 };
 
-const TdsTooltip = r2wc(Tooltip);
-customElements.define("tds-tooltip", TdsTooltip);
-
 export default Tooltip;
 export { Tooltip };
+
+const TdsTooltip = r2wc(Tooltip);
+customElements.define('tds-tooltip', TdsTooltip);
