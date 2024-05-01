@@ -89,5 +89,5 @@ Switch.propTypes = {
 export default React.memo(Switch);
 export { Switch as Toggle };
 
-// const TdsSwitch = r2wc(Switch);
-// customElements.define('tds-switch', TdsSwitch);
+const TdsSwitch = r2wc(Switch);
+customElements.define('tds-switch', TdsSwitch);

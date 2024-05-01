@@ -62,8 +62,8 @@ Radio.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark']), // Specify theme prop type
 };
 
-const TdsRadio = r2wc(Radio);
-customElements.define("tds-radio", TdsRadio);
-
 export default Radio;
 export { Radio };
+
+const TdsRadio = r2wc(Radio);
+customElements.define('tds-radio', TdsRadio);

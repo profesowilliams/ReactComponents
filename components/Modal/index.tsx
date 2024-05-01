@@ -1,13 +1,15 @@
 import React, { ReactNode } from 'react';
+import r2wc from '@r2wc/react-to-web-component';
 import PropTypes, { bool, func, node, oneOf, string } from 'prop-types';
 import { Modal as BModal } from 'react-bootstrap';
 import { Button } from '../Button';
 import './modal.scss';
 
 const modalSize = {
-  SM: 'sm',
-  LG: 'lg',
-  XL: 'xl',
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
+  xl: 'xl',
 };
 
 interface ModalProps {
@@ -41,10 +43,10 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   let footerComponent = (
     <>
-      <Button className="button-cancel" variant="secondary" size="md" onClick={onCancel}>
+      <Button className="button-cancel" variant="secondary" size="lg" onClick={onCancel}>
         Cancel
       </Button>
-      <Button className="button-save" variant="primary" size="md" onClick={onSave}>
+      <Button className="button-save" variant="primary" size="lg" onClick={onSave}>
         Save
       </Button>
     </>
@@ -109,3 +111,6 @@ Modal.propTypes = {
 
 export default Modal;
 export { Modal };
+
+const TdsModal = r2wc(Modal);
+customElements.define('tds-modal', TdsModal);

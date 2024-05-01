@@ -42,3 +42,6 @@ Accordion.defaultProps = {
 
 export default Accordion;
 export { Accordion };
+
+const TdsAccordion = r2wc(Accordion);
+customElements.define('tds-accordion', TdsAccordion);

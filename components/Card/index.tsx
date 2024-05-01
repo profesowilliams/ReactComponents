@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import r2wc from '@r2wc/react-to-web-component';
 import PropTypes from 'prop-types';
 import { Card as BCard } from 'react-bootstrap';
 
@@ -16,20 +17,20 @@ interface CardProps {
 }
 
 const cardBgs = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  SUCCESS: 'success',
-  DANGER: 'danger',
-  WARNING: 'warning',
-  INFO: 'info',
-  DARK: 'dark',
-  LIGHT: 'light',
+  primary: 'primary',
+  secondary: 'secondary',
+  success: 'success',
+  danger: 'danger',
+  warning: 'warning',
+  info: 'info',
+  dark: 'dark',
+  light: 'light',
 };
 
 const cardTexts = {
   ...cardBgs,
-  WHITE: 'white',
-  MUTED: 'muted',
+  white: 'white',
+  muted: 'muted',
 };
 
 const Card: React.FC<CardProps> = ({ width = '18rem', header, title, body, variant, ...props }) => {
@@ -66,3 +67,6 @@ Card.propTypes = {
 
 export default Card;
 export { Card, cardBgs, cardTexts };
+
+const TdsCard = r2wc(Card);
+customElements.define('tds-card', TdsCard);

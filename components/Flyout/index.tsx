@@ -65,3 +65,6 @@ Flyout.propTypes = {
 
 export default Flyout;
 export { Flyout };
+
+const TdsFlyout = r2wc(Flyout);
+customElements.define('tds-flyout', TdsFlyout);

@@ -25,23 +25,24 @@ interface ButtonProps {
 }
 
 const buttonVariant = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  FILLED: 'filled',
-  TERTIARY: 'tertiary',
-  LINK: 'link',
-  AFFIRMATIVE: 'affirmative',
-  DESTRUCTIVE: 'destructive',
+  primary: 'primary',
+  secondary: 'secondary',
+  filled: 'filled',
+  tertiary: 'tertiary',
+  link: 'link',
+  affirmative: 'affirmative',
+  destructive: 'destructive',
 };
 
 const buttonColor = {
-  DARK_BLUE: 'dark-blue',
-  OCEAN_BLUE: 'ocean-blue',
+  dark_blue: 'dark-blue',
+  ocean_blue: 'ocean-blue',
 };
 
 const buttonSize = {
-  SM: 'sm',
-  LG: 'lg',
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
 };
 
 const Button: React.FC<ButtonProps> = ({ label, loading, loadingText, children, color, theme, SpinnerProps, ...props }) => {
@@ -65,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({ label, loading, loadingText, children, 
 Button.defaultProps = {
   label: '',
   variant: 'secondary',
-  color: 'dark-blue',
+  color: 'dark_blue',
   size: 'sm',
   active: false,
   disabled: false,

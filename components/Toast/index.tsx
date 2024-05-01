@@ -1,4 +1,5 @@
 import React from 'react';
+import r2wc from '@r2wc/react-to-web-component';
 import PropTypes from 'prop-types';
 import { Toast, ToastContainer } from 'react-bootstrap';
 import './toast.scss';
@@ -6,22 +7,22 @@ import './toast.scss';
 const { Header, Body } = Toast;
 
 const toastsPositions = {
-  TOP_START: 'top-start',
-  TOP_CENTER: 'top-center',
-  TOP_END: 'top-end',
-  MIDDLE_START: 'middle-start',
-  MIDDLE_CENTER: 'middle-center',
-  MIDDLE_END: 'middle-end',
-  BOTTOM_START: 'bottom-start',
-  BOTTOM_CENTER: 'bottom-center',
-  BOTTOM_END: 'bottom-end',
+  top_start: 'top-start',
+  top_center: 'top-center',
+  top_end: 'top-end',
+  middle_start: 'middle-start',
+  middle_center: 'middle-center',
+  middle_end: 'middle-end',
+  bottom_start: 'bottom-start',
+  bottom_center: 'bottom-center',
+  bottom_end: 'bottom-end',
 };
 
 const toastsState = {
-  ERROR: 'error',
-  INFORMATION: 'information',
-  CONFIRMATION: 'confirmation',
-  ALERT: 'alert',
+  error: 'error',
+  information: 'information',
+  confirmation: 'confirmation',
+  alert: 'alert',
 };
 
 interface ToastsProps {
@@ -50,7 +51,7 @@ Toasts.defaultProps = {
   header: '',
   children: '',
   show: false,
-  position: toastsPositions.MIDDLE_CENTER,
+  position: toastsPositions.middle_center,
   delay: 3000,
   autohide: false,
   state: undefined,
@@ -70,3 +71,6 @@ Toasts.propTypes = {
 
 export default Toasts;
 export { Toasts, toastsPositions, toastsState };
+
+const TdsToasts = r2wc(Toasts);
+customElements.define('tds-toasts', TdsToasts);
