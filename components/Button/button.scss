@@ -1,15 +1,21 @@
 @use 'sass:map';
 @use '../../styles/abstracts/' as *;
+@use 'bootstrap/scss/bootstrap' as *;
 
 .btn-loading-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+tds-button .btn,
 .btn {
-  @include set-opacity('background', map.get($color-palette, 'legacy-ocean'), 1);
+  @include set-opacity(
+    'background',
+    map.get($color-palette, 'legacy-ocean'),
+    1
+  );
   border: none;
-  border-radius: none;
   box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;
@@ -35,21 +41,27 @@
   width: auto;
 }
 
-.btn-loading-container .btn-loading-text {
+tds-button .btn-loading-container .btn-loading-text, .btn-loading-container .btn-loading-text {
   margin-left: 5px;
 }
 
-element.style {
-}
+tds-button .bd-example > .btn,
+tds-button .bd-example > .btn-group,
 .bd-example > .btn,
 .bd-example > .btn-group {
   margin: 0.25rem 0.125rem;
 }
-.btn:hover {
+
+tds-button .btn:hover, .btn:hover {
   color: var(--bs-btn-hover-color);
   background-color: var(--bs-btn-hover-bg);
   border-color: var(--bs-btn-hover-border-color);
 }
+
+tds-button [type='button']:not(:disabled),
+tds-button [type='reset']:not(:disabled),
+tds-button [type='submit']:not(:disabled),
+tds-button button:not(:disabled),
 [type='button']:not(:disabled),
 [type='reset']:not(:disabled),
 [type='submit']:not(:disabled),
@@ -57,26 +69,51 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
-[data-bs-theme='light'] {
+tds-button [data-bs-compact='true'], [data-bs-compact='true'] {
+  display: inline-flex;
+  height: 2rem;
+  padding: 0.5rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  flex-shrink: 0;
+}
+
+tds-button [data-bs-theme='light'], [data-bs-theme='light'] {
   &[data-bs-color='dark-blue'] {
     &.btn {
       &.btn-primary {
         @include set-opacity('color', map.get($color-palette, 'white'), 1);
-        @include set-opacity('background', map.get($color-palette, 'dark-blue'), 1);
+        @include set-opacity(
+          'background',
+          map.get($color-palette, 'dark-blue'),
+          1
+        );
 
         &:hover {
           @include set-opacity('color', map.get($color-palette, 'white'), 1);
-          background: #{$gradient-primary-hover}, #{map.get($color-palette, 'dark-blue')};
+          background: #{$gradient-primary-hover},
+            #{map.get($color-palette, 'dark-blue')};
         }
 
         &:active {
           @include set-opacity('color', map.get($color-palette, 'white'), 1);
-          background: #{$gradient-primary-active}, #{map.get($color-palette, 'dark-blue')};
+          background: #{$gradient-primary-active},
+            #{map.get($color-palette, 'dark-blue')};
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-          @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'neutral-gray-2'),
+            1
+          );
         }
       }
       &.btn-secondary {
@@ -85,20 +122,40 @@ button:not(:disabled) {
         border: 1px solid #{map.get($color-palette, 'dark-blue')};
 
         &:hover {
-          @include set-opacity('background', map.get($color-palette, 'dark-blue'), 0.1);
-          @include set-opacity('border-color', map.get($color-palette, 'dark-blue'), 0.1);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'dark-blue'),
+            0.1
+          );
+          @include set-opacity(
+            'border-color',
+            map.get($color-palette, 'dark-blue'),
+            0.1
+          );
           border: 1px solid;
         }
 
         &:active {
           color: #{map.get($color-palette, 'dark-blue')};
-          @include set-opacity('background', map.get($color-palette, 'dark-blue'), 0.2);
-          @include set-opacity('border-color', map.get($color-palette, 'dark-blue'), 0.2);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'dark-blue'),
+            0.2
+          );
+          @include set-opacity(
+            'border-color',
+            map.get($color-palette, 'dark-blue'),
+            0.2
+          );
           border: 1px solid;
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: transparent;
           border: 1px solid #{map.get($color-palette, 'cool-gray-8')};
         }
@@ -108,38 +165,61 @@ button:not(:disabled) {
         background: transparent;
 
         &:hover {
-          @include set-opacity('background', map.get($color-palette, 'dark-blue'), 0.1);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'dark-blue'),
+            0.1
+          );
           color: #{map.get($color-palette, 'dark-blue')};
           border: none;
         }
 
         &:active {
-          @include set-opacity('background', map.get($color-palette, 'dark-blue'), 0.2);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'dark-blue'),
+            0.2
+          );
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: transparent;
         }
       }
       &.btn-filled {
         color: #{map.get($color-palette, 'dark-blue')};
-        background: #{$gradient-filled-bg}, #{map.get($color-palette, 'dark-blue')};
+        background: #{$gradient-filled-bg},
+          #{map.get($color-palette, 'dark-blue')};
 
         &:hover {
           color: #{map.get($color-palette, 'dark-blue')};
-          background: #{$gradient-filled-hover}, #{map.get($color-palette, 'dark-blue')};
+          background: #{$gradient-filled-hover},
+            #{map.get($color-palette, 'dark-blue')};
           border: none;
         }
 
         &:active {
           color: #{map.get($color-palette, 'dark-blue')};
-          background: #{$gradient-filled-active}, #{map.get($color-palette, 'dark-blue')};
+          background: #{$gradient-filled-active},
+            #{map.get($color-palette, 'dark-blue')};
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-          @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'neutral-gray-2'),
+            1
+          );
         }
       }
 
@@ -167,7 +247,11 @@ button:not(:disabled) {
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: transparent;
         }
       }
@@ -178,21 +262,35 @@ button:not(:disabled) {
     &.btn {
       &.btn-primary {
         @include set-opacity('color', map.get($color-palette, 'white'), 1);
-        @include set-opacity('background', map.get($color-palette, 'legacy-ocean'), 1);
+        @include set-opacity(
+          'background',
+          map.get($color-palette, 'legacy-ocean'),
+          1
+        );
 
         &:hover {
           @include set-opacity('color', map.get($color-palette, 'white'), 1);
-          background: #{$gradient-primary-hover}, #{map.get($color-palette, 'legacy-ocean')};
+          background: #{$gradient-primary-hover},
+            #{map.get($color-palette, 'legacy-ocean')};
         }
 
         &:active {
           @include set-opacity('color', map.get($color-palette, 'white'), 1);
-          background: #{$gradient-primary-active}, #{map.get($color-palette, 'legacy-ocean')};
+          background: #{$gradient-primary-active},
+            #{map.get($color-palette, 'legacy-ocean')};
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-          @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'neutral-gray-2'),
+            1
+          );
         }
       }
       &.btn-secondary {
@@ -201,8 +299,16 @@ button:not(:disabled) {
         border: 1px solid #{map.get($color-palette, 'legacy-ocean')};
 
         &:hover {
-          @include set-opacity('background', map.get($color-palette, 'legacy-ocean'), 0.1);
-          @include set-opacity('border-color', map.get($color-palette, 'legacy-ocean'), 0.1);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'legacy-ocean'),
+            0.1
+          );
+          @include set-opacity(
+            'border-color',
+            map.get($color-palette, 'legacy-ocean'),
+            0.1
+          );
           border: 1px solid;
         }
 
@@ -214,7 +320,11 @@ button:not(:disabled) {
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: transparent;
           border: transparent;
         }
@@ -224,38 +334,61 @@ button:not(:disabled) {
         background: transparent;
 
         &:hover {
-          @include set-opacity('background', map.get($color-palette, 'legacy-ocean'), 0.1);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'legacy-ocean'),
+            0.1
+          );
           color: #{map.get($color-palette, 'legacy-ocean')};
           border: none;
         }
 
         &:active {
-          @include set-opacity('background', map.get($color-palette, 'legacy-ocean'), 0.2);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'legacy-ocean'),
+            0.2
+          );
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: transparent;
         }
       }
       &.btn-filled {
         color: #{map.get($color-palette, 'legacy-ocean')};
-        background: #{$gradient-filled-bg}, #{map.get($color-palette, 'legacy-ocean')};
+        background: #{$gradient-filled-bg},
+          #{map.get($color-palette, 'legacy-ocean')};
 
         &:hover {
           color: #{map.get($color-palette, 'legacy-ocean')};
-          background: #{$gradient-filled-hover}, #{map.get($color-palette, 'legacy-ocean')};
+          background: #{$gradient-filled-hover},
+            #{map.get($color-palette, 'legacy-ocean')};
           border: none;
         }
 
         &:active {
           color: #{map.get($color-palette, 'legacy-ocean')};
-          background: #{$gradient-filled-active}, #{map.get($color-palette, 'legacy-ocean')};
+          background: #{$gradient-filled-active},
+            #{map.get($color-palette, 'legacy-ocean')};
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-          @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'neutral-gray-2'),
+            1
+          );
         }
       }
 
@@ -283,7 +416,175 @@ button:not(:disabled) {
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  &[data-bs-color='teal'] {
+    &.btn {
+      &.btn-primary {
+        @include set-opacity('color', map.get($color-palette, 'white'), 1);
+        @include set-opacity('background', map.get($color-palette, 'teal'), 1);
+
+        &:hover {
+          @include set-opacity('color', map.get($color-palette, 'white'), 1);
+          background: #{$gradient-primary-hover},
+            #{map.get($color-palette, 'teal')};
+        }
+
+        &:active {
+          @include set-opacity('color', map.get($color-palette, 'white'), 1);
+          background: #{$gradient-primary-active},
+            #{map.get($color-palette, 'teal')};
+        }
+
+        &:disabled {
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'neutral-gray-2'),
+            1
+          );
+        }
+      }
+      &.btn-secondary {
+        color: #{map.get($color-palette, 'teal')};
+        background: transparent;
+        border: 1px solid #{map.get($color-palette, 'teal')};
+
+        &:hover {
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'teal'),
+            0.1
+          );
+          @include set-opacity(
+            'border-color',
+            map.get($color-palette, 'teal'),
+            0.1
+          );
+          border: 1px solid;
+        }
+
+        &:active {
+          color: #{map.get($color-palette, 'teal')};
+          border-color: rgb(0 177 226 / 10%);
+          background: rgb(0 177 226 / 10%);
+          border: 1px solid;
+        }
+
+        &:disabled {
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          background: transparent;
+          border: transparent;
+        }
+      }
+      &.btn-tertiary {
+        color: #{map.get($color-palette, 'teal')};
+        background: transparent;
+
+        &:hover {
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'teal'),
+            0.1
+          );
+          color: #{map.get($color-palette, 'teal')};
+          border: none;
+        }
+
+        &:active {
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'teal'),
+            0.2
+          );
+        }
+
+        &:disabled {
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          background: transparent;
+        }
+      }
+      &.btn-filled {
+        color: #{map.get($color-palette, 'teal')};
+        background: #{$gradient-filled-bg}, #{map.get($color-palette, 'teal')};
+
+        &:hover {
+          color: #{map.get($color-palette, 'teal')};
+          background: #{$gradient-filled-hover},
+            #{map.get($color-palette, 'teal')};
+          border: none;
+        }
+
+        &:active {
+          color: #{map.get($color-palette, 'teal')};
+          background: #{$gradient-filled-active},
+            #{map.get($color-palette, 'teal')};
+        }
+
+        &:disabled {
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'neutral-gray-2'),
+            1
+          );
+        }
+      }
+
+      &.btn-link {
+        color: #{map.get($color-palette, 'teal')};
+        background: transparent;
+        text-decoration: none;
+        padding-left: 0;
+        padding-right: 0;
+        min-width: unset;
+
+        &:hover {
+          color: #{tint(map.get($color-palette, 'teal'), 20%)};
+          background: transparent;
+          border: none;
+          text-decoration: underline;
+          text-underline-position: under;
+        }
+
+        &:active {
+          color: #{shade(map.get($color-palette, 'teal'), 20%)};
+          background: transparent;
+          text-decoration: underline;
+          text-underline-position: under;
+        }
+
+        &:disabled {
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: transparent;
         }
       }
@@ -296,18 +597,24 @@ button:not(:disabled) {
 
     &:hover {
       @include set-opacity('color', map.get($color-palette, 'white'), 1);
-      background: #{$gradient-affirmative-destructive-hover}, #{map.get($color-palette, 'forest')};
+      background: #{$gradient-affirmative-destructive-hover},
+        #{map.get($color-palette, 'forest')};
       border: none;
     }
 
     &:active {
       @include set-opacity('color', map.get($color-palette, 'white'), 1);
-      background: #{$gradient-affirmative-destructive-active}, #{map.get($color-palette, 'forest')};
+      background: #{$gradient-affirmative-destructive-active},
+        #{map.get($color-palette, 'forest')};
     }
 
     &:disabled {
       @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-      @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+      @include set-opacity(
+        'background',
+        map.get($color-palette, 'neutral-gray-2'),
+        1
+      );
     }
   }
 
@@ -317,23 +624,29 @@ button:not(:disabled) {
 
     &:hover {
       @include set-opacity('color', map.get($color-palette, 'white'), 1);
-      background: #{$gradient-affirmative-destructive-hover}, #{map.get($color-palette, 'cherry')};
+      background: #{$gradient-affirmative-destructive-hover},
+        #{map.get($color-palette, 'cherry')};
       border: none;
     }
 
     &:active {
       @include set-opacity('color', map.get($color-palette, 'white'), 1);
-      background: #{$gradient-affirmative-destructive-active}, #{map.get($color-palette, 'cherry')};
+      background: #{$gradient-affirmative-destructive-active},
+        #{map.get($color-palette, 'cherry')};
     }
 
     &:disabled {
       @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-      @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+      @include set-opacity(
+        'background',
+        map.get($color-palette, 'neutral-gray-2'),
+        1
+      );
     }
   }
 }
 
-[data-bs-theme='dark'] {
+tds-button [data-bs-theme='dark'], [data-bs-theme='dark'] {
   &[data-bs-color='dark-blue'] {
     &.btn {
       &.btn-primary {
@@ -342,17 +655,37 @@ button:not(:disabled) {
         @include set-opacity('background', map.get($color-palette, 'white'), 1);
 
         &:hover {
-          @include set-opacity('color', map.get($color-palette, 'dark-blue'), 1);
-          @include set-opacity('background', map.get($color-palette, 'white'), 0.85);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'dark-blue'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'white'),
+            0.85
+          );
         }
 
         &:active {
-          @include set-opacity('color', map.get($color-palette, 'dark-blue'), 1);
-          @include set-opacity('background', map.get($color-palette, 'white'), 0.7);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'dark-blue'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'white'),
+            0.7
+          );
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: #{rgb(228 229 230 / 80%)};
         }
       }
@@ -367,17 +700,74 @@ button:not(:disabled) {
         @include set-opacity('background', map.get($color-palette, 'white'), 1);
 
         &:hover {
-          @include set-opacity('color', map.get($color-palette, 'legacy-ocean'), 1);
-          @include set-opacity('background', map.get($color-palette, 'white'), 0.85);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'legacy-ocean'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'white'),
+            0.85
+          );
         }
 
         &:active {
-          @include set-opacity('color', map.get($color-palette, 'legacy-ocean'), 1);
-          @include set-opacity('background', map.get($color-palette, 'white'), 0.7);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'legacy-ocean'),
+            1
+          );
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'white'),
+            0.7
+          );
         }
 
         &:disabled {
-          @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
+          background: #{rgb(228 229 230 / 80%)};
+        }
+      }
+    }
+  }
+
+  &[data-bs-color='teal'] {
+    &.btn {
+      &.btn-primary {
+        /* Values from the 'dark' theme primary default */
+        color: #{map.get($color-palette, 'teal')};
+        @include set-opacity('background', map.get($color-palette, 'white'), 1);
+
+        &:hover {
+          @include set-opacity('color', map.get($color-palette, 'teal'), 1);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'white'),
+            0.85
+          );
+        }
+
+        &:active {
+          @include set-opacity('color', map.get($color-palette, 'teal'), 1);
+          @include set-opacity(
+            'background',
+            map.get($color-palette, 'white'),
+            0.7
+          );
+        }
+
+        &:disabled {
+          @include set-opacity(
+            'color',
+            map.get($color-palette, 'cool-gray-8'),
+            1
+          );
           background: #{rgb(228 229 230 / 80%)};
         }
       }
@@ -447,7 +837,11 @@ button:not(:disabled) {
 
     &:disabled {
       @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-      @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+      @include set-opacity(
+        'background',
+        map.get($color-palette, 'neutral-gray-2'),
+        1
+      );
     }
   }
   &.btn-link {
@@ -487,7 +881,11 @@ button:not(:disabled) {
 
     &:hover {
       color: #{map.get($color-palette, 'forest')};
-      @include set-opacity('background', map.get($color-palette, 'white'), 0.85);
+      @include set-opacity(
+        'background',
+        map.get($color-palette, 'white'),
+        0.85
+      );
       border: none;
     }
 
@@ -498,7 +896,11 @@ button:not(:disabled) {
 
     &:disabled {
       @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-      @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+      @include set-opacity(
+        'background',
+        map.get($color-palette, 'neutral-gray-2'),
+        1
+      );
     }
   }
   &.btn-destructive {
@@ -508,7 +910,11 @@ button:not(:disabled) {
 
     &:hover {
       @include set-opacity('color', map.get($color-palette, 'cherry'), 1);
-      @include set-opacity('background', map.get($color-palette, 'white'), 0.85);
+      @include set-opacity(
+        'background',
+        map.get($color-palette, 'white'),
+        0.85
+      );
       border: none;
     }
 
@@ -519,7 +925,11 @@ button:not(:disabled) {
 
     &:disabled {
       @include set-opacity('color', map.get($color-palette, 'cool-gray-8'), 1);
-      @include set-opacity('background', map.get($color-palette, 'neutral-gray-2'), 1);
+      @include set-opacity(
+        'background',
+        map.get($color-palette, 'neutral-gray-2'),
+        1
+      );
     }
   }
 }

@@ -22,11 +22,15 @@ export default {
     },
     color: {
       options: Object.values(buttonColor),
-      control: { type: 'inline-radio' },
+      control: { type: 'select' },
     },
     size: {
       options: Object.values(buttonSize),
       control: { type: 'select' },
+    },
+    compact: {
+      options: [true, false],
+      control: { type: 'boolean' },
     },
     active: {
       options: [true, false],
@@ -67,7 +71,9 @@ const Btn: React.FC<ButtonProps> = (args) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
       <span key={args.variant} style={{ margin: 5 }}>
-        <Button {...args} variant={args.variant}></Button>
+        <Button {...args} variant={args.variant}>
+          {args.variant}
+        </Button>
       </span>
     </div>
   );
@@ -79,7 +85,7 @@ Primary.args = {
   variant: 'primary',
   size: 'sm',
   disabled: false,
-  label: 'Primary',
+  color: 'dark-blue',
   parameters: {
     backgrounds: { default: 'light' },
   },
@@ -92,7 +98,7 @@ Secondary.args = {
   size: 'sm',
   active: false,
   disabled: false,
-  label: 'Secondary',
+  color: 'dark-blue',
   parameters: {
     backgrounds: { default: 'light' },
   },
@@ -104,7 +110,7 @@ Filled.args = {
   variant: 'filled',
   size: 'sm',
   disabled: false,
-  label: 'Filled',
+  color: 'dark-blue',
   parameters: {
     backgrounds: { default: 'light' },
   },
@@ -116,7 +122,7 @@ Tertiary.args = {
   variant: 'tertiary',
   size: 'sm',
   disabled: false,
-  label: 'Tertiary',
+  color: 'dark-blue',
   parameters: {
     backgrounds: { default: 'light' },
   },
@@ -128,7 +134,7 @@ Link.args = {
   variant: 'link',
   size: 'sm',
   disabled: false,
-  label: 'Link',
+  color: 'dark-blue',
   parameters: {
     backgrounds: { default: 'light' },
   },
@@ -140,7 +146,7 @@ Affirmative.args = {
   variant: 'affirmative',
   size: 'sm',
   disabled: false,
-  label: 'Affirmative',
+  color: 'dark-blue',
   parameters: {
     backgrounds: { default: 'light' },
   },
@@ -152,7 +158,7 @@ Destructive.args = {
   variant: 'destructive',
   size: 'sm',
   disabled: false,
-  label: 'Destructive',
+  color: 'dark-blue',
   parameters: {
     backgrounds: { default: 'light' },
   },
