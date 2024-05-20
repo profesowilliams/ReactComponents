@@ -1,0 +1,1 @@
+The `label` attribute is used to set the text that will be displayed next to the checkbox. The `checked` property is used to keep track of the checkbox's state. The `handleChange` method is called when the checkbox is clicked and updates the `checked` property accordingly.

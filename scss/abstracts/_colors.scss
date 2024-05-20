@@ -1,0 +1,187 @@
+@use 'sass:map';
+
+@mixin set-opacity($property, $color, $opacity) {
+  #{$property}: rgba($color, $opacity);
+}
+
+/// Techdata Color Palette
+/// Primary and secondary colors for TDS,
+/// along with old color palette.
+/// @type Map
+$color-palette: (
+  // TDS Primary colors
+  'teal': #005758,
+  'deep-teal': #003031,
+  'aqua': #08bed5,
+  'cool-gray-8': #888b8d,
+  'cool-gray-10': #63666a,
+  'green': #2d9f88,
+  'chartreuse': #ccd814,
+  'black': #000000,
+  'white': #ffffff,
+
+  // TDS Secondary colors
+  'steel-blue': #1f728b,
+  'navy': #1d3152,
+  'copper': #ab584d,
+  'stone': #75716e,
+  'cool-gray-1': #d9d8d7,
+  'purple': #923a7f,
+  'plum': #5a2d3f,
+  'citron': #908c13,
+
+  // TDS Digital colors
+  'cobalt': #006fba,
+  'cherry': #cd163f,
+  'amber': #f7b500,
+  'forest': #38853c,
+  'charcoal': #262626,
+  'cool-gray-9': #727679,
+  'neutral-gray-1': #f8f8f8,
+  'neutral-gray-2': #e4e5e6,
+  'brilliant': #fcfcfc,
+
+  // Legacy colors
+  'legacy-dark-blue': #000c21,
+  'legacy-ocean': #00558c,
+
+  // old color palette
+  'dark-blue': #000c21,
+  'sky-blue': #0bb0df,
+  'legacy-gray': #676c71,
+  'brand-black': #000000,
+  'brand-primary-text': #ffbc0d,
+  'brand-secondary-text': #d90007,
+  'brand-white': #ffffff,
+  'brand-blue': #000c21,
+  'brand-green-synnex': #003030,
+  'brand-blue-sheer': rgba(0, 11, 31, 0.549),
+  'secondary-link-blue': #006bae,
+  'secondary-dark-grey': #6f6f6f,
+  'secondary-grey': #adadad,
+  'secondary-light-grey': #d6d6d6,
+  'secondary-ivory': #f9f9f9,
+  'accessible-accent-gold': #c08b00,
+  'accessible-accent-grey': #959595,
+  'tertiary-light-green': #a9c141,
+  'tertiary-dark-blue': #103c82,
+  'tertiary-light-blue': #56afd1,
+  'tertiary-fuchsia': #9a0a4d,
+  'tertiary-beige': #b69a81,
+  'brand-light-blue': #00b1e2,
+  'brand-light-blue-shadow': rgba(0, 177, 226, 0.15),
+  'brand-button-blue': #00558c,
+  'brand-nav-blue': #048fc8,
+  'border-light-gray': #979797,
+  'border-lighter-gray': #d9d9d9,
+  'text-shadow': #919599,
+  'text-dark-grey': #5d6165,
+  'text-light-gray': #7c8388,
+  'text-lighter-gray': #f6f6f6,
+  'text-mid-gray': #53565a,
+  'text-mid-charcoal': #666666,
+  'text-light-charcoal': #555555,
+  'td-lighter-gray': #f6f6f6,
+  'td-lightblue': #00b1e2,
+  'td-primary-blue': #048fc8,
+  'td-link-hover-state': #213859,
+  'td-dim-blue': #153b51,
+  'td-dark-blue': #000c21,
+  'td-dark-blue-shade': rgba(0, 12, 33, 0.64),
+  'brand-light-gray': #eaeaea,
+  'header-links-blue': #21314d,
+  'v-divider-gray': #e6e6e6,
+  'v-divider-darkgray': #c6c6c6,
+  'brand-light-gray2': #e6e6e6,
+  'brand-light-gray3': #f6f6f6,
+  'brand-text-gray': #555555,
+  'brand-text-lightgray': #888888,
+  'brand-light-blue-icon': #009fd4,
+  'brand-success': #26a600,
+  'button-open': #38853c,
+  'brand-scrollbar': #d8d8d8,
+  'brand-red-brilliant': #ff0000,
+  'box-shadow': rgba(0, 0, 0, 0.5),
+  'brand-box-shadow': rgba(0, 0, 0, 0.5),
+  'light-see-through-background': rgba(255, 255, 255, 0.5),
+  'input-border': #bdbdbd,
+  'brand-orange': #ffba30,
+  'td-brand-space-light': #334b76,
+  'container-transparent': rgba(0, 0, 0, 0)
+);
+
+/// Space color
+/// @type Color
+$space: #000c21;
+
+/// Sky color
+/// @type Color
+$sky: #00b1e2;
+
+/// Dark sky color
+/// @type Color
+$sky-dark: #00558c;
+
+/// Gray color
+/// @type Color
+$gray: #5d6165;
+
+/// Planet color
+/// @type Color
+$planet: #ccd814;
+
+/// Fire color
+/// @type Color
+$fire: #bf0000;
+
+/// Fall color
+/// @type Color
+$fall: #fdb71a;
+
+/// Grass color
+/// @type Color
+$grass: #1ba41f;
+
+/// Smoke color
+/// @type Color
+$smoke: #53565a;
+
+/// Carbon color
+/// @type Color
+$carbon: #1f2024;
+
+/// Gray-1 color
+/// @type Color
+$gray-1: #5d6165;
+
+/// Gray-2 color
+/// @type Color
+$gray-2: #979797;
+
+/// Gray-4 color
+/// @type Color
+$gray-4: #d6d6d6;
+
+/// Gray-5 color
+/// @type Color
+$gray-5: #f6f6f6;
+
+/// Gray-3 color
+/// @type Color
+$gray-3: #c6c6c6;
+
+$neutral-gray-2: map.get($color-palette, 'neutral-gray-2');
+$cool-gray-8: map.get($color-palette, 'cool-gray-8');
+$legacy-dark-blue: map.get($color-palette, 'legacy-dark-blue');
+$legacy-ocean: map.get($color-palette, 'legacy-ocean');
+$forest: map.get($color-palette, 'forest');
+$cherry: map.get($color-palette, 'cherry');
+$gradient-primary-hover: linear-gradient(0deg, rgb(255 255 255 / 20%), rgb(255 255 255 / 20%));
+$gradient-primary-active: linear-gradient(0deg, rgb(0 0 0 / 20%), rgb(0 0 0 / 20%));
+$gradient-filled-bg: linear-gradient(0deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 90%));
+$gradient-filled-hover: linear-gradient(0deg, rgb(255 255 255 / 80%), rgb(255 255 255 / 80%));
+$gradient-filled-active: linear-gradient(0deg, rgb(255 255 255 / 70%), rgb(255 255 255 / 70%));
+$gradient-affirmative-destructive-hover: linear-gradient(0deg, rgb(0 0 0 / 15%), rgb(0 0 0 / 15%));
+$gradient-affirmative-destructive-active: linear-gradient(0deg, rgb(0 0 0 / 30%), rgb(0 0 0 / 30%));
+$gradient-tertiary-hover: rgb(255 255 255 / 10%);
+$gradient-tertiary-active: rgb(255 255 255 / 20%);

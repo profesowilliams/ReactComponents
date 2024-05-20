@@ -1,0 +1,20 @@
+@use "sass:map";
+@import "../toast.scss";
+
+.toast-body {
+    padding-top: 0;
+    color: var(--Cobalt, #006fba);
+
+    /* Link */
+    font-family: Arial;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 1.5rem */
+
+    &::before {
+      padding-right: 1.5rem;
+      content: '';
+      margin-right: 1.25rem;
+    }
+  }
