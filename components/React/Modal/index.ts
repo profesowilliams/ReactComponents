@@ -1,2 +1,2 @@
 // src/components/React/Modal/index.ts
-export { Modal } from "./Modal";
+export { default as Modal } from "./Modal";

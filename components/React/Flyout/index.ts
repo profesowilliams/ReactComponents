@@ -1,2 +1,2 @@
 // src/components/React/Flyout/index.ts
-export { Flyout } from "./Flyout";
+export { default as Flyout } from "./Flyout";

@@ -1,6 +1,6 @@
-import { LitElement, html, css, unsafeCSS, PropertyValues } from "lit";
-import { property } from "lit/decorators.js";
-import customStyles from "./AccordionItem.scss?inline";
+import { LitElement, html, css, unsafeCSS, PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+import customStyles from './AccordionItem.scss?inline';
 
 // Define the accordion item component
 export class AccordionItem extends LitElement {
@@ -10,25 +10,25 @@ export class AccordionItem extends LitElement {
     `;
   }
 
-  @property({ type: String, attribute: "accordion-id" })
-  accordionId: string = "";
+  @property({ type: String, attribute: 'accordion-id' })
+  accordionId: string = '';
 
   @property({ type: Boolean, reflect: true })
   expanded: boolean = false;
 
-  @property({ type: String, attribute: "data-bs-outline" })
-  outline: string = "";
+  @property({ type: String, attribute: 'data-bs-outline' })
+  outline: string = '';
 
-  @property({ type: String, attribute: "data-bs-orientation" })
-  orientation: string = "";
+  @property({ type: String, attribute: 'data-bs-orientation' })
+  orientation: string = '';
 
   constructor() {
     super();
-    this.accordionId = "";
+    this.accordionId = '';
   }
 
   updated(changedProperties: PropertyValues) {
-    if (changedProperties.has("expanded")) {
+    if (changedProperties.has('expanded')) {
       this.requestUpdateInternalComponents();
     }
   }
@@ -36,13 +36,13 @@ export class AccordionItem extends LitElement {
   async requestUpdateInternalComponents() {
     // Use a microtask to defer updates and avoid nested updates
     await new Promise(requestAnimationFrame);
-    const buttons = this.querySelectorAll("tds-accordion-button");
+    const buttons = this.querySelectorAll('tds-accordion-button');
     buttons.forEach((button) => {
-      button.expanded = this.expanded;
+      (button as HTMLElement & { expanded: boolean }).expanded = this.expanded;
     });
-    const bodies = this.querySelectorAll("tds-accordion-body");
+    const bodies = this.querySelectorAll('tds-accordion-body');
     bodies.forEach((body) => {
-      body.open = this.expanded;
+      (body as HTMLElement & { open: boolean }).open = this.expanded;
     });
   }
 
@@ -60,4 +60,4 @@ export class AccordionItem extends LitElement {
   }
 }
 
-customElements.define("tds-accordion-item", AccordionItem);
+customElements.define('tds-accordion-item', AccordionItem);

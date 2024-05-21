@@ -1,9 +1,7 @@
-// src/components/Lit/Radio.tsx
-import { LitElement, html, css, unsafeCSS, PropertyValues } from "lit";
-import { property, customElement } from "lit/decorators.js";
-import customStyles from "./Radio.scss?inline";
+import { LitElement, html, css, unsafeCSS } from 'lit';
+import { property, customElement } from 'lit/decorators.js';
+import customStyles from './Radio.scss?inline';
 
-@customElement("tds-radio")
 export class Radio extends LitElement {
   static get styles() {
     return css`
@@ -11,34 +9,43 @@ export class Radio extends LitElement {
     `;
   }
 
-  @property({ type: String }) path: string = "";
+  @property({ type: String }) path: string = '';
   @property({ type: Boolean, reflect: true }) checked: boolean = false;
   @property({ type: Boolean, reflect: true }) disabled: boolean = false;
-  @property({ type: String, reflect: true }) id: string = "";
-  @property({ type: String }) label: string = "";
-  @property({ type: String, reflect: true }) name: string = "";
+  @property({ type: String, reflect: true }) id: string = '';
+  @property({ type: String }) label: string = '';
+  @property({ type: String, reflect: true }) name: string = '';
 
   constructor() {
     super();
     this.checked = false;
     this.disabled = false;
-    this.id = "";
-    this.label = "";
-    this.name = "";
+    this.id = '';
+    this.label = '';
+    this.name = '';
   }
 
   handleChange(event: Event) {
     if (!this.disabled) {
-      const radioGroup = this.getRootNode().querySelectorAll<Radio>(
-        `tds-radio[name="${this.name}"]`
-      );
-      radioGroup.forEach((radio) => {
-        if (radio !== this) {
-          radio.checked = false;
-        }
-      });
+      const rootNode = this.getRootNode();
+      let radioGroup: NodeListOf<Radio> | null = null;
+
+      if (rootNode instanceof Document || rootNode instanceof ShadowRoot) {
+        radioGroup = rootNode.querySelectorAll<Radio>(
+          `tds-radio[name="${this.name}"]`
+        );
+      }
+
+      if (radioGroup) {
+        radioGroup.forEach((radio: Radio) => {
+          if (radio !== this) {
+            radio.checked = false;
+          }
+        });
+      }
+
       this.checked = true;
-      this.dispatchEvent(new Event("change"));
+      this.dispatchEvent(new Event('change'));
     }
   }
 
@@ -63,4 +70,5 @@ export class Radio extends LitElement {
   }
 }
 
+customElements.define('tds-radio', Radio);
 export default Radio;

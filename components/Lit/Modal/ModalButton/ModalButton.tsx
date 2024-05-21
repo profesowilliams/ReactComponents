@@ -1,7 +1,7 @@
-import { LitElement, html, css, unsafeCSS } from "lit";
-import { property } from "lit/decorators.js";
-import "../../Button";
-import customStyles from "./ModalButton.scss?inline";
+import { LitElement, html, css, unsafeCSS, PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+import '../../Button';
+import customStyles from './ModalButton.scss?inline';
 
 export class ModalButton extends LitElement {
   static get styles() {
@@ -12,18 +12,18 @@ export class ModalButton extends LitElement {
 
   @property({ type: Boolean }) primary = false;
   @property({ type: Boolean }) disabled = false;
-  @property({ type: String }) type = "button";
-  @property({ type: String }) link = "";
-  @property({ type: String }) variant = "primary";
-  @property({ type: String }) theme = "dark";
+  @property({ type: String }) type = 'button';
+  @property({ type: String }) link = '';
+  @property({ type: String }) variant = 'primary';
+  @property({ type: String }) theme = 'dark';
   @property({ type: Boolean }) minimal = false;
-  @property({ type: String }) id = "";
-  @property({ type: String }) name = "";
-  @property({ type: String }) className = "";
-  @property({ type: String }) label = "Button";
-  @property({ type: String }) color = "";
-  @property({ type: String }) size = "medium";
-  @property({ type: String }) backgroundColor = "";
+  @property({ type: String }) id = '';
+  @property({ type: String }) name = '';
+  @property({ type: String }) className = '';
+  @property({ type: String }) label = 'Button';
+  @property({ type: String }) color = '';
+  @property({ type: String }) size = 'medium';
+  @property({ type: String }) backgroundColor = '';
   @property({ attribute: false }) onClick = () => {};
 
   render() {
@@ -51,50 +51,51 @@ export class ModalButton extends LitElement {
 
   firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);
-    this.addEventListener("click", this._handleClick.bind(this));
+    this.addEventListener('click', this._handleClick.bind(this));
   }
 
   _handleClick(event: Event) {
-    const toggle = this.getAttribute("data-bs-toggle");
-    const dismiss = this.getAttribute("data-bs-dismiss");
+    const toggle = this.getAttribute('data-bs-toggle');
+    const dismiss = this.getAttribute('data-bs-dismiss');
 
     if (!toggle && !dismiss) {
       return;
     }
 
-    if (toggle === "modal" && this.hasAttribute("data-bs-target")) {
-      const targetAttr = this.getAttribute("data-bs-target");
+    if (toggle === 'modal' && this.hasAttribute('data-bs-target')) {
+      const targetAttr = this.getAttribute('data-bs-target');
       if (targetAttr) {
         const targetId = targetAttr.substring(1);
         const modalElement = document
-          .querySelector("tds-modal")
+          .querySelector('tds-modal')
           ?.shadowRoot?.getElementById(targetId);
         if (modalElement) {
-          modalElement.classList.add("show");
+          modalElement.classList.add('show');
         }
       }
     }
 
-    if (dismiss === "modal") {
+    if (dismiss === 'modal') {
       let modalElement: HTMLElement | null = this;
-      while (modalElement && modalElement.tagName !== "TDS-MODAL") {
+      while (modalElement && modalElement.tagName !== 'TDS-MODAL') {
         if (modalElement.parentElement) {
           modalElement = modalElement.parentElement;
         } else if (modalElement.getRootNode() instanceof ShadowRoot) {
-          modalElement = modalElement.getRootNode().host as HTMLElement;
+          modalElement = (modalElement.getRootNode() as ShadowRoot)
+            .host as HTMLElement;
         } else {
           modalElement = null;
         }
       }
 
       if (modalElement) {
-        const modalContent = modalElement.shadowRoot?.querySelector(".modal");
+        const modalContent = modalElement.shadowRoot?.querySelector('.modal');
         if (modalContent) {
-          modalContent.classList.remove("show");
+          modalContent.classList.remove('show');
         }
       }
     }
   }
 }
 
-customElements.define("tds-modal-button", ModalButton);
+customElements.define('tds-modal-button', ModalButton);

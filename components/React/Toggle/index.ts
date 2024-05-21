@@ -1,2 +1,2 @@
 // src/components/React/Toggle/index.ts
-export { Toggle } from "./Toggle";
+export { default as Toggle } from "./Toggle";

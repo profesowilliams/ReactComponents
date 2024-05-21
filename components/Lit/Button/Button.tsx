@@ -1,7 +1,7 @@
-import { LitElement, html, css, nothing, unsafeCSS, PropertyValues } from "lit";
-import { choose } from "lit/directives/choose.js";
-import { property } from "lit/decorators.js";
-import customStyles from "./Button.scss?inline";
+import { LitElement, html, css, nothing, unsafeCSS } from 'lit';
+import { choose } from 'lit/directives/choose.js';
+import { property } from 'lit/decorators.js';
+import customStyles from './Button.scss?inline';
 
 /**
  * @prop {boolean} primary - Indicates if the button is primary
@@ -26,7 +26,7 @@ import customStyles from "./Button.scss?inline";
 export interface ButtonProps {
   primary?: boolean;
   backgroundColor?: string;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   label: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -39,6 +39,7 @@ export interface ButtonProps {
   name?: string;
   className?: string;
   color?: string;
+  compact?: boolean; // Add compact property to the interface
 }
 
 export class Button extends LitElement {
@@ -49,27 +50,28 @@ export class Button extends LitElement {
   }
 
   @property({ type: Boolean, reflect: true }) primary = false;
-  @property({ type: String, reflect: true }) backgroundColor = "";
-  @property({ type: String, reflect: true }) size = "medium";
-  @property({ type: String, reflect: true }) label = "";
+  @property({ type: String, reflect: true }) backgroundColor = '';
+  @property({ type: String, reflect: true }) size = 'medium';
+  @property({ type: String, reflect: true }) label = '';
   @property({ attribute: false }) onClick: () => void = () => {};
   @property({ type: Boolean, reflect: true }) disabled = false;
-  @property({ type: String, reflect: true }) type = "button";
-  @property({ type: String, reflect: true }) link = "";
-  @property({ type: String, reflect: true }) variant = "primary";
-  @property({ type: String, reflect: true }) theme = "dark";
+  @property({ type: String, reflect: true }) type = 'button';
+  @property({ type: String, reflect: true }) link = '';
+  @property({ type: String, reflect: true }) variant = 'primary';
+  @property({ type: String, reflect: true }) theme = 'dark';
   @property({ type: Boolean, reflect: true }) minimal = false;
-  @property({ type: String, reflect: true }) id = "";
-  @property({ type: String, reflect: true }) name = "";
-  @property({ type: String, reflect: true }) className = "";
-  @property({ type: String, reflect: true }) color = "";
+  @property({ type: String, reflect: true }) id = '';
+  @property({ type: String, reflect: true }) name = '';
+  @property({ type: String, reflect: true }) className = '';
+  @property({ type: String, reflect: true }) color = '';
+  @property({ type: Boolean, reflect: true }) compact = false; // Add compact property
 
   constructor() {
     super();
-    this.type = "button";
-    this.label = "Button";
-    this.theme = "dark";
-    this.variant = "primary";
+    this.type = 'button';
+    this.label = 'Button';
+    this.theme = 'dark';
+    this.variant = 'primary';
     this.disabled = false;
   }
 
@@ -79,7 +81,7 @@ export class Button extends LitElement {
         this.type,
         [
           [
-            "link",
+            'link',
             () => html`
               <a
                 id=${this.id}
@@ -99,7 +101,7 @@ export class Button extends LitElement {
             `,
           ],
           [
-            "button",
+            'button',
             () => html`
               <button
                 id=${this.id}
@@ -125,4 +127,4 @@ export class Button extends LitElement {
   }
 }
 
-customElements.define("tds-button", Button);
+customElements.define('tds-button', Button);

@@ -1,11 +1,14 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import title from './ModalTitle.scss?inline';
+import customStyles from './ModalTitle.scss?inline';
 
 @customElement('tds-modal-title')
 export class ModalTitle extends LitElement {
-  static styles = css`${unsafeCSS(title)}`;
-
+  static get styles() {
+    return css`
+      ${unsafeCSS(customStyles)}
+    `;
+  }
   render() {
     return html`
       <h5 class="modal-title">

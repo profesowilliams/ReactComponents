@@ -1,2 +1,2 @@
 // src/components/React/Tooltip/index.ts
-export { Tooltip } from "./Tooltip";
+export { default as Tooltip } from "./Tooltip";

@@ -1,2 +1,2 @@
 // src/components/React/Dropdown/index.ts
-export { Dropdown } from "./Dropdown";
+export { default as Dropdown } from "./Dropdown";

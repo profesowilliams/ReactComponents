@@ -1,2 +1,2 @@
 // src/components/React/Close/index.ts
-export { Close } from "./Close";
+export { default as Close } from "./Close";
