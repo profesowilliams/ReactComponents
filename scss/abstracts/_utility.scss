@@ -1,17 +1,34 @@
-/// Slightly lighten a color
-/// @access public
-/// @param {Color} $color - color to tint
-/// @param {Number} $percentage - percentage of `$color` in returned color
-/// @return {Color}
-@function tint($color, $percentage) {
-  @return mix(white, $color, $percentage);
-}
+/**
+ * Text alignment component.
+ *
+ * This component provides classes to align text to the left, right or center.
+ */
+.cmp-text-alignment {
 
-/// Slightly darken a color
-/// @access public
-/// @param {Color} $color - color to shade
-/// @param {Number} $percentage - percentage of `$color` in returned color
-/// @return {Color}
-@function shade($color, $percentage) {
-  @return mix(black, $color, $percentage);
+    /**
+     * Left aligned text
+     *
+     * Apply this class to align text to the left.
+     */
+    &--left {
+        text-align: left;
+    }
+
+    /**
+     * Right aligned text
+     *
+     * Apply this class to align text to the right.
+     */
+    &--right {
+        text-align: right;
+    }
+
+    /**
+     * Center aligned text
+     *
+     * Apply this class to align text in the center.
+     */
+    &--center {
+        text-align: center;
+    }
 }

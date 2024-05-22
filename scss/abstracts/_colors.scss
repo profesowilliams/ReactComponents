@@ -110,6 +110,14 @@ $color-palette: (
   'container-transparent': rgba(0, 0, 0, 0)
 );
 
+/// Default white color
+/// @type Color
+$white: #fff;
+
+/// Black color
+/// @type Color
+$black: #000;
+
 /// Space color
 /// @type Color
 $space: #000c21;
@@ -176,6 +184,8 @@ $legacy-dark-blue: map.get($color-palette, 'legacy-dark-blue');
 $legacy-ocean: map.get($color-palette, 'legacy-ocean');
 $forest: map.get($color-palette, 'forest');
 $cherry: map.get($color-palette, 'cherry');
+$white: map.get($color-palette, 'white');
+$teal: map.get($color-palette, 'teal');
 $gradient-primary-hover: linear-gradient(0deg, rgb(255 255 255 / 20%), rgb(255 255 255 / 20%));
 $gradient-primary-active: linear-gradient(0deg, rgb(0 0 0 / 20%), rgb(0 0 0 / 20%));
 $gradient-filled-bg: linear-gradient(0deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 90%));
