@@ -1,5 +1,5 @@
 import { LitElement, html, css, unsafeCSS, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 import customStyles from "./Notification.scss?inline";
 
 export class Notification extends LitElement {

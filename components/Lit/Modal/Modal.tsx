@@ -1,7 +1,7 @@
 // src/components/lit/modal.ts
 import { LitElement, html, css, unsafeCSS, PropertyValues } from "lit";
 import { classMap } from "lit/directives/class-map.js";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 import customStyles from "./Modal.scss?inline";
 
 export class Modal extends LitElement {
