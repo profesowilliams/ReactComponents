@@ -2,6 +2,14 @@
 @use '../../../scss/abstracts/' as *;
 @import 'bootstrap/scss/modal';
 
+:host(tds-modal.modal-backdrop)  {
+  --bs-backdrop-bg: rgba(38, 38, 38, 0.2)!important;
+}
+
+tds-button {
+  padding-left: 1.25rem;
+}
+
 .modal {
   --bs-modal-zindex: 1055;
   --bs-modal-width: 500px;
@@ -65,8 +73,8 @@
   --bs-modal-width: 56rem;
 }
 
-@media (max-width: 767.98px) {
-  .modal-dialog-centered {
+@include media-breakpoint-between(xs, sm) {
+  .modal-md .modal-dialog-centered {
     display: flex;
     align-items: self-end;
     min-height: 100%;
@@ -80,10 +88,26 @@
   }
 }
 
-.modal-backdrop {
-  --bs-backdrop-bg: rgba(38, 38, 38, 0.2);
+// Medium devices (tablets, less than 992px)
+@include media-breakpoint-only(md) {
+  .modal-sm .modal-dialog {
+    max-width: var(--bs-modal-width);
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .modal-md .modal-dialog-centered {
+    display: flex;
+    align-items: self-end;
+    min-height: 100%;
+    --bs-modal-width: 100%;
+  }
+
+  .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0;
+    pointer-events: none;
+  }
 }
 
-tds-button {
-  padding-left: 1.25rem;
-}

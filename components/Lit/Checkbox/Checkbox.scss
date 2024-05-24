@@ -2,6 +2,11 @@
 @use '../../../scss/abstracts/' as *;
 @import 'bootstrap/scss/forms/form-check';
 
+:host input {
+ width: 1rem;
+ height: 1rem;
+}
+
 .form-check-input {
   --bs-form-check-bg: var(--bs-body-bg);
   --bs-border-color: rgba(0, 87, 88, 1);

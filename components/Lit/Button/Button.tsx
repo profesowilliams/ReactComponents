@@ -31,7 +31,8 @@ export interface ButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   type?: string;
-  link?: string;
+  url?: string;
+  target?: string;
   variant?: string;
   theme?: string;
   minimal?: boolean;
@@ -56,9 +57,10 @@ export class Button extends LitElement {
   @property({ attribute: false }) onClick: () => void = () => {};
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: String, reflect: true }) type = 'button';
-  @property({ type: String, reflect: true }) link = '';
+  @property({ type: String, reflect: true }) url = '';
+  @property({ type: String, reflect: true }) target = '';
   @property({ type: String, reflect: true }) variant = 'primary';
-  @property({ type: String, reflect: true }) theme = 'dark';
+  @property({ type: String, reflect: true }) theme = 'light';
   @property({ type: Boolean, reflect: true }) minimal = false;
   @property({ type: String, reflect: true }) id = '';
   @property({ type: String, reflect: true }) name = '';
@@ -70,7 +72,7 @@ export class Button extends LitElement {
     super();
     this.type = 'button';
     this.label = 'Button';
-    this.theme = 'dark';
+    this.theme = 'light';
     this.variant = 'primary';
     this.disabled = false;
   }
@@ -92,7 +94,8 @@ export class Button extends LitElement {
                 data-bs-color=${this.color}
                 ?data-bs-compact=${this.compact}
                 data-bs-background-color=${this.backgroundColor}
-                href=${this.link}
+                href=${this.url}
+                target=${this.target}
                 ?disabled=${this.disabled}
                 aria-label="${this.ariaLabel || nothing}"
               >

@@ -3,18 +3,21 @@ import { property } from "lit/decorators.js";
 import customStyles from "./Notification.scss?inline";
 
 export class Notification extends LitElement {
-  static styles = css`
-    ${unsafeCSS(customStyles)}
-  `;
+  static get styles() {
+    return css`
+      ${unsafeCSS(customStyles)}
+    `;
+  }
 
   @property({ type: String }) id: string = "";
+  @property({ type: String }) url: string = "";
+  @property({ type: String }) link: string = "";
   @property({ type: String }) variant:
     | "default"
     | "alert"
     | "confirmation"
     | "error"
     | "information";
-  @property({ type: Boolean }) dismissible: boolean = false;
   @property({ type: String }) message: string =
     "This is a default notification";
   @property({ type: Boolean }) show: boolean = false;
@@ -38,14 +41,23 @@ export class Notification extends LitElement {
         role="alert"
         class="fade alert alert-${this.variant} ${this.show
           ? "show"
-          : ""} ${this.dismissible ? "alert-dismissible" : ""}"
+          : ""}"
       >
         <slot></slot>
-        ${this.dismissible
+        ${this.url
           ? html`
-              <tds-close-button data-bs-dismiss="alert"></tds-close-button>
+              <tds-button
+                type="link"
+                variant="link"
+                theme="light"
+                label="Button"
+                color="teal"
+                url="${this.url}"
+              >
+                ${this.link}
+              </tds-button>
             `
-          : ""}
+      : ""}
       </div>
     `;
   }

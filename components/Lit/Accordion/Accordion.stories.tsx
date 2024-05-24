@@ -4,9 +4,10 @@ import './AccordionItem';
 import './AccordionHeader';
 import './AccordionBody';
 import './AccordionButton';
-import { Meta, Story } from '@storybook/web-components';
+import { Meta, StoryFn } from '@storybook/web-components';
 
 interface AccordionProps {
+  theme: 'light' | 'dark';
   outline: 'top' | 'bottom' | 'topbottom' | 'full';
   orientation: 'left' | 'right';
 }
@@ -16,10 +17,17 @@ export default {
   component: 'tds-accordion',
   tags: ['autodocs'],
   args: {
+    theme: 'light',
     outline: 'top',
     orientation: 'left',
   },
   argTypes: {
+    theme: {
+      control: 'inline-radio',
+      options: ['light', 'dark'],
+      defaultValue: { summary: 'light' },
+      description: 'Sets the theme of the accordion',
+    },
     outline: {
       control: 'select',
       description: 'Sets the outline of the accordion',
@@ -39,9 +47,15 @@ export default {
       options: ['left', 'right'],
     },
   },
+  parameters: {
+    backgrounds: {
+      default: 'light',
+    },
+    theme: 'light',
+  },
 } as Meta<AccordionProps>;
 
-const Template: Story<AccordionProps> = ({ outline, orientation }): TemplateResult => html`
+const Template: StoryFn<AccordionProps> = ({ outline, orientation }: AccordionProps): TemplateResult => html`
   <tds-accordion outline="${outline}" orientation="${orientation}">
     <tds-accordion-item expanded>
       <tds-accordion-header>

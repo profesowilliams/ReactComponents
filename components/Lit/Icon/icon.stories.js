@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { Icon } from './icon.js';
+import { Icon } from './Icon';
 
 export default {
   title: 'Components/Icon',

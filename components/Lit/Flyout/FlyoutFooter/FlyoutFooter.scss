@@ -1,0 +1,8 @@
+@use "sass:map";
+@import "../Flyout.scss";
+
+.offcanvas-footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}

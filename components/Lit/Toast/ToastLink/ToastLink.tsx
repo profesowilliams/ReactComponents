@@ -1,5 +1,6 @@
-// src/components/Lit/Toast/ToastLink/ToastLink.tsx
 import { LitElement, html, css, unsafeCSS } from "lit";
+import { property } from 'lit/decorators.js';
+import '../../Button/Button';
 import customStyles from "./ToastLink.scss?inline";
 
 export class ToastLink extends LitElement {
@@ -9,8 +10,23 @@ export class ToastLink extends LitElement {
     `;
   }
 
+  @property({ type: String }) url: string = '';
+  @property({ type: String }) target: string = '';
+
   render() {
-    return html` <a class="toast-link" href="" target=""><slot></slot></a> `;
+    return html`
+      <tds-button
+        type="link"
+        variant="link"
+        theme="light"
+        label="Button"
+        color="cobalt"
+        url="${this.url}"
+        target="${this.target}"
+      >
+        <slot></slot>
+      </tds-button>
+    `;
   }
 }
 

@@ -1,4 +1,5 @@
 import { LitElement, html, css, unsafeCSS, PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
 import customStyles from './Accordion.scss?inline';
 
 // Utility function to generate a random unique ID
@@ -14,32 +15,15 @@ export class Accordion extends LitElement {
     `;
   }
 
-  private _outline: string = '';
-  private _orientation: string = '';
+  @property({ type: String })
+  outline: string = '';
+
+  @property({ type: String })
+  orientation: string = '';
 
   constructor() {
     super();
     this.id = generateUniqueId(); // Generate and set a unique ID
-  }
-
-  get outline(): string {
-    return this._outline;
-  }
-
-  set outline(value: string) {
-    const oldValue = this._outline;
-    this._outline = value;
-    this.requestUpdate('outline', oldValue);
-  }
-
-  get orientation(): string {
-    return this._orientation;
-  }
-
-  set orientation(value: string) {
-    const oldValue = this._orientation;
-    this._orientation = value;
-    this.requestUpdate('orientation', oldValue);
   }
 
   firstUpdated() {
@@ -47,10 +31,7 @@ export class Accordion extends LitElement {
   }
 
   updated(changedProperties: PropertyValues) {
-    if (
-      changedProperties.has('outline') ||
-      changedProperties.has('orientation')
-    ) {
+    if (changedProperties.has('outline') || changedProperties.has('orientation')) {
       this._setItemAttributes();
     }
   }

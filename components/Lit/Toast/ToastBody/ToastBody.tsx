@@ -1,4 +1,4 @@
-// src/components/React/ToastBody/ToastBody.tsx
+// src/components/Lit/Toast/ToastBody/ToastBody.tsx
 import { LitElement, html, css, unsafeCSS } from "lit";
 import customStyles from "./ToastBody.scss?inline";
 

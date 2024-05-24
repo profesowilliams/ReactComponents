@@ -1,10 +1,10 @@
 import { html, TemplateResult } from 'lit';
-import { Button, ButtonProps } from './Button';
+import '.';
 
 interface ButtonArgs {
   theme: 'light' | 'dark';
   disabled: boolean;
-  color: 'dark-blue' | 'ocean-blue' | 'teal';
+  color: 'dark-blue' | 'ocean-blue' | 'teal' | 'cobalt';
   compact: boolean;
   variant: 'primary' | 'secondary' | 'filled' | 'tertiary' | 'link' | 'affirmative' | 'destructive';
   label?: string;
@@ -23,7 +23,7 @@ export default {
     layout: 'centered',
   },
   tags: ['docsPage'],
-  render: (args: ButtonArgs) => new Button(args),
+  render: (args: ButtonArgs) => renderButton(args),
   argTypes: {
     theme: {
       control: 'inline-radio',
@@ -34,7 +34,7 @@ export default {
     },
     color: {
       control: 'select',
-      options: ['dark-blue', 'ocean-blue', 'teal'],
+      options: ['dark-blue', 'ocean-blue', 'teal', 'cobalt'],
     },
     compact: {
       control: 'boolean',
@@ -66,7 +66,6 @@ export const Primary = {
   render: renderButton,
   args: {
     variant: 'primary',
-    theme: 'light',
     disabled: false,
     color: 'dark-blue',
     label: 'Primary',
@@ -116,16 +115,4 @@ export const Destructive = {
     variant: 'destructive',
     label: 'Destructive',
   },
-};
-
-export const TealPrimary = {
-  args: {
-    theme: 'light',
-    disabled: false,
-    compact: false,
-    variant: 'primary',
-    color: 'teal',
-    label: 'Button',
-  },
-  render: renderButton,
 };

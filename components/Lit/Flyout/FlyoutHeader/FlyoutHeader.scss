@@ -1,0 +1,21 @@
+@use "sass:map";
+@import "../Flyout.scss";
+
+:host .btn-close {
+  margin-right: 0;
+  margin-left: var(--bs-flyout-padding-x);
+}
+
+.offcanvas-header {
+  border: 0;
+  padding-bottom: 1rem;
+  color: var(--Charcoal, #262626);
+
+  /* H9 */
+  font-family: Arial;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 1.5rem */
+}
+

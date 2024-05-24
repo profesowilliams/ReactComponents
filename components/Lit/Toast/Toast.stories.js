@@ -39,8 +39,7 @@ export const Default = {
     <tds-toast variant="${args.variant}" placement="${args.placement}">
       <tds-toast-header> Here's some text </tds-toast-header>
       <tds-toast-body>
-        ${args.message}
-        <tds-toast-link href="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
+        <tds-toast-link url="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
       </tds-toast-body>
     </tds-toast>
   `,
@@ -61,8 +60,7 @@ export const Confirmation = {
       ${args.text}
     </tds-toast-header>
       <tds-toast-body>
-        ${args.message}
-        <tds-toast-link href="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
+        <tds-toast-link url="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
       </tds-toast-body>
     </tds-toast>
   `,
@@ -81,8 +79,7 @@ export const Alert = {
     <tds-toast variant="${args.variant}" placement="${args.placement}">
       <tds-toast-header>${args.text}</tds-toast-header>
       <tds-toast-body>
-        ${args.message}
-        <tds-toast-link href="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
+        <tds-toast-link url="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
       </tds-toast-body>
     </tds-toast>
   `,
@@ -101,8 +98,7 @@ export const Error = {
     <tds-toast variant="${args.variant}" placement="${args.placement}">
       <tds-toast-header>${args.text}</tds-toast-header>
       <tds-toast-body>
-        ${args.message}
-        <tds-toast-link href="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
+        <tds-toast-link url="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
       </tds-toast-body>
     </tds-toast>
   `,
@@ -121,8 +117,7 @@ export const Information = {
     <tds-toast variant="${args.variant}" placement="${args.placement}">
       <tds-toast-header>${args.text}</tds-toast-header>
       <tds-toast-body>
-        ${args.message}
-        <tds-toast-link href="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
+        <tds-toast-link url="${args.url}" target="${args.target}">${args.link}</tds-toast-link>
       </tds-toast-body>
     </tds-toast>
   `,
