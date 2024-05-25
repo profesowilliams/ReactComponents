@@ -1,6 +1,6 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
-import customStyles from './checkbox.scss?inline';
+import customStyles from './Checkbox.scss?inline';
 
 /**
  * `tds-checkbox` is a custom checkbox element with indeterminate state support.
