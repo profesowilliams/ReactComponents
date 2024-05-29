@@ -1,5 +1,5 @@
 import { html, TemplateResult } from 'lit';
-import '.';
+import './Accordion';
 import './AccordionItem';
 import './AccordionHeader';
 import './AccordionBody';

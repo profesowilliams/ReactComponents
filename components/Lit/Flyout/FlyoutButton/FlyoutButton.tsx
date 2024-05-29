@@ -27,26 +27,7 @@ export class FlyoutButton extends LitElement {
   @property({ attribute: false }) onClick = () => {};
 
   render() {
-    return html`
-      <tds-button
-        .primary=${this.primary}
-        .disabled=${this.disabled}
-        .type=${this.type}
-        .link=${this.link}
-        .variant=${this.variant}
-        .theme=${this.theme}
-        .minimal=${this.minimal}
-        .id=${this.id}
-        .name=${this.name}
-        .className=${this.className}
-        .label=${this.label}
-        .color=${this.color}
-        .size=${this.size}
-        .backgroundColor=${this.backgroundColor}
-        .onClick=${this._handleClick.bind(this)}
-        ><slot></slot
-      ></tds-button>
-    `;
+    return html` <tds-button .primary=${this.primary} .disabled=${this.disabled} .type=${this.type} .link=${this.link} .variant=${this.variant} .theme=${this.theme} .minimal=${this.minimal} .id=${this.id} .name=${this.name} .className=${this.className} .label=${this.label} .color=${this.color} .size=${this.size} .backgroundColor=${this.backgroundColor} .onClick=${this._handleClick.bind(this)}><slot></slot></tds-button> `;
   }
 
   firstUpdated(changedProperties: PropertyValues) {
@@ -66,9 +47,7 @@ export class FlyoutButton extends LitElement {
       const targetAttr = this.getAttribute('data-bs-target');
       if (targetAttr) {
         const targetId = targetAttr.substring(1);
-        const flyoutElement = document
-          .querySelector('tds-flyout')
-          ?.shadowRoot?.getElementById(targetId);
+        const flyoutElement = document.querySelector('tds-flyout')?.shadowRoot?.getElementById(targetId);
         if (flyoutElement) {
           flyoutElement.classList.add('show');
         }
@@ -81,17 +60,17 @@ export class FlyoutButton extends LitElement {
         if (flyoutElement.parentElement) {
           flyoutElement = flyoutElement.parentElement;
         } else if (flyoutElement.getRootNode() instanceof ShadowRoot) {
-          flyoutElement = (flyoutElement.getRootNode() as ShadowRoot)
-            .host as HTMLElement;
+          flyoutElement = (flyoutElement.getRootNode() as ShadowRoot).host as HTMLElement;
         } else {
           flyoutElement = null;
         }
       }
 
       if (flyoutElement) {
-        const flyoutContent = flyoutElement.shadowRoot?.querySelector('.offcanvas');
-        if (flyoutContent) {
-          flyoutContent.classList.remove('show');
+        const backdrop = document.querySelector('.offcanvas-backdrop');
+        if (backdrop) {
+          backdrop.classList.remove('show');
+          backdrop.remove();
         }
       }
     }

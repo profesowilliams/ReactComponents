@@ -1,12 +1,18 @@
 // src/stories/Toast.stories.tsx
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import { Toast, ToastHeader, ToastLink, ToastBody, ToastClose } from '.';
+import { Toast, ToastHeader, ToastLink, ToastBody } from '.';
 
 export default {
   title: 'Components/Toast',
   component: Toast,
-  parameters: {},
+  parameters: {
+    docs: {
+      story: {
+        height: '250px',
+      },
+    },
+  },
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -26,15 +32,16 @@ export default {
 } as Meta<typeof Toast>;
 
 type ToastProps = React.ComponentProps<typeof Toast> & {
-    text?: string;
-    variant?: string;
-    placement?: string;
+  text?: string;
+  variant?: string;
+  placement?: string;
+  url?: string;
 };
 const Template: StoryFn<ToastProps> = (args) => (
   <Toast {...args}>
     <ToastHeader>{args.message}</ToastHeader>
     <ToastBody>
-      <ToastLink href='{args.url'>{args.link}</ToastLink>
+      <ToastLink url="{args.url}">{args.link}</ToastLink>
     </ToastBody>
   </Toast>
 );

@@ -10,7 +10,7 @@ export class FlyoutFooter extends LitElement {
   }
 
   render() {
-    return html` <div class="offcanvas-footer"><slot></slot></div> `;
+    return html` <div class="offcanvas-footer flex d-flex"><slot></slot></div> `;
   }
 }
 

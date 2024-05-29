@@ -1,7 +1,15 @@
 import React from 'react';
+import { createComponent } from '@lit/react';
+import { Checkbox as LitCheckbox } from '../../Lit/Checkbox';
 
-const Checkbox: React.FC = () => {
-  return <div>Checkbox Component</div>;
-};
+// Create the React component
+const Checkbox = createComponent({
+  tagName: 'tds-checkbox',
+  elementClass: LitCheckbox,
+  react: React,
+  events: {
+    onDismiss: 'dismiss',
+  },
+});
 
-export default Checkbox;
+export { Checkbox };

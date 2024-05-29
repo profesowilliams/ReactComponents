@@ -2,7 +2,7 @@ export * from "./Accordion";
 export * from "./Button";
 // export * from "./Card";
 export * from "./Checkbox";
-export * from "./Close";
+// export * from "./Close";
 // export * from "./Dropdown";
 // export * from "./Flyout";
 // export * from "./Hero";

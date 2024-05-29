@@ -1,6 +1,6 @@
-import { LitElement, html, css, unsafeCSS } from "lit";
-import "../../Close";
-import customStyles from "./FlyoutClose.scss?inline";
+import { LitElement, html, css, unsafeCSS } from 'lit';
+import '../../Close';
+import customStyles from './FlyoutClose.scss?inline';
 
 export class FlyoutClose extends LitElement {
   static get styles() {
@@ -10,12 +10,7 @@ export class FlyoutClose extends LitElement {
   }
 
   render() {
-    return html`
-      <tds-close-button
-        data-bs-dismiss="offcanvas"
-        @click="${this._onClick}"
-      ></tds-close-button>
-    `;
+    return html` <tds-close-button data-bs-dismiss="offcanvas" @click="${this._onClick}"></tds-close-button> `;
   }
 
   private _onClose(event: CustomEvent) {
@@ -24,17 +19,13 @@ export class FlyoutClose extends LitElement {
   }
 
   private _onClick() {
-    if (
-      this.hasAttribute("data-bs-dismiss") &&
-      this.getAttribute("data-bs-dismiss") === "offcanvas"
-    ) {
+    if (this.hasAttribute('data-bs-dismiss') && this.getAttribute('data-bs-dismiss') === 'offcanvas') {
       let flyoutElement: HTMLElement | null = this;
-      while (flyoutElement && flyoutElement.tagName !== "TDS-FLYOUT") {
+      while (flyoutElement && flyoutElement.tagName !== 'TDS-FLYOUT') {
         if (flyoutElement.parentElement) {
           flyoutElement = flyoutElement.parentElement;
         } else if ((flyoutElement.getRootNode() as ShadowRoot).host) {
-          flyoutElement = (flyoutElement.getRootNode() as ShadowRoot)
-            .host as HTMLElement;
+          flyoutElement = (flyoutElement.getRootNode() as ShadowRoot).host as HTMLElement;
         } else {
           flyoutElement = null;
         }
@@ -42,16 +33,26 @@ export class FlyoutClose extends LitElement {
 
       if (flyoutElement) {
         if (flyoutElement.shadowRoot) {
-          const flyoutContent = flyoutElement.shadowRoot.querySelector(
-            ".offcanvas"
-          ) as HTMLElement;
+          const flyoutContent = flyoutElement.shadowRoot.querySelector('.offcanvas') as HTMLElement;
           if (flyoutContent) {
-            flyoutContent.classList.remove("show");
+            flyoutContent.classList.remove('show');
             this.dispatchEvent(
-              new CustomEvent("flyoutClosed", {
+              new CustomEvent('flyoutClosed', {
                 detail: { flyout: flyoutContent },
               })
             );
+
+            // Remove the backdrop attribute
+            if (flyoutElement.hasAttribute('data-bs-backdrop')) {
+              flyoutElement.removeAttribute('data-bs-backdrop');
+            }
+
+            // Additional logic to hide or remove the backdrop element if necessary
+            const backdrop = document.querySelector('.offcanvas-backdrop');
+            if (backdrop) {
+              backdrop.classList.remove('show');
+              backdrop.remove();
+            }
           }
         }
       }
@@ -59,4 +60,4 @@ export class FlyoutClose extends LitElement {
   }
 }
 
-customElements.define("tds-flyout-close", FlyoutClose);
+customElements.define('tds-flyout-close', FlyoutClose);

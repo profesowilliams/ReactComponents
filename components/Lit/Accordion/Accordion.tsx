@@ -15,16 +15,9 @@ export class Accordion extends LitElement {
     `;
   }
 
-  @property({ type: String })
-  outline: string = '';
-
-  @property({ type: String })
-  orientation: string = '';
-
-  constructor() {
-    super();
-    this.id = generateUniqueId(); // Generate and set a unique ID
-  }
+  @property({ type: String }) outline: string = '';
+  @property({ type: String }) orientation: string = '';
+  @property({ type: String }) id: string = generateUniqueId();
 
   firstUpdated() {
     this._setItemAttributes();

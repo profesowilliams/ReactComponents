@@ -3,16 +3,7 @@ import { property } from 'lit/decorators.js';
 import customStyles from './Toast.scss?inline';
 
 // Define the type for the placement property
-type ToastPlacement =
-  | 'top-left'
-  | 'top-center'
-  | 'top-right'
-  | 'middle-left'
-  | 'middle-center'
-  | 'middle-right'
-  | 'bottom-left'
-  | 'bottom-center'
-  | 'bottom-right';
+type ToastPlacement = 'top-left' | 'top-center' | 'top-right' | 'middle-left' | 'middle-center' | 'middle-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 
 export class Toast extends LitElement {
   static get styles() {
@@ -54,21 +45,13 @@ export class Toast extends LitElement {
   }
 
   shouldUpdate(changedProperties: Map<string | number | symbol, unknown>) {
-    return ['variant', 'placement', 'message', 'link', 'url', 'target'].some(
-      (prop) => changedProperties.has(prop)
-    );
+    return ['variant', 'placement', 'message', 'link', 'url', 'target'].some((prop) => changedProperties.has(prop));
   }
 
   render() {
     return html`
       <div class="toast-container ${this.getPlacementClasses()} p-3">
-        <div
-          class="fade toast show"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-          data-bs-state="${this.variant}"
-        >
+        <div class="fade toast show" role="alert" aria-live="assertive" aria-atomic="true" data-bs-state="${this.variant}">
           <slot>${this.message}</slot>
         </div>
       </div>

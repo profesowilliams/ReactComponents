@@ -1,8 +1,8 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 import { Notification as LitNotification } from "../../Lit/Notification";
-import { NotificationLink as LitNotificationLink } from "../../Lit/Notification/NotificationLink";
-import "../../Lit/Close/Close";
+import { NotificationLink as LitNotificationLink } from '../../Lit/Notification/NotificationLink';
+import { NotificationClose as LitNotificationClose } from '../../Lit/Notification/NotificationClose';
 
 // Create the React component
 const Notification = createComponent({
@@ -16,12 +16,16 @@ const Notification = createComponent({
 
 // Create the React component
 const NotificationLink = createComponent({
-  tagName: "tds-notification",
+  tagName: "tds-notification-link",
   elementClass: LitNotificationLink,
   react: React,
-  events: {
-    onDismiss: "dismiss",
-  },
 });
 
-export { Notification, NotificationLink };
+// Create the React component
+const NotificationClose = createComponent({
+  tagName: "tds-notification-close",
+  elementClass: LitNotificationClose,
+  react: React,
+});
+
+export { Notification, NotificationLink, NotificationClose };

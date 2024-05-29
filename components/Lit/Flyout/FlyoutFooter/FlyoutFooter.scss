@@ -4,5 +4,13 @@
 .offcanvas-footer {
     bottom: 0;
     position: absolute;
-    width: 100%;
+    width: var(--bs-offcanvas-footer-width, calc(100% - 32px));
+    gap: var(--bs-offcanvas-footer-gap, '');
+    justify-content: var(--bs-offcanvas-align-content, 'left');
+    padding: var(--bs-offcanvas-paddding, 1rem);
+    border-top: 1px solid var(--bs-offcanvas-border-color, rgba(0, 0, 0, 0.125));
+
+    tds-flyout-button {
+        width: 50%;
+    }
 }

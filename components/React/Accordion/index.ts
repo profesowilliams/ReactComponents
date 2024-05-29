@@ -1,2 +1,2 @@
 // src/components/React/Accordion/index.ts
-export { Accordion } from "./Accordion";
+export { Accordion, AccordionBody, AccordionButton, AccordionHeader, AccordionItem } from "./Accordion";

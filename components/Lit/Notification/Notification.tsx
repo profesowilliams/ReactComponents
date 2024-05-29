@@ -44,20 +44,6 @@ export class Notification extends LitElement {
           : ""}"
       >
         <slot></slot>
-        ${this.url
-          ? html`
-              <tds-button
-                type="link"
-                variant="link"
-                theme="light"
-                label="Button"
-                color="teal"
-                url="${this.url}"
-              >
-                ${this.link}
-              </tds-button>
-            `
-      : ""}
       </div>
     `;
   }
