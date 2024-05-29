@@ -1,5 +1,5 @@
-import { LitElement, html, css, property } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 // Class definition for the custom web component "tds-icon"
 @customElement('tds-icon')
