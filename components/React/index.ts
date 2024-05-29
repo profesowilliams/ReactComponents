@@ -9,7 +9,7 @@ export * from "./Checkbox";
 // export * from "./Icon";
 // export * from "./Logo";
 // export * from "./Masthead";
-export * from "./Modal";
+// export * from "./Modal";
 export * from "./Notification";
 export * from "./Radio";
 // export * from "./Slider";
