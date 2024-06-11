@@ -7,6 +7,16 @@ import './FlyoutButton';
 import './FlyoutClose';
 import './FlyoutFooter';
 
+import '../Modal';
+import '../Modal/ModalHeader';
+import '../Modal/ModalTitle';
+import '../Modal/ModalBody';
+import '../Modal/ModalFooter';
+import '../Modal/ModalButton';
+import '../Modal/ModalClose';
+
+import '../Input';
+
 interface FlyoutArgs {
   show: boolean;
   size: 'sm' | 'md' | 'lg' | 'xl';
@@ -44,6 +54,33 @@ const renderTwoButtonFlyout = (args: FlyoutArgs): TemplateResult => html`
       <tds-flyout-button type="button" variant="tertiary" theme="light" label="Button" color="teal" data-bs-dismiss="flyout">Close</tds-flyout-button>
       <tds-flyout-button type="button" variant="primary" theme="light" label="Button" color="teal">Save</tds-flyout-button>
     </tds-flyout-footer>
+  </tds-flyout>
+`;
+
+const renderModalFlyout = (args: FlyoutArgs): TemplateResult => html`
+  <tds-flyout ?show=${args.show} size=${args.size} placement=${args.placement} id="offcanvas" aria-labelledby="offcanvasLabel" .scrollable="${args.scrollable}">
+    <tds-flyout-header>
+      <tds-flyout-title>Offcanvas</tds-flyout-title>
+    </tds-flyout-header>
+    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any Bootstrap component or custom elements here. </tds-flyout-body>
+    <tds-flyout-footer>
+      <tds-flyout-button type="button" variant="tertiary" theme="light" label="Button" color="teal" data-bs-dismiss="flyout">Close</tds-flyout-button>
+      <tds-flyout-button type="button" variant="primary" theme="light" label="Button" color="teal">Save</tds-flyout-button>
+    </tds-flyout-footer>
+
+    <tds-modal show fade size="xl" placement="inline">
+      <tds-modal-header>
+        <tds-modal-title>Test</tds-modal-title>
+      </tds-modal-header>
+      <tds-modal-body>
+        To complete placing your order for <strong>Avenir Global Cherry Advertising LTD</strong> please provide the following information.
+        <tds-input type="text" placeholder="Purchase order number" label="Purchase order number" class="pt-2"></tds-input>
+      </tds-modal-body>
+      <tds-modal-footer>
+        <tds-modal-button type="button" variant="tertiary" theme="light" label="Button" color="dark-blue" data-bs-dismiss="modal">Close</tds-modal-button>
+        <tds-modal-button type="button" variant="primary" theme="light" label="Button" color="dark-blue">Save</tds-modal-button>
+      </tds-modal-footer>
+    </tds-modal>
   </tds-flyout>
 `;
 
@@ -142,4 +179,13 @@ export const TwoButtonEnd = {
     placement: 'end',
   },
   render: (args: FlyoutArgs) => renderTwoButtonFlyout(args),
+};
+
+export const FlyoutWithModal = {
+  args: {
+    show: true,
+    placement: 'end',
+    size: 'lg',
+  },
+  render: (args: FlyoutArgs) => renderModalFlyout(args),
 };

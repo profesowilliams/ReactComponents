@@ -1,3 +1,4 @@
+// src/components/Lit/ModalButton.tsx
 import { LitElement, html, css, unsafeCSS, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 import '../../Button';
@@ -27,26 +28,7 @@ export class ModalButton extends LitElement {
   @property({ attribute: false }) onClick = () => {};
 
   render() {
-    return html`
-      <tds-button
-        .primary=${this.primary}
-        .disabled=${this.disabled}
-        .type=${this.type}
-        .link=${this.link}
-        .variant=${this.variant}
-        .theme=${this.theme}
-        .minimal=${this.minimal}
-        .id=${this.id}
-        .name=${this.name}
-        .className=${this.className}
-        .label=${this.label}
-        .color=${this.color}
-        .size=${this.size}
-        .backgroundColor=${this.backgroundColor}
-        .onClick=${this._handleClick.bind(this)}
-        ><slot></slot
-      ></tds-button>
-    `;
+    return html` <tds-button .primary=${this.primary} .disabled=${this.disabled} .type=${this.type} .link=${this.link} .variant=${this.variant} .theme=${this.theme} .minimal=${this.minimal} .id=${this.id} .name=${this.name} .className=${this.className} .label=${this.label} .color=${this.color} .size=${this.size} .backgroundColor=${this.backgroundColor} .onClick=${this._handleClick.bind(this)}><slot></slot></tds-button> `;
   }
 
   firstUpdated(changedProperties: PropertyValues) {
@@ -66,9 +48,7 @@ export class ModalButton extends LitElement {
       const targetAttr = this.getAttribute('data-bs-target');
       if (targetAttr) {
         const targetId = targetAttr.substring(1);
-        const modalElement = document
-          .querySelector('tds-modal')
-          ?.shadowRoot?.getElementById(targetId);
+        const modalElement = document.querySelector('tds-modal')?.shadowRoot?.getElementById(targetId);
         if (modalElement) {
           modalElement.classList.add('show');
         }
@@ -81,17 +61,16 @@ export class ModalButton extends LitElement {
         if (modalElement.parentElement) {
           modalElement = modalElement.parentElement;
         } else if (modalElement.getRootNode() instanceof ShadowRoot) {
-          modalElement = (modalElement.getRootNode() as ShadowRoot)
-            .host as HTMLElement;
+          modalElement = (modalElement.getRootNode() as ShadowRoot).host as HTMLElement;
         } else {
           modalElement = null;
         }
       }
 
       if (modalElement) {
-        const modalContent = modalElement.shadowRoot?.querySelector('.modal');
-        if (modalContent) {
-          modalContent.classList.remove('show');
+        const modalInstance = modalElement as any;
+        if (modalInstance.closeModal) {
+          modalInstance.closeModal();
         }
       }
     }

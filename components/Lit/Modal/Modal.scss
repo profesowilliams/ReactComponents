@@ -73,6 +73,18 @@ tds-button {
   --bs-modal-width: 56rem;
 }
 
+.modal-xl {
+  --bs-modal-width: 70.5rem;
+}
+
+.modal-dialog-inline {
+  width: min(95vw, 70.5rem) !important;
+
+  @include media-breakpoint-between(xs, sm) {
+    width: min(95vw, 22.5rem) !important;
+  }
+}
+
 @include media-breakpoint-between(xs, sm) {
   .modal-md .modal-dialog-centered {
     display: flex;
