@@ -1,11 +1,30 @@
-// src/stories/Toast.stories.tsx
+// src/components/ToastStories.tsx
 import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { Toast, ToastHeader, ToastLink, ToastBody } from '.';
+
+interface ToastProps {
+  text?: string;
+  variant: 'default' | 'information' | 'confirmation' | 'alert' | 'error';
+  placement: 'middle-center';
+  message: string;
+  link: string;
+  url: string;
+  target?: string;
+}
+
+const ToastComponent: React.FC<ToastProps> = ({ variant, message, link, url, placement }) => (
+  <Toast variant={variant} placement={placement}>
+    <ToastHeader>{message}</ToastHeader>
+    <ToastBody>
+      <ToastLink url={url}>{link}</ToastLink>
+    </ToastBody>
+  </Toast>
+);
 
 export default {
   title: 'Components/Toast',
-  component: Toast,
+  component: ToastComponent,
   parameters: {
     docs: {
       story: {
@@ -13,89 +32,95 @@ export default {
       },
     },
   },
-  tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'select',
       options: ['default', 'information', 'confirmation', 'alert', 'error'],
+      description: 'Variant of the toast.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'default' },
+      },
+    },
+    message: {
+      control: 'text',
+      description: 'Message to be displayed in the toast.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'This is a default toast' },
+      },
+    },
+    link: {
+      control: 'text',
+      description: 'Link text to be displayed in the toast.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'Action link' },
+      },
+    },
+    url: {
+      control: 'text',
+      description: 'URL for the link.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'https://www.google.com' },
+      },
     },
   },
   args: {
-    id: 'default-toast',
     variant: 'default',
+    message: 'This is a default toast',
     link: 'Action link',
     url: 'https://www.google.com',
-    target: '_blank',
-    placement: 'middle-center',
-    message: '',
   },
-} as Meta<typeof Toast>;
+} as Meta<typeof ToastComponent>;
 
-type ToastProps = React.ComponentProps<typeof Toast> & {
-  text?: string;
-  variant?: string;
-  placement?: string;
-  url?: string;
-};
-const Template: StoryFn<ToastProps> = (args) => (
-  <Toast {...args}>
-    <ToastHeader>{args.message}</ToastHeader>
-    <ToastBody>
-      <ToastLink url="{args.url}">{args.link}</ToastLink>
-    </ToastBody>
-  </Toast>
-);
-
-export const Default = Template.bind({});
-Default.args = {
-  id: 'default-toast',
-  type: 'toast',
-  variant: 'default',
-  size: 'medium',
-  placement: 'middle-center',
-  message: 'This is a default toast',
+export const Default = {
+  args: {
+    variant: 'default',
+    message: 'This is a default toast',
+    link: 'Action link',
+    url: 'https://www.google.com',
+  },
+  render: (args: ToastProps) => <ToastComponent {...args} />,
 };
 
-export const Confirmation = Template.bind({});
-Confirmation.args = {
-  id: 'confirmation-toast',
-  variant: 'confirmation',
-  link: 'Action link',
-  url: 'https://www.google.com',
-  target: '_blank',
-  placement: 'middle-center',
-  message: 'Confirmation/complete message',
+export const Confirmation = {
+  args: {
+    variant: 'confirmation',
+    message: 'Confirmation/complete message',
+    link: 'Action link',
+    url: 'https://www.google.com',
+  },
+  render: (args: ToastProps) => <ToastComponent {...args} />,
 };
 
-export const Alert = Template.bind({});
-Alert.args = {
-  id: 'alert-toast',
-  variant: 'alert',
-  link: 'Action link',
-  url: 'https://www.google.com',
-  target: '_blank',
-  placement: 'middle-center',
-  message: 'Alert message',
+export const Alert = {
+  args: {
+    variant: 'alert',
+    message: 'Alert message',
+    link: 'Action link',
+    url: 'https://www.google.com',
+  },
+  render: (args: ToastProps) => <ToastComponent {...args} />,
 };
 
-export const Information = Template.bind({});
-Information.args = {
-  id: 'information-toast',
-  variant: 'information',
-  link: 'Action link',
-  url: 'https://www.google.com',
-  target: '_blank',
-  placement: 'middle-center',
-  message: 'Information message',
+export const Information = {
+  args: {
+    variant: 'information',
+    message: 'Information message',
+    link: 'Action link',
+    url: 'https://www.google.com',
+  },
+  render: (args: ToastProps) => <ToastComponent {...args} />,
 };
 
-export const Error = Template.bind({});
-Error.args = {
-  id: 'error-toast',
-  variant: 'error',
-  link: 'Action link',
-  url: 'https://www.google.com',
-  target: '_blank',
-  placement: 'middle-center',
-  message: 'Attention needed/warning message',
+export const Error = {
+  args: {
+    variant: 'error',
+    message: 'Attention needed/warning message',
+    link: 'Action link',
+    url: 'https://www.google.com',
+  },
+  render: (args: ToastProps) => <ToastComponent {...args} />,
 };
