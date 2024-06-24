@@ -29,7 +29,7 @@ const renderFlyout = (args: FlyoutArgs): TemplateResult => html`
     <tds-flyout-header>
       <tds-flyout-title>Offcanvas</tds-flyout-title>
     </tds-flyout-header>
-    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any Bootstrap component or custom elements here. </tds-flyout-body>
+    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any component or custom elements here. </tds-flyout-body>
   </tds-flyout>
 `;
 
@@ -38,7 +38,7 @@ const renderOneButtonFlyout = (args: FlyoutArgs): TemplateResult => html`
     <tds-flyout-header>
       <tds-flyout-title>Offcanvas</tds-flyout-title>
     </tds-flyout-header>
-    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any Bootstrap component or custom elements here. </tds-flyout-body>
+    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any component or custom elements here. </tds-flyout-body>
     <tds-flyout-footer>
       <tds-flyout-button type="button" variant="primary" theme="light" label="Button" color="teal" data-bs-dismiss="flyout">Close</tds-flyout-button>
     </tds-flyout-footer>
@@ -49,7 +49,7 @@ const renderTwoButtonFlyout = (args: FlyoutArgs): TemplateResult => html`
     <tds-flyout-header>
       <tds-flyout-title>Offcanvas</tds-flyout-title>
     </tds-flyout-header>
-    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any Bootstrap component or custom elements here. </tds-flyout-body>
+    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any component or custom elements here. </tds-flyout-body>
     <tds-flyout-footer>
       <tds-flyout-button type="button" variant="tertiary" theme="light" label="Button" color="teal" data-bs-dismiss="flyout">Close</tds-flyout-button>
       <tds-flyout-button type="button" variant="primary" theme="light" label="Button" color="teal">Save</tds-flyout-button>
@@ -62,7 +62,7 @@ const renderModalFlyout = (args: FlyoutArgs): TemplateResult => html`
     <tds-flyout-header>
       <tds-flyout-title>Offcanvas</tds-flyout-title>
     </tds-flyout-header>
-    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any Bootstrap component or custom elements here. </tds-flyout-body>
+    <tds-flyout-body> Content for the offcanvas goes here. You can place just about any component or custom elements here. </tds-flyout-body>
     <tds-flyout-footer>
       <tds-flyout-button type="button" variant="tertiary" theme="light" label="Button" color="teal" data-bs-dismiss="flyout">Close</tds-flyout-button>
       <tds-flyout-button type="button" variant="primary" theme="light" label="Button" color="teal">Save</tds-flyout-button>

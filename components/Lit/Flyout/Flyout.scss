@@ -1,22 +1,35 @@
 @use 'sass:map';
 @use '../../../scss/abstracts/' as *;
+
 @import 'bootstrap/scss/offcanvas';
 
-:host(tds-flyout.offcanvas-backdrop)  {
-  background-color: rgba(38, 38, 38, 0.2)!important;
+:host(tds-flyout.offcanvas-backdrop) {
+  background-color: rgba(38, 38, 38, 0.2) !important;
 }
 
 .offcanvas {
-  background-color: white !important;
-  box-shadow: var(--bs-offcanvas-box-shadow, 8px 0px 10px -4px rgba(0, 0, 0, 0.25));
+  height: var(--bs-offcanvas-height);
+  position: fixed;
+  z-index: var(--bs-offcanvas-zindex);
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  color: var(--bs-offcanvas-color);
+  background-color: var(--bs-offcanvas-bg) !important;
+  background-clip: padding-box;
+  outline: 0;
+  visibility: hidden;
+  width: var(--bs-offcanvas-width);
+  border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+  box-shadow: var(--bs-offcanvas-box-shadow);
 
   &-xl {
-    --bs-offcanvas-width: min(95vw, 1140px);
+    --bs-offcanvas-width: min(95vw, 70.5rem);
     --bs-btn-d-flex: 0;
     --bs-offcanvas-footer-gap: 1.5rem;
   }
   &-lg {
-    --bs-offcanvas-width: min(95vw, 70.5rem);
+    --bs-offcanvas-width: min(95vw, 59.25rem);
     --bs-btn-d-flex: 0;
     --bs-offcanvas-footer-gap: 1.5rem;
   }
@@ -27,18 +40,39 @@
   }
 
   &-sm {
-    --bs-offcanvas-width: min(95vw, 22.5rem);
+    --bs-offcanvas-width: min(95vw, 22.5rem) !important;
     --bs-btn-width: 100%;
-    --bs-offcanvas-paddding: 0!important;
+    --bs-offcanvas-paddding: 0 !important;
     --bs-offcanvas-footer-width: 100%;
+    --bs-offcanvas-footer-display: flex;
   }
 
   &-end {
-    --bs-offcanvas-align-content: right;
+    --bs-offcanvas-height: 100vh;
     --bs-offcanvas-position-right: 0rem;
     --bs-offcanvas-paddding: 1rem;
     --bs-offcanvas-box-shadow: -8px 0px 10px -4px rgba(0, 0, 0, 0.25);
     --bs-btn-border-radius: 0;
+    --bs-offcanvas-text-align: right;
+
+    right: var(--bs-offcanvas-width);
+    width: var(--bs-offcanvas-width);
+    border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+    transform: translateX(100%);
+
+  }
+
+    &-start {
+    --bs-offcanvas-height: 100vh;
+    --bs-offcanvas-align-content: left;
+    --bs-offcanvas-position-right: 0rem;
+    --bs-offcanvas-paddding: 1rem;
+    --bs-offcanvas-box-shadow: -8px 0px 10px -4px rgba(0, 0, 0, 0.25);
+    --bs-btn-border-radius: 0;
+  }
+
+  &.show {
+    visibility: visible;
   }
 
   @include media-breakpoint-down(sm) {
