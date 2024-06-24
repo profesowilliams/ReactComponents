@@ -1,63 +1,89 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { PropertyValues } from 'lit';
 
-// Class definition for the custom web component "tds-icon"
-@customElement('tds-icon')
 export class Icon extends LitElement {
-  // Define properties for the component
-  @property({ type: String }) path: string = ''; // path of the icon
-  @property({ type: String }) size: string = '24'; // size of the icon
-  @property({ type: String }) viewbox: string = '0 0 24 24'; // viewbox of the svg
-  @property({ type: String }) flip: string = ''; // flip of the icon
-  @property({ type: String }) rotate: string = ''; // rotation of the icon
-  @property({ type: String }) src: string = ''; // source of the icon
-  @property({ type: String }) width: string = ''; // width of the icon
-  @property({ type: String }) height: string = ''; // height of the icon
+  @property({ type: String }) name = '';
+  @property({ type: String }) state = '';
+  @property({ type: String }) size = '24';
+  @property({ type: String }) viewbox = '0 0 24 24';
+  @property({ type: String }) flip = '';
+  @property({ type: String }) rotate = '';
+  @property({ type: String }) width = '';
+  @property({ type: String }) height = '';
+  @property({ type: String }) svgContent = '';
 
-  private icon: string = ''; // default icon
-
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' }); // attach shadow DOM
-  }
-
-  // method that runs when component is first connected to the DOM
-  async connectedCallback() {
-    super.connectedCallback();
-    if (this.src) {
-      const response = await fetch(this.src);
-      const text = await response.text();
-      this.icon = text; // fetch text from src and assign to icon
-    }
-  }
-
-  // css styles for the component
   static styles = css`
     :host {
       display: inline-block;
-      vertical-align: middle;
-      justify-content: center;
-      color: var(--tds-icon-color, #000);
-      pointer-events: none;
-      padding: 0 5px;
     }
-
-    svg {
+    .icon-container {
       display: inline-block;
-      height: var(--icon-height, 24px);
       width: var(--icon-width, 24px);
+      height: var(--icon-height, 24px);
+      transform: var(--icon-transform);
+    }
+    svg {
+      width: 100%;
+      height: 100%;
     }
   `;
 
-  // render method for the component
+  get iconPath() {
+    const server = window.location.origin;
+    return `${server}/content/dam/global-shared/icons/${this.state}/${this.name}.svg`;
+  }
+
+  get computedTransform() {
+    const transforms = [];
+    if (this.flip === 'horizontal') transforms.push('scaleX(-1)');
+    if (this.flip === 'vertical') transforms.push('scaleY(-1)');
+    if (this.rotate) transforms.push(`rotate(${this.rotate}deg)`);
+    return transforms.join(' ');
+  }
+
+  async loadSVG() {
+    try {
+      const response = await fetch(this.iconPath);
+      if (response.ok) {
+        let svgText = await response.text();
+
+        // Create a temporary container to manipulate the SVG
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = svgText;
+
+        const svgElement = tempContainer.querySelector('svg');
+        if (svgElement) {
+          svgElement.setAttribute('width', this.width || this.size);
+          svgElement.setAttribute('height', this.height || this.size);
+          svgElement.setAttribute('viewBox', this.viewbox);
+        }
+
+        this.svgContent = tempContainer.innerHTML;
+      } else {
+        console.error('SVG not found:', this.iconPath);
+        this.svgContent = '';
+      }
+      this.requestUpdate();
+    } catch (error) {
+      console.error('Error fetching SVG:', error);
+      this.svgContent = '';
+    }
+  }
+
+  updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('name') || changedProperties.has('state')) {
+      this.loadSVG();
+    }
+  }
+
   render() {
-    return html`${this.icon}`;
+    const width = this.width || this.size;
+    const height = this.height || this.size;
+
+    return html` <div class="icon-container" style="--icon-width: ${width}px; --icon-height: ${height}px; --icon-transform: ${this.computedTransform};">${unsafeSVG(this.svgContent)}</div> `;
   }
 }
 
-// register the component with the name "tds-icon"
-declare global {
-  interface HTMLElementTagNameMap {
-    'tds-icon': Icon;
-  }
-}
+customElements.define('tds-icon', Icon);
