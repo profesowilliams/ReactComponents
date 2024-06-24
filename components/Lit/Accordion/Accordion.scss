@@ -1,20 +1,17 @@
 @use 'sass:map';
 @use '../../../scss/abstracts/' as *;
+
 @import 'bootstrap/scss/accordion';
 
 .accordion {
   --bs-border-radius: 0.25rem;
   --bs-accordion-color: var(--bs-body-color);
   --bs-accordion-bg: var(--bs-body-bg);
-  --bs-accordion-transition: color 0.15s ease-in-out,
-    background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+  --bs-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
   --bs-accordion-border-color: var(--Cool-Gray-1, #d9d8d7);
   --bs-accordion-border-width: var(--bs-border-width);
   --bs-accordion-border-radius: var(--bs-border-radius);
-  --bs-accordion-inner-border-radius: calc(
-    var(--bs-border-radius) - (var(--bs-border-width))
-  );
+  --bs-accordion-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width)));
   --bs-accordion-btn-padding-x: 0.62rem;
   --bs-accordion-btn-padding-y: 1rem;
   --bs-accordion-btn-color: var(--bs-body-color);
@@ -64,8 +61,7 @@
   &:host-context([data-bs-variation='top']) {
     .accordion-item {
       border-radius: 0;
-      border-top: var(--bs-accordion-border-width) solid
-        var(--bs-accordion-border-color);
+      border-top: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
       border-bottom: none;
       border-right: none;
       border-left: none;
@@ -83,8 +79,7 @@
   &:host-context([data-bs-variation='bottom']) {
     .accordion-item {
       border-radius: 0;
-      border-bottom: var(--bs-accordion-border-width) solid
-        var(--bs-accordion-border-color);
+      border-bottom: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
       border-top: none;
       border-right: none;
       border-left: none;
@@ -102,8 +97,7 @@
   &:host-context([data-bs-variation='topbottom']) {
     .accordion-item {
       border-radius: 0;
-      border: var(--bs-accordion-border-width) solid
-        var(--bs-accordion-border-color);
+      border: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
       border-right: none;
       border-left: none;
     }
@@ -119,8 +113,7 @@
 
   &:host-context([data-bs-variation='full']) {
     .accordion-item {
-      border: var(--bs-accordion-border-width) solid
-        var(--bs-accordion-border-color);
+      border: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
       border-bottom-right-radius: var(--bs-accordion-inner-border-radius);
       border-bottom-left-radius: var(--bs-accordion-inner-border-radius);
       border-top-left-radius: var(--bs-accordion-inner-border-radius);
@@ -178,4 +171,3 @@
     }
   }
 }
-

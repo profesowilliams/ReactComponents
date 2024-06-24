@@ -15,7 +15,7 @@ interface AccordionProps {
 export default {
   title: 'Components/Accordion',
   component: 'tds-accordion',
-  tags: ['autodocs'],
+  // tags: ['autodocs'],
   args: {
     theme: 'light',
     outline: 'top',
