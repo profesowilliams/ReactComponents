@@ -1,63 +1,74 @@
-import { LitElement, html, css, property } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { LitElement, html, css, PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
-// Class definition for the custom web component "tds-logo"
-@customElement('tds-logo')
 export class Logo extends LitElement {
-  // Define properties for the component
-  @property({ type: String }) path: string = ''; // path of the logo
-  @property({ type: String }) size: string = '24'; // size of the logo
-  @property({ type: String }) viewbox: string = '0 0 24 24'; // viewbox of the svg
-  @property({ type: String }) flip: string = ''; // flip of the logo
-  @property({ type: String }) rotate: string = ''; // rotation of the logo
-  @property({ type: String }) src: string = ''; // source of the logo
-  @property({ type: String }) width: string = ''; // width of the logo
-  @property({ type: String }) height: string = ''; // height of the logo
+  @property({ type: String }) name = '';
+  @property({ type: String }) state = '';
+  @property({ type: String }) width = '';
+  @property({ type: String }) height = '';
+  @property({ type: String }) svgContent = '';
 
-  private logo: string = ''; // default logo
-
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' }); // attach shadow DOM
-  }
-
-  // method that runs when component is first connected to the DOM
-  async connectedCallback() {
-    super.connectedCallback();
-    if (this.src) {
-      const response = await fetch(this.src);
-      const text = await response.text();
-      this.logo = text; // fetch text from src and assign to logo
-    }
-  }
-
-  // css styles for the component
   static styles = css`
     :host {
       display: inline-block;
-      vertical-align: middle;
-      justify-content: center;
-      color: var(--tds-logo-color, #000);
-      pointer-events: none;
-      padding: 0 5px;
     }
-
-    svg {
+    .icon-container {
       display: inline-block;
-      height: var(--logo-height, 24px);
-      width: var(--logo-width, 24px);
+      width: var(--icon-width, auto);
+      height: var(--icon-height, auto);
+    }
+    svg {
+      width: 100%;
+      height: 100%;
     }
   `;
 
-  // render method for the component
+  get iconPath() {
+    const server = window.location.origin;
+    return `${server}/content/dam/global-shared/logos/${this.state}/${this.name}.svg`;
+  }
+
+  async loadSVG() {
+    try {
+      const response = await fetch(this.iconPath);
+      if (response.ok) {
+        let svgText = await response.text();
+
+        // Create a temporary container to manipulate the SVG
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = svgText;
+
+        const svgElement = tempContainer.querySelector('svg');
+        if (svgElement) {
+          if (this.width) svgElement.setAttribute('width', this.width);
+          if (this.height) svgElement.setAttribute('height', this.height);
+        }
+
+        this.svgContent = tempContainer.innerHTML;
+      } else {
+        console.error('SVG not found:', this.iconPath);
+        this.svgContent = '';
+      }
+      this.requestUpdate();
+    } catch (error) {
+      console.error('Error fetching SVG:', error);
+      this.svgContent = '';
+    }
+  }
+
+  updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('name') || changedProperties.has('state')) {
+      this.loadSVG();
+    }
+  }
+
   render() {
-    return html`${this.logo}`;
+    const width = this.width || 'auto';
+    const height = this.height || 'auto';
+
+    return html` <div class="icon-container" style="--icon-width: ${width}; --icon-height: ${height};">${unsafeSVG(this.svgContent)}</div> `;
   }
 }
 
-// register the component with the name "tds-logo"
-declare global {
-  interface HTMLElementTagNameMap {
-    'tds-logo': Logo;
-  }
-}
+customElements.define('tds-logo', Logo);
