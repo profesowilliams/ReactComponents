@@ -1,4 +1,4 @@
-import { LitElement, html, css, unsafeCSS } from 'lit';
+import { LitElement, html, css, unsafeCSS, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 import customStyles from './Toast.scss?inline';
 
@@ -6,23 +6,29 @@ import customStyles from './Toast.scss?inline';
 type ToastPlacement = 'top-left' | 'top-center' | 'top-right' | 'middle-left' | 'middle-center' | 'middle-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 
 export class Toast extends LitElement {
+  @property({ type: String }) id: string = '';
+  @property({ type: String }) type: string = 'toast'; // 'banner' or 'toast'
+  @property({ type: String, reflect: true }) variant: 'default' | 'information' | 'confirmation' | 'alert' | 'error' = 'default';
+  @property({ type: String }) size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ type: String }) link: string = ''; // link to open when action link is clicked
+  @property({ type: String }) url: string = ''; // url to open when action link is clicked
+  @property({ type: String }) target: string = '_self'; // target for the action link
+  @property({ type: String }) message: string = ''; // message to display
+  @property({ type: String, reflect: true }) placement: ToastPlacement = 'middle-center'; // default placement
+
   static get styles() {
     return css`
       ${unsafeCSS(customStyles)}
     `;
   }
 
-  @property({ type: String }) id: string = '';
-  @property({ type: String }) type: string = ''; // 'banner' or 'toast'
-  @property({ type: String }) variant: string = ''; // 'success', 'error', 'warning', 'info'
-  @property({ type: String }) size: string = ''; // 'small', 'medium', 'large'
-  @property({ type: String }) link: string = ''; // link to open when action link is clicked
-  @property({ type: String }) url: string = ''; // url to open when action link is clicked
-  @property({ type: String }) target: string = '_self'; // target for the action link
-  @property({ type: String }) message: string = ''; // message to display
+  constructor() {
+    super();
+  }
 
-  // Use the defined type for the placement property
-  @property({ type: String }) placement: ToastPlacement = 'middle-center'; // default placement
+  updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+  }
 
   static position: Record<ToastPlacement, string> = {
     'top-left': 'top-0 start-0',
@@ -61,3 +67,9 @@ export class Toast extends LitElement {
 
 export const placementOptions = Toast.placementOptions;
 customElements.define('tds-toast', Toast);
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'tds-toast': Toast;
+  }
+}

@@ -1,11 +1,6 @@
 @use "sass:map";
 @import "../Toast.scss";
 
-:host .btn-close {
-  margin-right: 0;
-  margin-left: var(--bs-toast-padding-x);
-}
-
 .toast-header {
   border: 0;
   padding-bottom: 1rem;
@@ -26,7 +21,7 @@
   }
 }
 
-:host([data-bs-state='error']) .toast-header {
+.error {
   &::before {
     padding-right: 1.25rem;
     top: 0.195rem;
@@ -35,7 +30,7 @@
   }
 }
 
-:host([data-bs-state='information']) .toast-header {
+.information {
   &::before {
     padding-right: 1.25rem;
     top: 0.195rem;
@@ -44,7 +39,7 @@
   }
 }
 
-:host([data-bs-state='confirmation']) .toast-header {
+.confirmation {
   &::before {
     padding-right: 1.25rem;
     top: 0.195rem;
@@ -53,7 +48,7 @@
   }
 }
 
-:host([data-bs-state='alert']) .toast-header {
+.alert {
   &::before {
     padding-right: 1.25rem;
     top: 0.195rem;
