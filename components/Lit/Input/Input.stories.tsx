@@ -43,6 +43,7 @@ Text.args = {
   type: 'text',
   placeholder: 'Enter text',
   label: 'Text Input',
+  required: true,
 };
 
 export const Search = Template.bind({});

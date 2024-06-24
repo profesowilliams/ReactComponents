@@ -5,6 +5,7 @@
 @import 'bootstrap/scss/forms/form-text';
 @import 'bootstrap/scss/forms/validation';
 @import 'bootstrap/scss/forms/labels';
+@import 'bootstrap/scss/forms/';
 
 :host([required]) tds-textfield {
   --bs-border-color: var(--bs-danger);
