@@ -44,11 +44,11 @@ export interface ButtonProps {
 }
 
 export class Button extends LitElement {
-  static get styles() {
-    return css`
-      ${unsafeCSS(customStyles)}
-    `;
-  }
+    static get styles() {
+      return css`
+        ${unsafeCSS(customStyles)}
+      `;
+    }
 
   @property({ type: Boolean, reflect: true }) primary = false;
   @property({ type: String, reflect: true }) backgroundColor = '';

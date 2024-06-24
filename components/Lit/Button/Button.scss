@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../../../scss/abstracts/' as *;
+
 @import 'bootstrap/scss/buttons';
 
 .btn {
@@ -18,6 +19,7 @@
   --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
   --bs-btn-disabled-opacity: 0.65;
   --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), 0.5);
+
   display: inline-block;
   padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
   font-family: var(--bs-btn-font-family);
@@ -46,7 +48,6 @@
   border-radius: none;
   box-sizing: border-box;
   color: #ffffff;
-  cursor: pointer;
   display: inline-block;
   font-weight: 400;
   font-size: 1rem;
@@ -57,7 +58,6 @@
   outline-style: solid;
   outline-width: 1px;
   outline-offset: 0;
-  padding: 12px 20px;
   -webkit-appearance: button;
   position: relative;
   text-align: center;
@@ -82,6 +82,7 @@
   color: var(--bs-btn-hover-color);
   background-color: var(--bs-btn-hover-bg);
   border-color: var(--bs-btn-hover-border-color);
+  cursor: pointer !important;
 }
 
 [type='button']:not(:disabled),
@@ -108,12 +109,16 @@ button:not(:disabled) {
 
   &:hover {
     @include set-opacity('color', map.get($color-palette, 'white'), 1);
-    background: #{$gradient-hover}, #{map.get($color-palette, $bg)};
+    background:
+      #{$gradient-hover},
+      #{map.get($color-palette, $bg)};
   }
 
   &:active {
     @include set-opacity('color', map.get($color-palette, 'white'), 1);
-    background: #{$gradient-active}, #{map.get($color-palette, $bg)};
+    background:
+      #{$gradient-active},
+      #{map.get($color-palette, $bg)};
   }
 
   &:disabled {
@@ -169,17 +174,23 @@ button:not(:disabled) {
 
 @mixin filled-button-styles($color, $gradient-bg, $gradient-hover, $gradient-active) {
   color: #{map.get($color-palette, $color)};
-  background: #{$gradient-bg}, #{map.get($color-palette, $color)};
+  background:
+    #{$gradient-bg},
+    #{map.get($color-palette, $color)};
 
   &:hover {
     color: #{map.get($color-palette, $color)};
-    background: #{$gradient-hover}, #{map.get($color-palette, $color)};
+    background:
+      #{$gradient-hover},
+      #{map.get($color-palette, $color)};
     border: none;
   }
 
   &:active {
     color: #{map.get($color-palette, $color)};
-    background: #{$gradient-active}, #{map.get($color-palette, $color)};
+    background:
+      #{$gradient-active},
+      #{map.get($color-palette, $color)};
   }
 
   &:disabled {
@@ -192,8 +203,8 @@ button:not(:disabled) {
   color: #{map.get($color-palette, $color)};
   background: transparent;
   text-decoration: none;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: var(--bs-btn-link-padding-left, 0);
+  padding-right: var(--bs-btn-link-padding-right, 0);
   min-width: unset;
 
   &:hover {

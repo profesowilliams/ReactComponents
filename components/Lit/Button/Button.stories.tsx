@@ -55,64 +55,9 @@ export default {
   },
 };
 
-export const Default = {
+export const Button = {
   render: renderButton,
   args: {
     label: 'Button',
-  },
-};
-
-export const Primary = {
-  render: renderButton,
-  args: {
-    variant: 'primary',
-    disabled: false,
-    color: 'dark-blue',
-    label: 'Primary',
-  },
-};
-
-export const Secondary = {
-  render: renderButton,
-  args: {
-    ...Primary.args,
-    variant: 'secondary',
-    label: 'Secondary',
-  },
-};
-
-export const Tertiary = {
-  render: renderButton,
-  args: {
-    ...Primary.args,
-    variant: 'tertiary',
-    label: 'Tertiary',
-  },
-};
-
-export const Link = {
-  render: renderButton,
-  args: {
-    ...Primary.args,
-    variant: 'link',
-    label: 'Link',
-  },
-};
-
-export const Affirmative = {
-  render: renderButton,
-  args: {
-    ...Primary.args,
-    variant: 'affirmative',
-    label: 'Affirmative',
-  },
-};
-
-export const Destructive = {
-  render: renderButton,
-  args: {
-    ...Primary.args,
-    variant: 'destructive',
-    label: 'Destructive',
   },
 };
