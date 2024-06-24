@@ -1,13 +1,29 @@
 @use 'sass:map';
 @use '../../../scss/abstracts/' as *;
+
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/utilities/api';
+
 @import 'bootstrap/scss/modal';
 
-:host(tds-modal.modal-backdrop)  {
-  --bs-backdrop-bg: rgba(38, 38, 38, 0.2)!important;
+:host(tds-modal.modal-backdrop) {
+  --bs-backdrop-bg: rgba(38, 38, 38, 0.2) !important;
+}
+
+:host([size='lg'][placement='inline']) .modal-lg {
+  --bs-modal-width: 59.25rem;
 }
 
 tds-button {
   padding-left: 1.25rem;
+}
+
+@media (min-width: 576px) {
+  .modal {
+    --bs-modal-margin: 1.75rem;
+    --bs-modal-box-shadow: var(--bs-box-shadow);
+  }
 }
 
 .modal {
@@ -19,7 +35,7 @@ tds-button {
   --bs-modal-bg: var(--bs-body-bg);
   --bs-modal-border-color: var(--bs-border-color-translucent);
   --bs-modal-border-width: var(--bs-border-width);
-  --bs-modal-border-radius: 0.125rem;
+  --bs-modal-border-radius: var(--bs-border-radius-lg);
   --bs-modal-box-shadow: var(--bs-box-shadow-sm);
   --bs-modal-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));
   --bs-modal-header-padding-x: 1rem;
@@ -59,29 +75,53 @@ tds-button {
     transition: transform 0.3s ease-out;
     //transform: translate(0, -50px);
   }
+
+  &.modal-sm {
+    --bs-modal-width: 22.5rem;
+  }
+
+  &.modal-md {
+    --bs-modal-width: 48rem;
+  }
+
+  &.modal-lg {
+    --bs-modal-width: 56rem;
+  }
+
+  &.modal-xl {
+    --bs-modal-width: 70.5rem;
+  }
 }
 
-.modal-sm {
-  --bs-modal-width: 22.5rem;
+.modal-content {
+  border-radius: 0.125rem;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.30);
 }
 
-.modal-md {
-  --bs-modal-width: 48rem;
-}
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: var(--bs-modal-margin);
+  pointer-events: none;
 
-.modal-lg {
-  --bs-modal-width: 56rem;
-}
+  @media (min-width: 576px) {
+    max-width: var(--bs-modal-width);
+    margin-right: auto;
+    margin-left: auto;
+  }
 
-.modal-xl {
-  --bs-modal-width: 70.5rem;
-}
+  &.modal-dialog-centered {
+    //position: absolute;
+  }
 
-.modal-dialog-inline {
-  width: min(95vw, 70.5rem) !important;
+  &.modal-dialog-inline {
+    width: min(95vw, 70.5rem) !important;
+    bottom: 0;
+    position: absolute;
 
-  @include media-breakpoint-between(xs, sm) {
-    width: min(95vw, 22.5rem) !important;
+    @include media-breakpoint-between(xs, sm) {
+      width: min(95vw, 22.5rem) !important;
+    }
   }
 }
 
@@ -122,4 +162,3 @@ tds-button {
     pointer-events: none;
   }
 }
-

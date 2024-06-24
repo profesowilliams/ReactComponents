@@ -35,7 +35,7 @@ export class Modal extends LitElement {
     'bottom-left': 'bottom-0 start-0',
     'bottom-center': 'bottom-0 start-50 translate-middle-x',
     'bottom-right': 'bottom-0 end-0',
-    inline: 'modal-dialog-inline position-absolute bottom-0 end-0 m-0',
+    'inline': 'modal-dialog-inline position-absolute bottom-0 end-0 m-0',
   };
 
   static get placementOptions() {
@@ -92,3 +92,9 @@ export class Modal extends LitElement {
 
 customElements.define('tds-modal', Modal);
 export default Modal;
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'tds-modal': Modal;
+  }
+}

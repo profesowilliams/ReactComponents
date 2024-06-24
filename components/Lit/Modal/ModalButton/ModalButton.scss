@@ -1,3 +1,4 @@
-:host {
-    padding-left: 1.25rem;
+
+:host(button) {
+  cursor: pointer;
 }

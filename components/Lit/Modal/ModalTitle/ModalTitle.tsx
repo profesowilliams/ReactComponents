@@ -11,9 +11,9 @@ export class ModalTitle extends LitElement {
   }
   render() {
     return html`
-      <h5 class="modal-title">
+      <div class="modal-title">
         <slot></slot>
-      </h5>
+      </div>
     `;
   }
 }

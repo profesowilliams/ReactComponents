@@ -19,6 +19,7 @@ interface ModalArgs {
   centered: boolean;
   scrollable: boolean;
   backdrop: boolean;
+  placement: 'top-left' | 'top-center' | 'top-right' | 'middle-left' | 'middle-center' | 'middle-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'inline';
 }
 
 const renderModal = (args: ModalArgs): TemplateResult => html`
@@ -119,7 +120,27 @@ export default {
       description: 'Determines if the modal has a backdrop.',
       table: {
         type: { summary: 'boolean' },
-        defaultValue: { summary: false },
+        defaultValue: { summary: true },
+      },
+    },
+    placement: {
+      options: [
+        'top-left',
+        'top-center',
+        'top-right',
+        'middle-left',
+        'middle-center',
+        'middle-right',
+        'bottom-left',
+        'bottom-center',
+        'bottom-right',
+        'inline',
+      ],
+      control: 'select',
+      description: 'Determines if the modal has a backdrop.',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'middle-center' },
       },
     },
   },
@@ -133,6 +154,7 @@ export default {
     centered: true,
     scrollable: false,
     backdrop: false,
+    placement: 'middle-center',
   },
 };
 
@@ -146,6 +168,7 @@ export const _Modal = {
     centered: true,
     scrollable: false,
     backdrop: false,
+    placement: 'middle-center',
   },
   render: (args: ModalArgs) => renderModal(args),
 };

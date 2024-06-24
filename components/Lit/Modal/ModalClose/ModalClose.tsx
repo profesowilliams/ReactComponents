@@ -21,7 +21,7 @@ export class ModalClose extends LitElement {
   private _onClick() {
     if (this.hasAttribute('data-bs-dismiss') && this.getAttribute('data-bs-dismiss') === 'modal') {
       let modalElement: HTMLElement | null = this;
-      while (modalElement && modalElement.tagName !== 'TDS-TOAST') {
+      while (modalElement && modalElement.tagName !== 'TDS-MODAL') {
         if (modalElement.parentElement) {
           modalElement = modalElement.parentElement;
         } else if ((modalElement.getRootNode() as ShadowRoot).host) {

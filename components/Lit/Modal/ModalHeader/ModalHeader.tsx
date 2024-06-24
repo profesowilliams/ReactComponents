@@ -1,11 +1,15 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import header from './ModalHeader.scss?inline';
+import customStyles from './ModalHeader.scss?inline';
 
 @customElement('tds-modal-header')
 export class ModalHeader extends LitElement {
-  static styles = css`${unsafeCSS(header)}`;
-
+  static get styles() {
+    return css`
+      ${unsafeCSS(customStyles)}
+    `;
+  }
+  
   render() {
     return html`
       <div class="modal-header">
