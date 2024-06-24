@@ -1,13 +1,30 @@
 @forward 'colors';
-@forward 'mixins';
+@forward 'functions';
 @forward 'variables';
+@forward 'mixins';
+@forward 'typography';
 
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/variables-dark';
-@import 'bootstrap/scss/maps';
 @import 'bootstrap/scss/mixins';
-@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/vendor/rfs';
 
-@import 'bootstrap/scss/utilities/api';
 
+// @import 'bootstrap/scss/functions';
+// @import 'bootstrap/scss/variables';
+// @import 'bootstrap/scss/variables-dark';
+// @import 'bootstrap/scss/maps';
+// @import 'bootstrap/scss/mixins';
+// @import 'bootstrap/scss/utilities';
+
+// @import 'bootstrap/scss/utilities/api';
+
+$new-spacer: 1.875rem;
+
+// Define a new map with the additional spacer value
+$new-spacers: (
+  6: $new-spacer,
+);
+
+// Merge the new map with the existing $spacers map
+$spacers: map-merge($spacers, $new-spacers);

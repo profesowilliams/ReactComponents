@@ -110,82 +110,21 @@ $color-palette: (
   'container-transparent': rgba(0, 0, 0, 0)
 );
 
-/// Default white color
-/// @type Color
-$white: #fff;
+:root {
+  @each $name, $color in $color-palette {
+    --#{$name}: #{$color};
+  }
+}
 
-/// Black color
-/// @type Color
-$black: #000;
+@each $name, $color in $color-palette {
+  .#{$name} {
+    color: var(--#{$name});
+  }
+  .bg-#{$name} {
+    background-color: var(--#{$name});
+  }
+}
 
-/// Space color
-/// @type Color
-$space: #000c21;
-
-/// Sky color
-/// @type Color
-$sky: #00b1e2;
-
-/// Dark sky color
-/// @type Color
-$sky-dark: #00558c;
-
-/// Gray color
-/// @type Color
-$gray: #5d6165;
-
-/// Planet color
-/// @type Color
-$planet: #ccd814;
-
-/// Fire color
-/// @type Color
-$fire: #bf0000;
-
-/// Fall color
-/// @type Color
-$fall: #fdb71a;
-
-/// Grass color
-/// @type Color
-$grass: #1ba41f;
-
-/// Smoke color
-/// @type Color
-$smoke: #53565a;
-
-/// Carbon color
-/// @type Color
-$carbon: #1f2024;
-
-/// Gray-1 color
-/// @type Color
-$gray-1: #5d6165;
-
-/// Gray-2 color
-/// @type Color
-$gray-2: #979797;
-
-/// Gray-4 color
-/// @type Color
-$gray-4: #d6d6d6;
-
-/// Gray-5 color
-/// @type Color
-$gray-5: #f6f6f6;
-
-/// Gray-3 color
-/// @type Color
-$gray-3: #c6c6c6;
-
-$neutral-gray-2: map.get($color-palette, 'neutral-gray-2');
-$cool-gray-8: map.get($color-palette, 'cool-gray-8');
-$legacy-dark-blue: map.get($color-palette, 'legacy-dark-blue');
-$legacy-ocean: map.get($color-palette, 'legacy-ocean');
-$forest: map.get($color-palette, 'forest');
-$cherry: map.get($color-palette, 'cherry');
-$white: map.get($color-palette, 'white');
-$teal: map.get($color-palette, 'teal');
 $gradient-primary-hover: linear-gradient(0deg, rgb(255 255 255 / 20%), rgb(255 255 255 / 20%));
 $gradient-primary-active: linear-gradient(0deg, rgb(0 0 0 / 20%), rgb(0 0 0 / 20%));
 $gradient-filled-bg: linear-gradient(0deg, rgb(255 255 255 / 90%), rgb(255 255 255 / 90%));

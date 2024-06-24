@@ -1,0 +1,653 @@
+@use 'sass:map';
+@use 'colors' as *;
+
+// Font and Color Definitions
+$font-arial: 'Arial';
+$font-everett: 'TWKEverett-Regular-web', 'Arial';
+$font-everett-medium: 'TWKEverett-Medium-web', 'Arial';
+$color-apj: var(--legacy-ocean, map.get($color-palette, 'legacy-ocean')); // Define APJ color
+$color-techdata: var(--cobalt, map.get($color-palette, 'cobalt')); // Define TECH DATA color
+$color-tdsynnex: var(--teal, map.get($color-palette, 'teal')); // Define TD SYNNEX color
+
+%h0 {
+  font-size: 4.125rem;
+  line-height: 4.74375rem;
+  font-weight: normal;
+}
+
+%h1 {
+  font-size: 2.625rem;
+  line-height: 3.28125rem;
+  font-weight: normal;
+}
+
+%h2 {
+  font-size: 2.5rem;
+  line-height: 3.125rem;
+  font-weight: normal;
+}
+
+%h3 {
+  font-size: 2.25rem;
+  line-height: 2.8125rem;
+  font-weight: normal;
+}
+
+%h4 {
+  font-size: 2rem;
+  line-height: 2.5rem;
+  font-weight: normal;
+}
+
+%h5 {
+  font-size: 1.75rem;
+  line-height: 2.1875rem;
+  font-weight: normal;
+}
+
+%h6 {
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+  font-weight: normal;
+}
+
+%h7 {
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  font-weight: normal;
+}
+
+%h8 {
+  font-size: 1.125rem;
+  line-height: 1.6875rem;
+  font-weight: normal;
+}
+
+%h9 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: normal;
+}
+
+%h10 {
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  font-weight: normal;
+}
+
+// Default Styles
+body {
+  font-family: $font-arial;
+  color: var(--charcoal, map.get($color-palette, 'charcoal'));
+
+  .h0,
+  h1.h0,
+  .display-xl,
+  h1.display-xl {
+    @extend %h0;
+
+    * {
+      @extend %h0;
+    }
+  }
+
+  h1,
+  .h1 {
+    @extend %h1;
+  }
+
+  h2,
+  .h2 {
+    @extend %h2;
+  }
+
+  h3,
+  .h3 {
+    @extend %h3;
+  }
+
+  h4,
+  .h4 {
+    @extend %h4;
+  }
+
+  h5,
+  .h5 {
+    @extend %h5;
+  }
+
+  h6,
+  .h6 {
+    @extend %h6;
+  }
+
+  .h7 {
+    @extend %h7;
+  }
+
+  .h8 {
+    @extend %h8;
+  }
+
+  .h9 {
+    @extend %h9;
+  }
+
+  .h10 {
+    @extend %h10;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  p.extra-small,
+  .p1,
+  .p-extra-small {
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+
+    p {
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+    }
+  }
+
+  p.small,
+  .p2,
+  .p-small {
+    font-size: 0.875rem;
+    line-height: 1.3125rem;
+
+    p {
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+    }
+  }
+
+  p.large,
+  .p3,
+  .p-large {
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+
+    p {
+      font-size: 1.25rem;
+      line-height: 1.875rem;
+    }
+  }
+
+  blockquote {
+    color: var(--Cool-Gray-8, map.get($color-palette, 'cool-gray-8'));
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  // Adjust font weight for strong and bold within headings
+  .h0 strong,
+  .h0 b,
+  .h1 strong,
+  .h1 b,
+  .h2 strong,
+  .h2 b,
+  .h3 strong,
+  .h3 b,
+  .h4 strong,
+  .h4 b,
+  .h5 strong,
+  .h5 b,
+  .h6 strong,
+  .h6 b,
+  .h7 strong,
+  .h7 b,
+  .h8 strong,
+  .h8 b,
+  .h9 strong,
+  .h9 b,
+  .h10 strong,
+  .h10 b,
+  h1 strong,
+  h1 b,
+  h2 strong,
+  h2 b,
+  h3 strong,
+  h3 b,
+  h4 strong,
+  h4 b,
+  h5 strong,
+  h5 b,
+  h6 strong,
+  h6 b {
+    font-weight: bold;
+  }
+
+  @media (max-width: 767.98px) {
+    .h0,
+    h1.h0,
+    .display-xl,
+    h1.display-xl {
+      font-size: 2.375rem;
+      line-height: 2.85rem;
+      font-weight: normal;
+
+      * {
+        font-size: 2.375rem;
+        line-height: 2.85rem;
+        font-weight: normal;
+      }
+    }
+
+    h1,
+    .h1 {
+      font-size: 2.125rem;
+      line-height: 3.65625rem;
+      font-weight: normal;
+    }
+
+    h2,
+    .h2 {
+      font-size: 2rem;
+      line-height: 2.5rem;
+      font-weight: normal;
+    }
+
+    h3,
+    .h3 {
+      font-size: 1.875rem;
+      line-height: 2.34375rem;
+      font-weight: normal;
+    }
+
+    h4,
+    .h4 {
+      font-size: 1.625rem;
+      line-height: 2.03125rem;
+      font-weight: normal;
+    }
+
+    h5,
+    .h5 {
+      font-size: 1.5rem;
+      line-height: 1.875rem;
+      font-weight: normal;
+    }
+
+    h6,
+    .h6 {
+      font-size: 1.25rem;
+      line-height: 1.6875rem;
+      font-weight: normal;
+    }
+
+    .h7 {
+      font-size: 1.125rem;
+      line-height: 1.51875rem;
+      font-weight: normal;
+    }
+
+    .h8 {
+      font-size: 1rem;
+      line-height: 1.35rem;
+      font-weight: normal;
+    }
+
+    .h9 {
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+      font-weight: normal;
+    }
+
+    .h10 {
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+      font-weight: normal;
+    }
+
+    p {
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+    }
+
+    p.extra-small,
+    .p1 {
+      font-size: 0.625rem;
+      line-height: 0.9375rem;
+
+      p {
+        font-size: 0.625rem;
+        line-height: 0.9375rem;
+      }
+    }
+
+    p.small,
+    .p2 {
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+
+      p {
+        font-size: 0.75rem;
+        line-height: 1.125rem;
+      }
+    }
+
+    p.large,
+    .p3 {
+      font-size: 1rem;
+      line-height: 1.5rem;
+
+      p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+    }
+
+    blockquote {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
+}
+
+// APJ Styles
+.apj,
+.asiapacificjapan {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h0,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .h7,
+  .h8,
+  .h9,
+  .h10 {
+    color: $color-apj;
+    font-family: $font-arial;
+  }
+
+  // Define other APJ-specific styles
+}
+
+// TECH DATA Styles
+.td,
+.techdata {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h0,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .h7,
+  .h8,
+  .h9,
+  .h10 {
+    color: $color-techdata;
+    font-family: $font-arial;
+  }
+
+  // Define other TECH DATA-specific styles
+}
+
+// TD SYNNEX Styles
+.tds,
+.tdsynnex {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h0,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .h7,
+  .h8,
+  .h9,
+  .h10 {
+    color: $color-tdsynnex;
+    font-family: $font-everett;
+  }
+
+  .h0,
+  h1.h0,
+  .display-xl,
+  h1.display-xl {
+    font-size: 3.9375rem;
+    line-height: 4.764375rem;
+
+    * {
+      font-size: 3.9375rem;
+      line-height: 4.764375rem;
+    }
+  }
+
+  h1,
+  .h1 {
+    font-size: 2.5625rem;
+    line-height: 3.33125rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 2.3125rem;
+    line-height: 3.145rem;
+  }
+
+  h3,
+  .h3 {
+    font-size: 2.125rem;
+    line-height: 2.805rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.875rem;
+    line-height: 2.5125rem;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.625rem;
+    line-height: 2.1775rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1.375rem;
+    line-height: 1.98rem;
+  }
+
+  .h7 {
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+  }
+
+  .h8 {
+    font-size: 1.0625rem;
+    line-height: 1.4875rem;
+  }
+
+  .h9 {
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+  }
+
+  .h10 {
+    font-size: 0.8125rem;
+    line-height: 1.3rem;
+  }
+
+  // Adjust font weight for strong and bold within headings
+  .h0 strong,
+  .h0 b,
+  .h1 strong,
+  .h1 b,
+  .h2 strong,
+  .h2 b,
+  .h3 strong,
+  .h3 b,
+  .h4 strong,
+  .h4 b,
+  .h5 strong,
+  .h5 b,
+  .h6 strong,
+  .h6 b,
+  .h7 strong,
+  .h7 b,
+  .h8 strong,
+  .h8 b,
+  .h9 strong,
+  .h9 b,
+  .h10 strong,
+  .h10 b,
+  h1 strong,
+  h1 b,
+  h2 strong,
+  h2 b,
+  h3 strong,
+  h3 b,
+  h4 strong,
+  h4 b,
+  h5 strong,
+  h5 b,
+  h6 strong,
+  h6 b {
+    font-family: $font-everett-medium;
+    font-weight: 500;
+  }
+
+  // Define other TD SYNNEX-specific styles
+
+  @media (max-width: 767.98px) {
+    .h0,
+    h1.h0,
+    .display-xl,
+    h1.display-xl {
+      font-size: 2.25rem;
+      line-height: 2.88rem;
+
+      * {
+        font-size: 2.25rem;
+        line-height: 2.88rem;
+      }
+    }
+
+    h1,
+    .h1 {
+      font-size: 1.9375rem;
+      line-height: 2.7125rem;
+    }
+
+    h2,
+    .h2 {
+      font-size: 1.875rem;
+      line-height: 2.5125rem;
+    }
+
+    h3,
+    .h3 {
+      font-size: 1.75rem;
+      line-height: 2.38rem;
+    }
+
+    h4,
+    .h4 {
+      font-size: 1.5rem;
+      line-height: 2.04rem;
+    }
+
+    h5,
+    .h5 {
+      font-size: 1.375rem;
+      line-height: 1.87rem;
+    }
+
+    h6,
+    .h6 {
+      font-size: 1.125rem;
+      line-height: 1.6875rem;
+    }
+
+    .h7 {
+      font-size: 1.125rem;
+      line-height: 1.4875rem;
+    }
+
+    .h8 {
+      font-size: 0.9375rem;
+      line-height: 1.3875rem;
+    }
+
+    .h9 {
+      font-size: 0.8125rem;
+      line-height: 1.28375rem;
+    }
+
+    .h10 {
+      font-size: 0.6875rem;
+      line-height: 1.1rem;
+    }
+  }
+}
+
+// Link Styles and Hover Effects
+a {
+  text-decoration: none;
+  color: inherit;
+
+  [href] {
+    &:hover {
+      text-decoration: underline;
+    }
+
+    // Hover states within regional classes
+    .tds &,
+    .tdsynnex & {
+      color: $color-tdsynnex;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .td &,
+    .techdata & {
+      color: $color-techdata;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .apj &,
+    .asiapacificjapan & {
+      color: $color-apj;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+/* stylelint-enable no-descending-specificity */
