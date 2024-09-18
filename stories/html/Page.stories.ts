@@ -7,7 +7,7 @@ export default {
 
 export const WebComponents = () => {
   const template = `
-    <tds-flyout show size="lg" placement="end" id="offcanvas" aria-labelledby="offcanvasLabel" scrollable>
+    <tds-flyout show size="xl" placement="end" id="offcanvas" aria-labelledby="offcanvasLabel" scrollable backdrop="true">
       <tds-flyout-header>
         <tds-flyout-title>Offcanvas</tds-flyout-title>
       </tds-flyout-header>
@@ -19,7 +19,7 @@ export const WebComponents = () => {
         <tds-flyout-button type="button" variant="primary" theme="light" label="Button" color="teal">Save</tds-flyout-button>
       </tds-flyout-footer>
 
-      <tds-modal show fade size="xl" placement="inline">
+      <tds-modal show fade size="xl" placement="inline" backdrop="true">
         <tds-modal-header>
           <tds-modal-title>Test</tds-modal-title>
         </tds-modal-header>

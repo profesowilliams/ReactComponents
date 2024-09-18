@@ -12,7 +12,7 @@
 
 ## **Engineering Spec**
 
-DDS WC3 Checkbox extends from the [FAST Checkbox](https://explore.fast.design/components/fast-checkbox) and is intended to be as close to the DDS UI React 9 Checkbox implementation as possible. However, due to the nature of web components there will not be 100% parity between the two.
+DDS WC3 Checkbox extends from the [FAST Checkbox](https://explore.fast.design/components/fast-checkbox) and is intended to be as close to the DDS UI React 1 Checkbox implementation as possible. However, due to the nature of web components there will not be 100% parity between the two.
 
 <br />
 
@@ -107,13 +107,13 @@ FAST `checkboxTemplate`
 
 <br />
 
-### **DDS Web Component v3 v.s DDS React 9**
+### **DDS Web Component v1 v.s DDS React 1**
 
 <br />
 
 **Component and Slot Mapping**
 
-| DDS UI React 9 | DDS Web Components 3            | Description                      |
+| DDS UI React 1 | DDS Web Components 1            | Description                      |
 | -------------- | ------------------------------- | -------------------------------- |
 | `<Checkbox>`   | `<tds-checkbox>`                |
 | n/a            | slot: `checked-indicator`       | slot for checked indicator       |
@@ -122,6 +122,6 @@ FAST `checkboxTemplate`
 <br />
 
 **Property Mapping**
-| DDS UI React 9 | DDS Web Components 3 | Description of difference |
+| DDS UI React 1 | DDS Web Components 1 | Description of difference |
 | ---------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `checked: boolean | 'mixed'` | `checked: boolean` `indeterminate: boolean` | DDS UI React v9 uses a single property to set the checked and indeterminate states, while DDS UI Web Components v3 requires separate boolean attributes for each state.

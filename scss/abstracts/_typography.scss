@@ -81,9 +81,7 @@ body {
   color: var(--charcoal, map.get($color-palette, 'charcoal'));
 
   .h0,
-  h1.h0,
-  .display-xl,
-  h1.display-xl {
+  .display-xl {
     @extend %h0;
 
     * {

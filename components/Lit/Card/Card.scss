@@ -1,9 +1,4 @@
 @use 'sass:map';
-@use '../../../scss/abstracts/' as *;
-@import 'bootstrap/scss/card';
-
-tds-card {
-}
 
 .card {
   --bs-card-spacer-y: 1rem;
@@ -23,6 +18,7 @@ tds-card {
   --bs-card-bg: #fff;
   --bs-card-img-overlay-padding: 1rem;
   --bs-card-group-margin: 0.75rem;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -31,6 +27,7 @@ tds-card {
   word-wrap: break-word;
   background-color: var(--bs-card-bg);
   background-clip: border-box;
+  --webkit-background-clip: border-box;
   border: var(--bs-card-border-width) solid var(--bs-card-border-color);
   border-radius: var(--bs-card-border-radius);
 }

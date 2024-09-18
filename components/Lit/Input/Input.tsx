@@ -7,6 +7,7 @@ import customStyles from './Input.scss?inline';
 import './Text';
 import './Datalist';
 import './Checkbox';
+import './Radio';
 import { HiddenInput } from './Hidden';
 import { SearchInput } from './Search';
 import { DatetimeInput } from './Datetime';
@@ -18,7 +19,7 @@ import { DatetimeLocalInput } from './DatetimeLocal';
 import { RangeInput } from './Range';
 import { ColorInput } from './Color';
 // import { CheckboxInput } from './Checkbox';
-import { RadioInput } from './Radio';
+// import { RadioInput } from './Radio';
 import { FileInput } from './File';
 import { SubmitInput } from './Submit';
 import { ImageInput } from './Image';
@@ -40,6 +41,7 @@ export class Input extends LitElement {
   @property({ type: String }) type: InputType = 'text';
   @property({ type: String }) placeholder = '';
   @property({ type: String }) label = '';
+  @property({ type: Boolean }) checked = false;
   @property({ type: Boolean }) indeterminate = false;
   @property({ type: Boolean }) disabled = false;
   @property({ type: Boolean }) required = false;
@@ -47,6 +49,7 @@ export class Input extends LitElement {
   render() {
     const attrs = {
       placeholder: this.placeholder,
+      checked: this.checked,
       disabled: this.disabled,
       required: this.required,
     };
@@ -71,8 +74,8 @@ export class Input extends LitElement {
           ['number', () => html`<tds-textfield id="${this.id}" type="number" placeholder="${this.placeholder}" label="${this.label}" .attrs="${attrs}"></tds-textfield>`],
           ['range', () => RangeInput(this.id, this.placeholder, this.label, attrs)],
           ['color', () => ColorInput(this.id, this.placeholder, this.label, attrs)],
-          ['checkbox', () => html`<tds-checkbox id="${this.id}" type="text" label="${this.label}" ?indeterminate=${this.indeterminate} ?disabled=${this.disabled} .attrs="${attrs}"></tds-checkbox>`],
-          ['radio', () => RadioInput(this.id, this.placeholder, this.label, attrs)],
+          ['checkbox', () => html`<tds-checkbox id="${this.id}" type="text" label="${this.label}" ?checked=${this.checked} ?indeterminate=${this.indeterminate} ?disabled=${this.disabled} .attrs="${attrs}"></tds-checkbox>`],
+          ['radio', () => html`<tds-radio id="${this.id}" type="text" label="${this.label}" ?checked=${this.checked} ?disabled=${this.disabled} .attrs="${attrs}"></tds-radio>`],
           ['file', () => FileInput(this.id, this.placeholder, this.label, attrs)],
           ['submit', () => SubmitInput(this.id, this.placeholder, this.label, attrs)],
           ['image', () => ImageInput(this.id, this.placeholder, this.label, attrs)],

@@ -2,7 +2,7 @@
 
 A partial implementation of an [`<input>`](https://w3c.github.io/html-reference/input.text.html) as a form-associated custom element.
 
-The `<tds-text-input>` is intended to match feature parity with the DDS UI React 9 `<Input />` component. However, due to the nature of web components there will not be 100% parity between the two.
+The `<tds-text-input>` is intended to match feature parity with the DDS UI React 1 `<Input />` component. However, due to the nature of web components there will not be 100% parity between the two.
 
 [View the Text Input Design Spec in Figma](https://www.figma.com/file/TvHmWjZYxwtI9Tz6v5BT7E/Input?node-id=2366-657&t=UNSOfCD3St9ffppx-0)
 
@@ -127,11 +127,11 @@ This component supports ARIA attributes that inherit from the [ARIA Global State
 
 <hr />
 
-## DDS Web Component v3 v.s DDS React 9
+## DDS Web Component v1 v.s DDS React 1
 
 ### Component and Slot Mapping
 
-| DDS UI React 9  | DDS Web Components 3 |
+| DDS UI React 1  | DDS Web Components 1 |
 | --------------- | -------------------- |
 | `<Input>`       | `<tds-text-input>`   |
 | `contentBefore` | `start`              |

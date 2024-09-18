@@ -170,8 +170,10 @@ export const Radio = Template.bind({});
 Radio.args = {
   id: 'radio-example',
   type: 'radio',
-  placeholder: 'Enter radio',
   label: 'Radio Input',
+  checked: false,
+  disabled: false,
+  required: false,
 };
 
 export const File = Template.bind({});

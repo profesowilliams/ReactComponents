@@ -12,7 +12,7 @@
 
 ## **Engineering Spec**
 
-DDS WC3 Radio is a form associated component that extends from the FAST Radio [FAST Radio](https://explore.fast.design/components/fast-radio) and is intended to be as close to the DDS UI React 9 Menu implementation as possible. However, due to the nature of web components there will not be 100% parity between the two.
+DDS WC3 Radio is a form associated component that extends from the FAST Radio [FAST Radio](https://explore.fast.design/components/fast-radio) and is intended to be as close to the DDS UI React 1 Menu implementation as possible. However, due to the nature of web components there will not be 100% parity between the two.
 
 ### Use Case
 
@@ -105,7 +105,7 @@ Used anywhere an author might otherwise use an input[type="radio"]. Used to faci
 
 <br />
 
-### **DDS Web Component v3 v.s DDS React 9**
+### **DDS Web Component v1 v.s DDS React 1**
 
 **Deltas**
 
@@ -121,13 +121,13 @@ In contrast to the FUIRv9 implimentation of the `Radio` component the WC3 `Radio
 
 **Component and Slot Mapping**
 
-| DDS UI React 9 | DDS Web Components 3 |
+| DDS UI React 1 | DDS Web Components 1 |
 | -------------- | -------------------- |
 | `<Radio>`      | `<tds-radio>`        |
 
 <br />
 
 **Property Mapping**
-| DDS UI React 9 | DDS Web Components 3 | Description of difference |
+| DDS UI React 1 | DDS Web Components 1 | Description of difference |
 |-------------------|------------------------ |---------------------------|
 | `prop label` | default slotted content | React implementation requires user to pass a string through the `label` prop on the Radio component <br /><br /> The web component implementation requires users to pass the label text through the default slotted content
