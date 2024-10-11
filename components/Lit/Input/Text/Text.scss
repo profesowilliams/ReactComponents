@@ -10,6 +10,10 @@
   --bs-border-color: var(--bs-danger);
 }
 
+:host {
+  --bs-border-color: var(--teal, map.get($color-palette, 'teal'));
+}
+
 .form-control {
   --bs-border-width: 2px;
   display: block;
@@ -31,7 +35,8 @@
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
-  border: var(--bs-border-width) solid var(--Cobalt, #006fba);
+  border: var(--bs-border-width) solid var(--Teal, map.get($color-palette, 'teal'));
+  border-bottom: var(--bs-border-width) solid var(--Teal, map.get($color-palette, 'teal'))!important;
   outline: 0;
   box-shadow: none;
 }
@@ -160,7 +165,7 @@ textarea.form-control {
   &:focus {
     color: var(--bs-body-color);
     background-color: var(--bs-body-bg);
-    border: var(--bs-border-width) solid var(--Cobalt, #006fba);
+    border: var(--bs-border-width) solid var(--teal, map.get($color-palette, 'teal'));
     outline: 0;
     box-shadow: none;
   }

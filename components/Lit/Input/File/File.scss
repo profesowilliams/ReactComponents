@@ -1,0 +1,84 @@
+.drop-area {
+  border-radius: 0.25rem;
+  border: 1px dashed var(--Cool-Gray-9, #727679);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  color: var(--Charcoal, #262626);
+  background: var(--Neutral-Gray-1, #f8f8f8);
+  display: grid;
+  row-gap: 1rem;
+}
+
+.drop-area:hover {
+  border-radius: 0.25rem;
+  border: 1px dashed var(--Teal, #005758);
+  background: rgba(0, 87, 88, 0.1);
+}
+
+.drop-area.dragover {
+  background-color: #f0f0f0;
+  border-color: #0000ff;
+}
+.file-text {
+  display: grid;
+  row-gap: 0.25rem;
+}
+
+.file-list {
+  display: grid;
+  gap: 1.25rem;
+}
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0.62rem;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+}
+.file-name {
+  color: var(--Charcoal, #262626);
+  font-size: 0.875rem;
+}
+.file-size {
+  color: var(--Cool-Gray-8, #888b8d);
+  font-size: 0.875rem;
+}
+.file-input {
+  display: flex;
+  /* flex: 1; */
+  gap: 1.25rem;
+  flex-direction: column;
+}
+
+.file-upload {
+  display: grid;
+  row-gap: 0.5rem;
+
+  label {
+    color: var(--Charcoal, #262626);
+
+    /* XSP */
+    font-family: Arial;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 1.125rem */
+  }
+}
+
+.extra-small {
+  color: var(--Charcoal, #262626);
+  text-align: center;
+  /* Desktop Paragraph/XSP - arial */
+  font-family: Arial;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 1.125rem */
+
+  margin: 0;
+}

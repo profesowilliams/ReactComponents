@@ -1,0 +1,9 @@
+tds-close-button {
+    position: relative;
+    top: -12px;
+    opacity: 1;
+
+    .btn-close {
+      --bs-btn-close-opacity: 1;
+    }
+}

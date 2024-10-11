@@ -171,3 +171,11 @@
     }
   }
 }
+
+:host([orientation='right']) {
+  --bs-accordion-body-padding: 1.25rem 2.625rem 1.25rem 0.625rem;
+}
+
+:host([orientation='left']) {
+  --bs-accordion-body-padding: 1.25rem 2.625rem;
+}

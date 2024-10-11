@@ -1,18 +1,12 @@
-import { LitElement, html, css, PropertyValues } from 'lit';
+import { LitElement, html, css, unsafeCSS, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
+import customStyles from './AccordionBody.scss?inline';
 
 // Define the accordion body component
 export class AccordionBody extends LitElement {
   static get styles() {
     return css`
-      div {
-        display: none;
-        padding: 1.25rem 2.625rem;
-      }
-
-      div[open] {
-        display: block;
-      }
+      ${unsafeCSS(customStyles)}
     `;
   }
 

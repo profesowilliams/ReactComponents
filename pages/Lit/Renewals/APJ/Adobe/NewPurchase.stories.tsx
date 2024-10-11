@@ -19,7 +19,11 @@ export default {
   title: 'Pages/Adobe/New Purchase Flyout',
   parameters: {
     layout: 'fullscreen',
+    options: {
+      bottomPanelHeight: 0,
+    },
   },
+  tags: ['!autodocs'],
 };
 
 export const WebComponents = () => {

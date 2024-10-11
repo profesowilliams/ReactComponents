@@ -1,6 +1,9 @@
 import { html } from 'lit';
 import { Meta, StoryFn } from '@storybook/web-components';
 import './Input';
+import '../Heading';
+import '../Icon';
+import '../Button';
 import { Input } from './Input';
 
 export default {
@@ -9,17 +12,53 @@ export default {
   argTypes: {
     type: {
       control: 'select',
-      options: ['hidden', 'text', 'search', 'tel', 'url', 'email', 'password', 'datetime', 'date', 'month', 'week', 'time', 'datetime-local', 'number', 'range', 'color', 'checkbox', 'radio', 'file', 'submit', 'image', 'reset', 'button'],
+      options: [
+        'hidden',
+        'text',
+        'search',
+        'tel',
+        'url',
+        'email',
+        'password',
+        'datetime',
+        'date',
+        'month',
+        'week',
+        'time',
+        'datetime-local',
+        'number',
+        'range',
+        'color',
+        'checkbox',
+        'radio',
+        'file',
+        'submit',
+        'image',
+        'reset',
+        'button',
+      ],
     },
     placeholder: { control: 'text' },
     label: { control: 'text' },
     id: { control: 'text' },
     disabled: { control: 'boolean' },
     required: { control: 'boolean' },
+    regex: { control: 'text' },
   },
 } as Meta;
 
-const Template: StoryFn<Input> = (args) => html` <tds-input id="${args.id}" type="${args.type}" placeholder="${args.placeholder}" label="${args.label}" ?disabled="${args.disabled}" ?required="${args.required}"></tds-input> `;
+const Template: StoryFn<Input> = (args) =>
+  html`
+    <tds-input
+      id="${args.id}"
+      type="${args.type}"
+      placeholder="${args.placeholder}"
+      label="${args.label}"
+      regex="${args.pattern}"
+      ?disabled="${args.disabled}"
+      ?required="${args.required}"
+    ></tds-input>
+  `;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -60,6 +99,7 @@ Telephone.args = {
   type: 'tel',
   placeholder: 'Enter phone number',
   label: 'Telephone Input',
+  regex: '[0-9]{3}-[0-9]{3}-[0-9]{4}',
 };
 
 export const Url = Template.bind({});

@@ -5,7 +5,6 @@
 }
 
 :host {
-  // overflow: scroll;
-  // overflow-x: auto;
-  margin-bottom: 6rem;
+  margin-bottom: 3rem;
+  overflow-y: scroll;
 }

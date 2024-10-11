@@ -16,7 +16,8 @@
 
 :host([data-bs-outline='top']) .accordion-item {
   border-radius: 0;
-  border-top: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+  border-top: var(--bs-accordion-border-width) solid
+    var(--bs-accordion-border-color);
   border-bottom: none;
   border-right: none;
   border-left: none;
@@ -24,7 +25,8 @@
 
 :host([data-bs-outline='bottom']) .accordion-item {
   border-radius: 0;
-  border-bottom: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+  border-bottom: var(--bs-accordion-border-width) solid
+    var(--bs-accordion-border-color);
   border-top: none;
   border-right: none;
   border-left: none;
@@ -32,13 +34,15 @@
 
 :host([data-bs-outline='topbottom']) .accordion-item {
   border-radius: 0;
-  border: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+  border: var(--bs-accordion-border-width) solid
+    var(--bs-accordion-border-color);
   border-right: none;
   border-left: none;
 }
 
 :host([data-bs-outline='full']) .accordion-item {
-  border: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+  border: var(--bs-accordion-border-width) solid
+    var(--bs-accordion-border-color);
   border-bottom-right-radius: var(--bs-accordion-inner-border-radius);
   border-bottom-left-radius: var(--bs-accordion-inner-border-radius);
   border-top-left-radius: var(--bs-accordion-inner-border-radius);

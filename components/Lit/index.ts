@@ -12,7 +12,7 @@ export * from './Button';
 
 export * from './Close';
 
-export * from './Input/Datalist';
+export * from './Input/Dropdown';
 
 export * from './Flyout';
 export * from './Flyout/FlyoutBody';

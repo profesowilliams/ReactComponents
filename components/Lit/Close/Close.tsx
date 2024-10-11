@@ -90,7 +90,7 @@ export class CloseButton extends LitElement {
       }
     }
 
-   
+
   }
 }
 
