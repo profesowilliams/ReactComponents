@@ -2,3 +2,14 @@
   position: absolute;
   right: 4.25rem;
 }
+
+:host(.btn-link) {
+  align-items: center;
+  display: flex;
+}
+
+ tds-button {
+    display: flex;
+    position: relative;
+    height: 35px;
+ }

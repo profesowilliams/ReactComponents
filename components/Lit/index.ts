@@ -12,6 +12,8 @@ export * from './Button';
 
 export * from './Close';
 
+export * from './Input/Dropdown/Dropdown';
+
 export * from './Input/Dropdown';
 
 export * from './Flyout';

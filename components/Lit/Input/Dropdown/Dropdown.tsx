@@ -1,195 +1,316 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import '../Text'; // Import the TextInput component
+import { LitElement, html, css, unsafeCSS } from 'lit';
+import { customElement, property, query } from 'lit/decorators.js';
+import customStyles from './Dropdown.scss?inline';
 
 @customElement('tds-dropdown')
 export class Dropdown extends LitElement {
-  static styles = css`
-    :host {
-      display: inline-block;
-      position: relative;
+  static get styles() {
+    return css`
+      ${unsafeCSS(customStyles)}
+    `;
+  }
+
+  @property({ type: Array }) options: Array<string> = [];
+  @property({ type: Array }) filteredResults: Array<string> = [];
+  @property({ type: Boolean }) isDropDownOpen = false;
+  @property({ type: Number }) currentListItemFocused = -1;
+  @property({ type: Array }) selectedValues: Array<string> = [];
+  @property({ type: String, reflect: true, attribute: 'value' }) value: string =
+    '';
+  @property({ type: Boolean }) multiselect: boolean = false;
+
+  // New properties
+  @property({ type: String }) id: string = 'autocomplete-input';
+  @property({ type: String }) label: string = 'Choose a value';
+  @property({ type: Number }) minlength?: number;
+  @property({ type: Number }) maxlength?: number;
+  @property({ type: Number }) size?: number;
+  @property({ type: Boolean }) disabled: boolean = false;
+  @property({ type: Boolean }) required: boolean = false;
+
+  @property({ type: String }) supporttext?: string;
+  @property({ type: String }) errormessage?: string;
+
+  @query('#autocomplete-input') input!: HTMLInputElement;
+  @query('#autocomplete-results') resultsList!: HTMLUListElement;
+  @query('.autocomplete__dropdown-arrow') dropdownArrow!: HTMLElement;
+  @query('.autocomplete__container') comboBox!: HTMLElement;
+  @query('slot') slotElement!: HTMLSlotElement;
+
+  debounceTimeout?: number;
+  DEBOUNCE_TIMEOUT_MS = 100;
+
+  firstUpdated() {
+    super.firstUpdated();
+
+    window.addEventListener('click', this.handleOutsideClick.bind(this));
+    if (this.input) {
+      this.updateInputValue(); // Set initial value if provided
+      this.input.addEventListener('focusout', this.validateInput.bind(this));
     }
-    .dropdown-button {
-      background-color: #ffffff;
-      border: 1px solid #cccccc;
-      border-radius: 4px;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-size: 1rem;
-      width: 100%;
-      box-sizing: border-box;
+
+    // Parse options if provided as a string attribute
+    const optionsAttr = this.getAttribute('options');
+    if (optionsAttr) {
+      try {
+        this.options = JSON.parse(optionsAttr);
+        this.filteredResults = [...this.options];
+      } catch (e) {
+        console.error(
+          'Invalid options attribute, must be a valid JSON array of strings.'
+        );
+      }
     }
-    .dropdown-list {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: #ffffff;
-      border: 1px solid #cccccc;
-      border-radius: 4px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 10;
+
+    // Handle slot content
+    if (this.slotElement) {
+      this.slotElement.addEventListener('slotchange', () => {
+        const slottedNodes = this.slotElement.assignedNodes({ flatten: true });
+        if (slottedNodes.length > 0) {
+          const textContent = slottedNodes[0].textContent?.trim();
+          if (textContent) {
+            this.label = textContent; // Set the label property to the slot content
+          }
+        }
+      });
     }
-    .dropdown-item {
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-    .dropdown-item:hover {
-      background-color: #f0f0f0;
-    }
-    .hidden {
-      display: none;
-    }
-  `;
-
-  @property({ type: Array })
-  options: string[] = [];
-
-  @property({ type: String })
-  selected: string = '';
-
-  @property({ type: Boolean })
-  typeahead = false;
-
-  @property({ type: String })
-  id = 'floatingInput';
-
-  @property({ type: String })
-  label = 'Select an option';
-
-  @property({ type: String })
-  placeholder = 'Start typing...';
-
-  @property({ type: String })
-  supporttext?: string;
-
-  @property({ type: Boolean })
-  required = false;
-
-  @property({ type: Boolean })
-  disabled = false;
-
-  @property({ type: String })
-  pattern = '';
-
-  @property({ type: Number })
-  minLength?: number;
-
-  @property({ type: Number })
-  maxLength?: number;
-
-  @property({ type: Number })
-  size?: number;
-
-  @property({ type: String })
-  value = '';
-
-  @state()
-  private isOpen = false;
-
-  @state()
-  private filterText = '';
-
-  connectedCallback() {
-    super.connectedCallback();
-    document.addEventListener('click', this.handleOutsideClick);
   }
 
   disconnectedCallback() {
-    document.removeEventListener('click', this.handleOutsideClick);
     super.disconnectedCallback();
+    window.removeEventListener('click', this.handleOutsideClick.bind(this));
+    if (this.input) {
+      this.input.removeEventListener('focusout', this.validateInput.bind(this));
+    }
   }
 
-  private handleOutsideClick = (event: MouseEvent): void => {
-    const path = event.composedPath();
-    if (!path.includes(this)) {
+  updated(changedProperties: Map<string | number | symbol, unknown>) {
+    if (changedProperties.has('options')) {
+      this.filteredResults = [...this.options];
+      this.updateInputValue();
+    }
+    if (changedProperties.has('value')) {
+      this.updateInputValue();
+    }
+  }
+
+  updateInputValue() {
+    if (this.input) {
+      if (this.multiselect && this.selectedValues.length > 0) {
+        this.input.value = this.selectedValues.join(', ');
+      } else {
+        this.input.value = this.value || ''; // Update input value when the property changes, ensure it's not undefined
+      }
+    }
+  }
+
+  handleOutsideClick(event: MouseEvent) {
+    if (this.isDropDownOpen && !this.contains(event.target as Node)) {
       this.closeDropdown();
     }
-  };
+  }
 
-  render(): TemplateResult {
-    const filteredOptions = this.filterText
-      ? this.options.filter((option) =>
-          option.toLowerCase().includes(this.filterText.toLowerCase())
-        )
-      : this.options;
-
+  render() {
     return html`
-      <div class="dropdown">
-        ${this.typeahead
-          ? html`
-              <tds-textfield
-                id="${this.id}"
-                .value="${this.filterText || this.selected}"
-                .label="${this.label}"
-                .placeholder="${this.placeholder}"
-                .supporttext="${this.supporttext}"
-                ?disabled="${this.disabled}"
-                ?required="${this.required}"
-                .pattern="${this.pattern}"
-                .minLength="${this.minLength}"
-                .maxLength="${this.maxLength}"
-                .size="${this.size}"
-                @input="${this.onFilterInput}"
-                @focus="${this.openDropdown}"
-              ></tds-textfield>
-            `
-          : html`
-              <div class="dropdown-button" @click="${this.toggleDropdown}">
-                ${this.selected || 'Select an option'}
-              </div>
-            `}
-        <div class="dropdown-list ${this.isOpen ? '' : 'hidden'}">
-          ${filteredOptions.length > 0
-            ? filteredOptions.map(
-                (option) => html`
-                  <div
-                    class="dropdown-item"
-                    @click="${() => this.selectOption(option)}"
-                  >
-                    ${option}
-                  </div>
-                `
-              )
-            : html`<div class="dropdown-item">No options found</div>`}
-        </div>
+      <div
+        class="autocomplete__container form-floating"
+        role="combobox"
+        aria-labelledby="autocomplete-label"
+        aria-expanded="${this.isDropDownOpen}"
+      >
+        <input
+          id="${this.id}"
+          class="autocomplete__input form-control"
+          role="textbox"
+          placeholder="${this.label}"
+          minlength="${this.minlength ?? ''}"
+          maxlength="${this.maxlength ?? ''}"
+          size="${this.size ?? ''}"
+          ?disabled="${this.disabled}"
+          ?required="${this.required}"
+          .value="${this.value || ''}"
+          aria-controls="autocomplete-results"
+          @input="${this.onInput}"
+          @keydown="${this.handleKeyboardEvents}"
+          @click="${this.openDropdown}"
+        />
+        <label for="${this.id}">
+          ${this.required
+            ? html`<span class="required">*</span> <slot></slot>`
+            : html`<slot></slot>`}
+        </label>
+
+        <button
+          aria-label="toggle dropdown"
+          class="autocomplete__dropdown-arrow btn btn-secondary"
+          @click="${this.toggleDropdown}"
+        >
+          ${this.isDropDownOpen
+            ? html`<svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.14645 10.3536C3.34171 10.5488 3.65829 10.5488 3.85355 10.3536L8 6.20711L12.1464 10.3536C12.3417 10.5488 12.6583 10.5488 12.8536 10.3536C13.0488 10.1583 13.0488 9.84171 12.8536 9.64645L8.35355 5.14645C8.15829 4.95118 7.84171 4.95118 7.64645 5.14645L3.14645 9.64645C2.95118 9.84171 2.95118 10.1583 3.14645 10.3536Z"
+                  fill="#212121"
+                />
+              </svg>`
+            : html`<svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.14645 5.64645C3.34171 5.45118 3.65829 5.45118 3.85355 5.64645L8 9.79289L12.1464 5.64645C12.3417 5.45118 12.6583 5.45118 12.8536 5.64645C13.0488 5.84171 13.0488 6.15829 12.8536 6.35355L8.35355 10.8536C8.15829 11.0488 7.84171 11.0488 7.64645 10.8536L3.14645 6.35355C2.95118 6.15829 2.95118 5.84171 3.14645 5.64645Z"
+                  fill="#262626"
+                />
+              </svg>`}
+        </button>
+
+        ${this.supporttext
+          ? html`<div class="form-text">${this.supporttext}</div>`
+          : ''}
+        ${this.errormessage
+          ? html`<div class="error">${this.errormessage}</div>`
+          : ''}
+
+        <ul
+          id="autocomplete-results"
+          class="autocomplete__results ${this.isDropDownOpen ? 'visible' : ''}"
+          role="listbox"
+        >
+          ${this.filteredResults.map(
+            (item, index) => html`<li
+              id="autocomplete-item-${index}"
+              class="autocomplete-item ${this.selectedValues.includes(item)
+                ? 'selected highlighted'
+                : ''}"
+              role="option"
+              tabindex="0"
+              @click="${() => this.selectValue(item)}"
+              @keydown="${this.handleKeyboardEvents}"
+            >
+              ${item}
+            </li>`
+          )}
+        </ul>
       </div>
     `;
   }
 
-  private toggleDropdown(): void {
-    this.isOpen = !this.isOpen;
-  }
-
-  private openDropdown(): void {
-    this.isOpen = true;
-  }
-
-  private closeDropdown(): void {
-    this.isOpen = false;
-  }
-
-  private onFilterInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.filterText = input.value;
-
-    // If the input is cleared, show all options
-    if (this.filterText === '') {
-      this.isOpen = true; // Keep the dropdown open
+  validateInput() {
+    if (this.value && !this.options.includes(this.value)) {
+      this.errormessage = 'You have entered an invalid option.';
+    } else {
+      this.errormessage = '';
     }
   }
 
-  private selectOption(option: string): void {
-    this.selected = option;
-    this.filterText = ''; // Clear the filterText to show all options next time
-    this.closeDropdown(); // Close the dropdown after selection
-    this.dispatchEvent(
-      new CustomEvent('option-selected', {
-        detail: { value: option },
-      })
-    );
+  handleKeyboardEvents(event: KeyboardEvent) {
+    const listItems = Array.from(this.resultsList.children) as HTMLElement[];
+    let itemToFocus: HTMLElement | null = null;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        if (this.currentListItemFocused < listItems.length - 1) {
+          this.currentListItemFocused++;
+          itemToFocus = listItems[this.currentListItemFocused];
+          this.focusListItem(itemToFocus);
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (this.currentListItemFocused > 0) {
+          this.currentListItemFocused--;
+          itemToFocus = listItems[this.currentListItemFocused];
+          this.focusListItem(itemToFocus);
+        }
+        break;
+      case 'Enter':
+        event.preventDefault();
+        if (this.isDropDownOpen && this.currentListItemFocused >= 0) {
+          const selectedItem =
+            this.filteredResults[this.currentListItemFocused];
+          this.selectValue(selectedItem);
+        }
+        break;
+      case 'Escape':
+        this.closeDropdown();
+        break;
+      default:
+        break;
+    }
+  }
+
+  focusListItem(listItemNode: HTMLElement) {
+    const id = listItemNode.id;
+    if (this.input) {
+      this.input.setAttribute('aria-activedescendant', id);
+    }
+    listItemNode.focus();
+  }
+
+  selectValue(value: string) {
+    if (this.multiselect) {
+      if (this.selectedValues.includes(value)) {
+        this.selectedValues = this.selectedValues.filter((v) => v !== value);
+      } else {
+        this.selectedValues = [...this.selectedValues, value];
+      }
+    } else {
+      this.value = value; // Set the value property
+      this.selectedValues = [value];
+      this.closeDropdown();
+    }
+    this.updateInputValue(); // Update input field to match selected value(s)
+    this.errormessage = ''; // Clear any existing error message when a valid value is selected
+  }
+
+  onInput(event: InputEvent) {
+    const value = (event.target as HTMLInputElement).value;
+    this.value = value; // Set the value property
+    clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = window.setTimeout(() => {
+      this.filterResults(value);
+      if (!this.isDropDownOpen) {
+        this.openDropdown();
+      }
+      if (!value) {
+        this.selectedValues = []; // Deselect all values if input is cleared
+      }
+    }, this.DEBOUNCE_TIMEOUT_MS);
+  }
+
+  filterResults(value: string) {
+    if (value) {
+      const regex = new RegExp(`^${value}.*`, 'gi');
+      this.filteredResults = this.options.filter((val) => regex.test(val));
+    } else {
+      this.filteredResults = [...this.options];
+    }
+  }
+
+  openDropdown() {
+    this.isDropDownOpen = true;
+  }
+
+  closeDropdown() {
+    this.isDropDownOpen = false;
+    this.currentListItemFocused = -1;
+    if (this.input) {
+      this.input.setAttribute('aria-activedescendant', '');
+    }
+  }
+
+  toggleDropdown(event: Event) {
+    event.preventDefault();
+    this.isDropDownOpen ? this.closeDropdown() : this.openDropdown();
   }
 }
 

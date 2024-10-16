@@ -32,7 +32,7 @@
 .file-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   margin: 0;
   padding: 0.62rem;
   border: 1px solid #dddddd;
@@ -81,4 +81,10 @@
   line-height: 150%; /* 1.125rem */
 
   margin: 0;
+}
+
+.drop-area.dragover {
+  border-radius: 0.25rem;
+  border: 1px dashed var(--Teal, #005758);
+  background: rgba(0, 87, 88, 0.1);
 }

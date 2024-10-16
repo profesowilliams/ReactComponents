@@ -44,6 +44,7 @@ export class TextInput extends LitElement {
     | 'button' = 'email';
   @property({ type: String }) id = 'floatingInput';
   @property({ type: String }) supporttext?: string;
+  @property({ type: String }) errormessage?: string;
   @property({ type: Boolean }) required = false;
   @property({ type: Boolean }) disabled = false; // Add disabled property
   @property({ type: String }) pattern = '';
@@ -72,11 +73,11 @@ export class TextInput extends LitElement {
           ?disabled="${this.disabled}"
           ?required="${this.required}"
         />
-        <!-- Use disabled property -->
         ${this.supporttext
-          ? html`<div class="form-text" id="basic-addon4">
-              ${this.supporttext}
-            </div>`
+          ? html`<div class="form-text">${this.supporttext}</div>`
+          : ''}
+        ${this.errormessage
+          ? html`<div class="error">${this.errormessage}</div>`
           : ''}
         <label for="${this.id}">${this.getLabel()}</label>
       </div>
