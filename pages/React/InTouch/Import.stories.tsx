@@ -10,7 +10,6 @@ import {
 } from '../../../components/React/Flyout';
 import { Dropdown } from '../../../components/React/Input/Dropdown';
 import { Input } from '../../../components/React/Input';
-import { Logo } from '../../../components/React/Logo';
 import '../../../components/Lit/Heading';
 import customStyles from './Import.scss?inline';
 
