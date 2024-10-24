@@ -39,7 +39,7 @@ export const Import = () => {
               <tds-dropdown id="dropdown" required options='["Option 1", "Option 2", "Option 3"]'>Vendor</tds-dropdown>
               <tds-dropdown id="dropdown-1" required size="100" options='["Red", "Blue", "Green", "Yellow", "Purple"]'>Vendor program</tds-dropdown>
             </div>
-            <tds-file-input></tds-file-input>
+            <tds-file-input apiEndpoint="https://westeu-sit-ui.dc.tdebusiness.cloud/ui-renewal/v1/ImportDocumentQuote/Validate"></tds-file-input>
           </div>
         </div>
       </tds-flyout-body>

@@ -4,6 +4,12 @@ import { classMap } from 'lit/directives/class-map.js';
 import customStyles from './File.scss?inline';
 import './FileClose';
 
+interface FileUploadProgress {
+  file: File;
+  progress: number;
+  error?: string; // Optional error message
+}
+
 @customElement('tds-file-input')
 export class FileInput extends LitElement {
   static get styles() {
@@ -13,13 +19,38 @@ export class FileInput extends LitElement {
   }
 
   @property({ type: Array })
-  files: File[] = [];
+  files: FileUploadProgress[] = [];
 
   @property({ type: Boolean })
   isDragOver = false;
 
-  @property({ type: Number })
-  maxFileSize = 2 * 1024 * 1024; // Default to 2 MB
+  // Accept maxFileSize as a user-friendly string (e.g., "2MB" or "800KB")
+  @property({ type: String })
+  maxFileSize = '2MB'; // Default to 2MB
+
+  @property({ type: String })
+  apiEndpoint = ''; // API address property
+
+  @property({ type: String })
+  iconName = 'upload';
+
+  @property({ type: String })
+  iconState = 'default';
+
+  @property({ type: String })
+  headingText = 'Drag & Drop or Choose file from device';
+
+  @property({ type: String })
+  buttonText = 'Browse file';
+
+  @property({ type: Array })
+  allowedFileTypes: string[] = ['application/pdf']; // Default to PDFs only
+
+  private mimeTypeToLabel: Record<string, string> = {
+    'application/pdf': 'PDF',
+    'image/jpeg': 'JPEG',
+    'image/png': 'PNG',
+  };
 
   render(): TemplateResult {
     return html`
@@ -34,13 +65,17 @@ export class FileInput extends LitElement {
             @drop="${this.handleDrop}"
             @click="${this.handleClick}"
           >
-            <tds-icon name="upload" state="default"></tds-icon>
+            <tds-icon
+              name="${this.iconName}"
+              state="${this.iconState}"
+            ></tds-icon>
             <div class="file-text">
               <tds-heading as="h10">
-                <strong>Drag & Drop or Choose file from device</strong>
+                <strong>${this.headingText}</strong>
               </tds-heading>
               <p class="extra-small">
-                PDF, Max file size of ${this.formatFileSize(this.maxFileSize)}.
+                ${this.formatAllowedFileTypes()}, Max file size:
+                ${this.maxFileSize}.
               </p>
             </div>
             <tds-button
@@ -50,7 +85,7 @@ export class FileInput extends LitElement {
               label="Button"
               color="teal"
             >
-              Browse file
+              ${this.buttonText}
             </tds-button>
           </div>
         </div>
@@ -58,13 +93,38 @@ export class FileInput extends LitElement {
           ? html`
               <div class="file-list">
                 ${this.files.map(
-                  (file, index) => html`
+                  (fileUpload, index) => html`
                     <div class="file-item">
-                      <div>
-                        <div class="file-name">${file.name}</div>
+                      <div class="file-progress">
+                        <div class="file-name">${fileUpload.file.name}</div>
                         <div class="file-size">
-                          ${this.formatFileSize(file.size)}
+                          ${this.formatFileSize(fileUpload.file.size)}
                         </div>
+                        <div class="progress-bar">
+                          <div
+                            class="progress ${fileUpload.error
+                              ? 'progress-error'
+                              : ''}"
+                            style="
+      --progress-width: ${fileUpload.progress}%;
+      background-color: ${fileUpload.error
+                              ? '#cd163f'
+                              : fileUpload.progress === 100
+                              ? '#4caf50'
+                              : '#F7B500'};
+    "
+                          ></div>
+                          <span class="progress-percentage">
+                            ${fileUpload.error
+                              ? '0%'
+                              : `${fileUpload.progress}%`}
+                          </span>
+                        </div>
+                        ${fileUpload.error
+                          ? html`<div class="error-message">
+                              ${fileUpload.error}
+                            </div>`
+                          : ''}
                       </div>
                       <tds-file-close
                         @click="${() => this.removeFile(index)}"
@@ -77,6 +137,26 @@ export class FileInput extends LitElement {
           : ''}
       </div>
     `;
+  }
+
+  private formatAllowedFileTypes(): string {
+    return this.allowedFileTypes
+      .map((type) => this.mimeTypeToLabel[type] || type)
+      .join(', ');
+  }
+
+  private parseFileSize(size: string): number {
+    const units: Record<string, number> = {
+      B: 1,
+      KB: 1024,
+      MB: 1024 * 1024,
+      GB: 1024 * 1024 * 1024,
+    };
+    const match = size.match(/^(\d+(?:\.\d+)?)\s*(B|KB|MB|GB)$/i);
+    if (!match) throw new Error('Invalid file size format');
+    const value = parseFloat(match[1]);
+    const unit = match[2].toUpperCase();
+    return value * (units[unit] || 1);
   }
 
   private handleDragOver(event: DragEvent): void {
@@ -107,6 +187,7 @@ export class FileInput extends LitElement {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.multiple = true;
+    fileInput.accept = this.allowedFileTypes.join(',');
     fileInput.addEventListener('change', this.handleFileSelect.bind(this));
     fileInput.click();
   }
@@ -117,16 +198,64 @@ export class FileInput extends LitElement {
     this.addFiles(selectedFiles);
   }
 
-  private addFiles(newFiles: File[]): void {
-    const validFiles = newFiles.filter((file) => {
-      if (file.size > this.maxFileSize) {
-        this.showFileSizeError(file);
-        return false;
+  private async uploadFile(fileUpload: FileUploadProgress): Promise<void> {
+    if (!this.apiEndpoint) {
+      fileUpload.error = 'API endpoint is not configured';
+      this.files = [...this.files];
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', fileUpload.file);
+
+    try {
+      const response = await fetch(this.apiEndpoint, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        fileUpload.error = errorData.message || 'Upload failed';
+      } else {
+        fileUpload.progress = 100; // Set progress to 100 on success
       }
-      return true;
+    } catch (error) {
+      fileUpload.error = 'Network error or server unavailable';
+    } finally {
+      this.files = [...this.files]; // Trigger re-render
+    }
+  }
+
+  private addFiles(newFiles: File[]): void {
+    const maxSizeInBytes = this.parseFileSize(this.maxFileSize);
+
+    const validFiles = newFiles.map((file) => {
+      if (!this.isFileTypeAllowed(file)) {
+        return { file, progress: 0, error: 'Invalid file type.' };
+      }
+      if (file.size > maxSizeInBytes) {
+        return { file, progress: 0, error: 'File size exceeds the limit.' };
+      }
+      return { file, progress: 0 };
     });
 
     this.files = [...this.files, ...validFiles];
+
+    setTimeout(() => this.forceReflow(), 0);
+
+    validFiles
+      .filter((file) => !file.error)
+      .forEach((file) => this.uploadFile(file));
+  }
+
+  private isFileTypeAllowed(file: File): boolean {
+    return this.allowedFileTypes.includes(file.type);
+  }
+
+  private forceReflow(): void {
+    const progressElements = this.shadowRoot?.querySelectorAll('.progress');
+    progressElements?.forEach((el) => el.getBoundingClientRect());
   }
 
   private removeFile(index: number): void {
@@ -143,14 +272,17 @@ export class FileInput extends LitElement {
     }
   }
 
-  private showFileSizeError(file: File): void {
-    alert(
-      `The file "${
-        file.name
-      }" exceeds the maximum file size of ${this.formatFileSize(
-        this.maxFileSize
-      )}.`
-    );
+  private simulateUploadProgress(files: FileUploadProgress[]): void {
+    files.forEach((fileUpload) => {
+      const interval = setInterval(() => {
+        if (fileUpload.progress >= 100) {
+          clearInterval(interval);
+        } else {
+          fileUpload.progress += 10;
+          this.files = [...this.files];
+        }
+      }, 300);
+    });
   }
 }
 

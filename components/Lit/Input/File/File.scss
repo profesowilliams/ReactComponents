@@ -1,3 +1,7 @@
+tds-button {
+  margin: auto;
+}
+
 .drop-area {
   border-radius: 0.25rem;
   border: 1px dashed var(--Cool-Gray-9, #727679);
@@ -29,16 +33,21 @@
   display: grid;
   gap: 1.25rem;
 }
+
 .file-item {
   display: flex;
   justify-content: space-between;
   align-items: start;
   margin: 0;
   padding: 0.62rem;
-  border: 1px solid #dddddd;
   border-radius: 3px;
   background-color: #f9f9f9;
 }
+
+.file-progress {
+  width: 100%;
+}
+
 .file-name {
   color: var(--Charcoal, #262626);
   font-size: 0.875rem;
@@ -87,4 +96,49 @@
   border-radius: 0.25rem;
   border: 1px dashed var(--Teal, #005758);
   background: rgba(0, 87, 88, 0.1);
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Full-width container */
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+.progress {
+  height: 8px;
+  border-radius: 8px;
+  transition: width 0.5s ease, background-color 0.3s ease; /* Smooth transition */
+  background-color: var(--progress-color, #f7b500); /* Amber as default */
+  width: var(--progress-width, 0%);
+}
+
+.progress-error {
+  background-color: #cd163f; /* Red for errors */
+  width: 100% !important;
+}
+
+.progress-percentage {
+  margin-left: auto;
+  padding-left: 8px;
+  color: var(--Cool-Gray-8, #888b8d);
+  font-family: Arial;
+  font-size: 0.875rem;
+  position: relative;
+  width: 35.813px;
+  text-align: right;
+}
+
+.error-message {
+  color: var(--Cherry, #cd163f);
+
+  /* XSP */
+  font-family: Arial;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 1.125rem */
 }
