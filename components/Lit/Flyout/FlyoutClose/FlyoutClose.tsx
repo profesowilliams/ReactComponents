@@ -10,53 +10,47 @@ export class FlyoutClose extends LitElement {
   }
 
   render() {
-    return html` <tds-close-button data-bs-dismiss="offcanvas" @click="${this._onClick}"></tds-close-button> `;
-  }
-
-  private _onClose(event: CustomEvent) {
-    console.log(event.detail.message);
-    // Add any additional flyout close logic here
+    return html`
+      <tds-close-button data-bs-dismiss="offcanvas" @click="${this._onClick}">
+      </tds-close-button>
+    `;
   }
 
   private _onClick() {
-    if (this.hasAttribute('data-bs-dismiss') && this.getAttribute('data-bs-dismiss') === 'offcanvas') {
-      let flyoutElement: HTMLElement | null = this;
-      while (flyoutElement && flyoutElement.tagName !== 'TDS-FLYOUT') {
-        if (flyoutElement.parentElement) {
-          flyoutElement = flyoutElement.parentElement;
-        } else if ((flyoutElement.getRootNode() as ShadowRoot).host) {
-          flyoutElement = (flyoutElement.getRootNode() as ShadowRoot).host as HTMLElement;
-        } else {
-          flyoutElement = null;
-        }
-      }
+    if (this.getAttribute('data-bs-dismiss') === 'offcanvas') {
+      let flyoutElement: HTMLElement | null = this._findClosestFlyout();
 
       if (flyoutElement) {
-        if (flyoutElement.shadowRoot) {
-          const flyoutContent = flyoutElement.shadowRoot.querySelector('.offcanvas') as HTMLElement;
-          if (flyoutContent) {
-            flyoutContent.classList.remove('show');
-            this.dispatchEvent(
-              new CustomEvent('flyoutClosed', {
-                detail: { flyout: flyoutContent },
-              })
-            );
-
-            // Remove the backdrop attribute
-            if (flyoutElement.hasAttribute('data-bs-backdrop')) {
-              flyoutElement.removeAttribute('data-bs-backdrop');
-            }
-
-            // Additional logic to hide or remove the backdrop element if necessary
-            const backdrop = document.querySelector('.offcanvas-backdrop');
-            if (backdrop) {
-              backdrop.classList.remove('show');
-              backdrop.remove();
-            }
-          }
+        // Remove the 'show' attribute from the flyout
+        if (flyoutElement.hasAttribute('show')) {
+          flyoutElement.removeAttribute('show');
         }
+
+        // Dispatch a custom event to signal the flyout was closed
+        this.dispatchEvent(
+          new CustomEvent('flyoutClosed', {
+            detail: { flyout: flyoutElement },
+            bubbles: true,
+            composed: true,
+          })
+        );
       }
     }
+  }
+
+  // Helper function to find the closest tds-flyout parent
+  private _findClosestFlyout(): HTMLElement | null {
+    let element: HTMLElement | null = this;
+    while (element && element.tagName !== 'TDS-FLYOUT') {
+      if (element.parentElement) {
+        element = element.parentElement;
+      } else if ((element.getRootNode() as ShadowRoot).host) {
+        element = (element.getRootNode() as ShadowRoot).host as HTMLElement;
+      } else {
+        return null;
+      }
+    }
+    return element;
   }
 }
 

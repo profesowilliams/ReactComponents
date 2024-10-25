@@ -5,12 +5,21 @@
 
 :host(tds-flyout.offcanvas-backdrop) {
   background-color: rgba(38, 38, 38, 0.2) !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1200;
+    width: 100vw;
+    height: 100vh;
 }
 
 .offcanvas {
+  --bs-offcanvas-bg: var(--White, #ffffff);
+  --bs-offcanvas-zindex: 1200;
+
   height: var(--bs-offcanvas-height);
   position: fixed;
-  z-index: var(--bs-offcanvas-zindex);
+  z-index: var(--bs-offcanvas-zindex, 1200);
   display: flex;
   flex-direction: column;
   max-width: 100%;
