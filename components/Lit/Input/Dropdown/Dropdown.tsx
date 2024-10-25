@@ -257,6 +257,21 @@ export class Dropdown extends LitElement {
   }
 
   selectValue(value: string) {
+      this.value = value; // Set the value property
+      this.selectedValues = [value];
+      this.closeDropdown();
+      this.updateInputValue(); // Update input field to match selected value(s)
+      this.errormessage = ''; // Clear any existing error message
+
+      // Emit a custom event when the value changes
+      this.dispatchEvent(
+        new CustomEvent('value-changed', {
+          detail: { value },
+          bubbles: true,
+          composed: true,
+        })
+    );
+
     if (this.multiselect) {
       if (this.selectedValues.includes(value)) {
         this.selectedValues = this.selectedValues.filter((v) => v !== value);

@@ -140,9 +140,9 @@ export class FileInput extends LitElement {
   }
 
   private formatAllowedFileTypes(): string {
-    return this.allowedFileTypes
-      .map((type) => this.mimeTypeToLabel[type] || type)
-      .join(', ');
+    // Add a guard to ensure allowedFileTypes is defined
+    const types = this.allowedFileTypes || [];
+    return types.map((type) => this.mimeTypeToLabel[type] || type).join(', ');
   }
 
   private parseFileSize(size: string): number {
