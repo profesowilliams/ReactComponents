@@ -29,9 +29,6 @@ export class FileInput extends LitElement {
   maxFileSize = '2MB'; // Default to 2MB
 
   @property({ type: String })
-  apiEndpoint = ''; // API address property
-
-  @property({ type: String })
   iconName = 'upload';
 
   @property({ type: String })
@@ -201,35 +198,6 @@ export class FileInput extends LitElement {
     this.addFiles(selectedFiles);
   }
 
-  private async uploadFile(fileUpload: FileUploadProgress): Promise<void> {
-    if (!this.apiEndpoint) {
-      fileUpload.error = 'API endpoint is not configured';
-      this.files = [...this.files];
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', fileUpload.file);
-
-    try {
-      const response = await fetch(this.apiEndpoint, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        fileUpload.error = errorData.message || 'Upload failed';
-      } else {
-        fileUpload.progress = 100; // Set progress to 100 on success
-      }
-    } catch (error) {
-      fileUpload.error = 'Network error or server unavailable';
-    } finally {
-      this.files = [...this.files]; // Trigger re-render
-    }
-  }
-
   private addFiles(newFiles: File[]): void {
     const maxSizeInBytes = this.parseFileSize(this.maxFileSize);
 
@@ -247,9 +215,7 @@ export class FileInput extends LitElement {
 
     setTimeout(() => this.forceReflow(), 0);
 
-    validFiles
-      .filter((file) => !file.error)
-      .forEach((file) => this.uploadFile(file));
+    this.simulateUploadProgress(validFiles.filter((file) => !file.error));
   }
 
   private isFileTypeAllowed(file: File): boolean {
