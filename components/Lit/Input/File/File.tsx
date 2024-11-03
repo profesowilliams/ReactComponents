@@ -41,6 +41,9 @@ export class FileInput extends LitElement {
   headingText = 'Drag & Drop or Choose file from device';
 
   @property({ type: String })
+  secondaryText = 'Max file size';
+
+  @property({ type: String })
   buttonText = 'Browse file';
 
   @property({ type: Array })
@@ -74,7 +77,7 @@ export class FileInput extends LitElement {
                 <strong>${this.headingText}</strong>
               </tds-heading>
               <p class="extra-small">
-                ${this.formatAllowedFileTypes()}, Max file size:
+                ${this.formatAllowedFileTypes()}, ${this.secondaryText}:
                 ${this.maxFileSize}.
               </p>
             </div>
