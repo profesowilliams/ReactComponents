@@ -10,8 +10,12 @@ export class Dropdown extends LitElement {
     `;
   }
 
-  @property({ type: Array }) options: Array<string> = [];
-  @property({ type: Array }) filteredResults: Array<string> = [];
+  @property({ type: Array }) options: Array<{ text: string; value: string }> =
+    [];
+  @property({ type: Array }) filteredResults: Array<{
+    text: string;
+    value: string;
+  }> = [];
   @property({ type: Boolean }) isDropDownOpen = false;
   @property({ type: Number }) currentListItemFocused = -1;
   @property({ type: Array }) selectedValues: Array<string> = [];
@@ -37,6 +41,9 @@ export class Dropdown extends LitElement {
   @query('.autocomplete__container') comboBox!: HTMLElement;
   @query('slot') slotElement!: HTMLSlotElement;
 
+  @property({ type: String }) optionTextKey: string = 'text';
+  @property({ type: String }) optionValueKey: string = 'value';
+
   debounceTimeout?: number;
   DEBOUNCE_TIMEOUT_MS = 100;
 
@@ -57,7 +64,7 @@ export class Dropdown extends LitElement {
         this.filteredResults = [...this.options];
       } catch (e) {
         console.error(
-          'Invalid options attribute, must be a valid JSON array of strings.'
+          'Invalid options attribute, must be a valid JSON array of objects.'
         );
       }
     }
@@ -97,9 +104,23 @@ export class Dropdown extends LitElement {
   updateInputValue() {
     if (this.input) {
       if (this.multiselect && this.selectedValues.length > 0) {
-        this.input.value = this.selectedValues.join(', ');
+        this.input.value = this.selectedValues
+          .map((selectedValue) => {
+            const matchedOption = this.options.find(
+              (option) => option[this.optionValueKey] === selectedValue
+            );
+            return matchedOption
+              ? matchedOption[this.optionTextKey]
+              : selectedValue;
+          })
+          .join(', ');
       } else {
-        this.input.value = this.value || ''; // Update input value when the property changes, ensure it's not undefined
+        const matchedOption = this.options.find(
+          (option) => option[this.optionValueKey] === this.value
+        );
+        this.input.value = matchedOption
+          ? matchedOption[this.optionTextKey]
+          : ''; // Update input value to show text instead of value
       }
     }
   }
@@ -128,7 +149,7 @@ export class Dropdown extends LitElement {
           size="${this.size ?? ''}"
           ?disabled="${this.disabled}"
           ?required="${this.required}"
-          .value="${this.value || ''}"
+          .value="${this.input ? this.input.value : this.getInputTextValue()}"
           aria-controls="autocomplete-results"
           @input="${this.onInput}"
           @keydown="${this.handleKeyboardEvents}"
@@ -187,7 +208,9 @@ export class Dropdown extends LitElement {
           ${this.filteredResults.map(
             (item, index) => html`<li
               id="autocomplete-item-${index}"
-              class="autocomplete-item ${this.selectedValues.includes(item)
+              class="autocomplete-item ${this.selectedValues.includes(
+                item[this.optionValueKey]
+              )
                 ? 'selected highlighted'
                 : ''}"
               role="option"
@@ -195,7 +218,7 @@ export class Dropdown extends LitElement {
               @click="${() => this.selectValue(item)}"
               @keydown="${this.handleKeyboardEvents}"
             >
-              ${item}
+              ${item[this.optionTextKey]}
             </li>`
           )}
         </ul>
@@ -203,8 +226,18 @@ export class Dropdown extends LitElement {
     `;
   }
 
+  getInputTextValue() {
+    const matchedOption = this.options.find(
+      (option) => option[this.optionValueKey] === this.value
+    );
+    return matchedOption ? matchedOption[this.optionTextKey] : '';
+  }
+
   validateInput() {
-    if (this.value && !this.options.includes(this.value)) {
+    if (
+      this.value &&
+      !this.options.some((opt) => opt[this.optionValueKey] === this.value)
+    ) {
       this.errormessage = 'You have entered an invalid option.';
     } else {
       this.errormessage = '';
@@ -256,31 +289,36 @@ export class Dropdown extends LitElement {
     listItemNode.focus();
   }
 
-  selectValue(value: string) {
-      this.value = value; // Set the value property
-      this.selectedValues = [value];
-      this.closeDropdown();
-      this.updateInputValue(); // Update input field to match selected value(s)
-      this.errormessage = ''; // Clear any existing error message
+  selectValue(value: { text: string; value: string }) {
+    this.value = value[this.optionValueKey]; // Set the value property
+    this.selectedValues = [value[this.optionValueKey]];
+    this.updateInputValue(); // Update input field to match selected value text
+    this.closeDropdown();
+    this.errormessage = ''; // Clear any existing error message
 
-      // Emit a custom event when the value changes
-      this.dispatchEvent(
-        new CustomEvent('value-changed', {
-          detail: { value },
-          bubbles: true,
-          composed: true,
-        })
+    // Emit a custom event when the value changes
+    this.dispatchEvent(
+      new CustomEvent('value-changed', {
+        detail: { value: this.value, text: value[this.optionTextKey] },
+        bubbles: true,
+        composed: true,
+      })
     );
 
     if (this.multiselect) {
-      if (this.selectedValues.includes(value)) {
-        this.selectedValues = this.selectedValues.filter((v) => v !== value);
+      if (this.selectedValues.includes(value[this.optionValueKey])) {
+        this.selectedValues = this.selectedValues.filter(
+          (v) => v !== value[this.optionValueKey]
+        );
       } else {
-        this.selectedValues = [...this.selectedValues, value];
+        this.selectedValues = [
+          ...this.selectedValues,
+          value[this.optionValueKey],
+        ];
       }
     } else {
-      this.value = value; // Set the value property
-      this.selectedValues = [value];
+      this.value = value[this.optionValueKey]; // Set the value property
+      this.selectedValues = [value[this.optionValueKey]];
       this.closeDropdown();
     }
     this.updateInputValue(); // Update input field to match selected value(s)
@@ -305,7 +343,9 @@ export class Dropdown extends LitElement {
   filterResults(value: string) {
     if (value) {
       const regex = new RegExp(`^${value}.*`, 'gi');
-      this.filteredResults = this.options.filter((val) => regex.test(val));
+      this.filteredResults = this.options.filter((opt) =>
+        regex.test(opt[this.optionTextKey])
+      );
     } else {
       this.filteredResults = [...this.options];
     }
