@@ -290,8 +290,19 @@ export class Dropdown extends LitElement {
   }
 
   selectValue(value: { text: string; value: string }) {
-    this.value = value[this.optionValueKey]; // Set the value property
-    this.selectedValues = [value[this.optionValueKey]];
+
+    // Accessing using the correct keys defined in the properties
+    const selectedValue = value[this.optionValueKey];
+    if (!selectedValue) {
+      console.error(
+        `Value key "${this.optionValueKey}" not found in the selected item.`
+      );
+      return;
+    }
+
+    this.value = selectedValue; // Set the value property
+
+    this.selectedValues = [selectedValue];
     this.updateInputValue(); // Update input field to match selected value text
     this.closeDropdown();
     this.errormessage = ''; // Clear any existing error message
@@ -304,25 +315,6 @@ export class Dropdown extends LitElement {
         composed: true,
       })
     );
-
-    if (this.multiselect) {
-      if (this.selectedValues.includes(value[this.optionValueKey])) {
-        this.selectedValues = this.selectedValues.filter(
-          (v) => v !== value[this.optionValueKey]
-        );
-      } else {
-        this.selectedValues = [
-          ...this.selectedValues,
-          value[this.optionValueKey],
-        ];
-      }
-    } else {
-      this.value = value[this.optionValueKey]; // Set the value property
-      this.selectedValues = [value[this.optionValueKey]];
-      this.closeDropdown();
-    }
-    this.updateInputValue(); // Update input field to match selected value(s)
-    this.errormessage = ''; // Clear any existing error message when a valid value is selected
   }
 
   onInput(event: InputEvent) {
