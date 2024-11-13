@@ -30,16 +30,20 @@
   transition: none;
 }
 
-.form-control:focus, .visible {
+.form-control:focus,
+.visible {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
   border: var(--bs-border-width) solid
     var(--Teal, map.get($color-palette, 'teal'));
-  border-bottom: 2px solid
-    var(--Teal, map.get($color-palette, 'teal')) !important;
+  border-bottom: 2px solid var(--Teal, map.get($color-palette, 'teal')) !important;
   outline: 0;
   box-shadow: none;
+}
+
+ul.visible {
+  border-bottom: none !important;
 }
 
 .form-floating > .form-control,
