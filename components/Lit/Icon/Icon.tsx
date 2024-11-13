@@ -4,15 +4,15 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { PropertyValues } from 'lit';
 
 export class Icon extends LitElement {
-  @property({ type: String }) name = '';
-  @property({ type: String }) state = '';
-  @property({ type: String }) size = '24';
-  @property({ type: String }) viewbox = '0 0 24 24';
-  @property({ type: String }) flip = '';
-  @property({ type: String }) rotate = '';
-  @property({ type: String }) width = '';
-  @property({ type: String }) height = '';
-  @property({ type: String }) svgContent = '';
+  @property({ type: String, reflect: true }) name = '';
+  @property({ type: String, reflect: true }) state = '';
+  @property({ type: String, reflect: true }) size = '24';
+  @property({ type: String, reflect: true }) viewbox = '0 0 24 24';
+  @property({ type: String, reflect: true }) flip = '';
+  @property({ type: String, reflect: true }) rotate = '';
+  @property({ type: String, reflect: true }) width = '';
+  @property({ type: String, reflect: true }) height = '';
+  @property({ type: String, reflect: true }) svgContent = '';
 
   static styles = css`
     :host {
@@ -82,7 +82,15 @@ export class Icon extends LitElement {
     const width = this.width || this.size;
     const height = this.height || this.size;
 
-    return html` <div class="icon-container" style="--icon-width: ${width}px; --icon-height: ${height}px; --icon-transform: ${this.computedTransform};">${unsafeSVG(this.svgContent)}</div> `;
+    return html`
+      <div
+        class="icon-container"
+        style="--icon-width: ${width}px; --icon-height: ${height}px; --icon-transform: ${this
+          .computedTransform};     vertical-align: middle;"
+      >
+        ${unsafeSVG(this.svgContent)}
+      </div>
+    `;
   }
 }
 

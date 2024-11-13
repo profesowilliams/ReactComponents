@@ -98,6 +98,7 @@ export class Button extends LitElement {
                 target=${this.target}
                 ?disabled=${this.disabled}
                 aria-label="${this.ariaLabel || nothing}"
+                style="align-content: center;"
               >
                 <slot>${this.label}</slot>
               </a>
@@ -118,6 +119,7 @@ export class Button extends LitElement {
                 type="button"
                 ?disabled=${this.disabled}
                 aria-label="${this.ariaLabel || nothing}"
+                style="align-content: center;"
               >
                 <slot>${this.label}</slot>
               </button>
