@@ -158,7 +158,7 @@ export class FileInput extends LitElement {
                 <strong>${this.headingText}</strong>
               </tds-heading>
               <p class="extra-small">
-                ${this.formatAllowedFileTypes()}, ${this.secondaryText}:
+                ${this.formatAllowedFileTypes()}, ${this.secondaryText}
                 ${this.maxFileSize}.
               </p>
             </div>
