@@ -2,6 +2,9 @@ import { LitElement, html, css, TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import customStyles from './File.scss?inline';
+
+import { mimeTypeToLabel } from '../../../../constants/mimeTypes';
+
 import './FileClose';
 
 interface FileUploadProgress {
@@ -12,46 +15,127 @@ interface FileUploadProgress {
 
 @customElement('tds-file-input')
 export class FileInput extends LitElement {
+  /**
+   * Styles for the file input component.
+   * @returns {CSSResult} - Returns a CSS template with custom styles.
+   */
   static get styles() {
     return css`
       ${unsafeCSS(customStyles)}
     `;
   }
 
+  /**
+   * List of files being uploaded with their progress and error status.
+   * @type {FileUploadProgress[]}
+   */
   @property({ type: Array })
   files: FileUploadProgress[] = [];
 
+  /**
+   * Indicates if the drag area is active.
+   * @type {boolean}
+   */
   @property({ type: Boolean })
   isDragOver = false;
 
-  // Accept maxFileSize as a user-friendly string (e.g., "2MB" or "800KB")
+  /**
+   * Maximum allowed file size for uploads.
+   * @type {string}
+   */
   @property({ type: String })
   maxFileSize = '2MB'; // Default to 2MB
 
+  /**
+   * Name of the icon used in the upload area.
+   * @type {string}
+   */
   @property({ type: String })
   iconName = 'upload';
 
+  /**
+   * State of the icon used in the upload area.
+   * @type {string}
+   */
   @property({ type: String })
   iconState = 'default';
 
+  /**
+   * Heading text displayed in the drop area.
+   * @type {string}
+   */
   @property({ type: String })
   headingText = 'Drag & Drop or Choose file from device';
 
+  /**
+   * Secondary text indicating file size limit.
+   * @type {string}
+   */
   @property({ type: String })
   secondaryText = 'Max file size';
 
+  /**
+   * Text for the browse button.
+   * @type {string}
+   */
   @property({ type: String })
   buttonText = 'Browse file';
 
+  /**
+   * List of allowed file types for uploads.
+   * @type {string[]}
+   */
   @property({ type: Array })
   allowedFileTypes: string[] = ['application/pdf']; // Default to PDFs only
 
-  private mimeTypeToLabel: Record<string, string> = {
-    'application/pdf': 'PDF',
-    'image/jpeg': 'JPEG',
-    'image/png': 'PNG',
+  /**
+   * Mapping of MIME types to human-readable labels.
+   * @type {Record<string, string>}
+   */
+  private mimeTypeToLabel = mimeTypeToLabel;
+
+  /**
+   * Lifecycle hook called when the element is added to the DOM.
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    // Listen for error events from FileUpload
+    document.addEventListener(
+      'file-upload-error',
+      this.handleFileError as EventListener
+    );
+  }
+
+  /**
+   * Lifecycle hook called when the element is removed from the DOM.
+   */
+  disconnectedCallback() {
+    // Clean up event listener when component is removed
+    document.removeEventListener(
+      'file-upload-error',
+      this.handleFileError as EventListener
+    );
+    super.disconnectedCallback();
+  }
+
+  /**
+   * Handles the file-upload-error event by updating the error status of the specific file.
+   * @param {CustomEvent} event - The event containing the file error details.
+   */
+  private handleFileError = (
+    event: CustomEvent<{ fileName: string; error: string }>
+  ) => {
+    const { fileName, error } = event.detail;
+    console.log('Handling error for file:', fileName, 'with error:', error); // Debugging log
+    this.files = this.files.map((fileUpload) =>
+      fileUpload.file.name === fileName ? { ...fileUpload, error } : fileUpload
+    );
   };
 
+  /**
+   * Renders the HTML template for the component.
+   * @returns {TemplateResult} - The rendered HTML template.
+   */
   render(): TemplateResult {
     return html`
       <div class="file-input">
@@ -106,13 +190,13 @@ export class FileInput extends LitElement {
                               ? 'progress-error'
                               : ''}"
                             style="
-      --progress-width: ${fileUpload.progress}%;
-      background-color: ${fileUpload.error
+                              --progress-width: ${fileUpload.progress}%;
+                              background-color: ${fileUpload.error
                               ? '#cd163f'
                               : fileUpload.progress === 100
                               ? '#4caf50'
                               : '#F7B500'};
-    "
+                            "
                           ></div>
                           <span class="progress-percentage">
                             ${fileUpload.error
@@ -139,12 +223,20 @@ export class FileInput extends LitElement {
     `;
   }
 
+  /**
+   * Formats the allowed file types for display.
+   * @returns {string} - The formatted list of allowed file types.
+   */
   private formatAllowedFileTypes(): string {
-    // Add a guard to ensure allowedFileTypes is defined
     const types = this.allowedFileTypes || [];
     return types.map((type) => this.mimeTypeToLabel[type] || type).join(', ');
   }
 
+  /**
+   * Parses the file size from a string to a number of bytes.
+   * @param {string} size - File size as a string (e.g., '2MB').
+   * @returns {number} - The parsed file size in bytes.
+   */
   private parseFileSize(size: string): number {
     const units: Record<string, number> = {
       B: 1,
@@ -159,30 +251,49 @@ export class FileInput extends LitElement {
     return value * (units[unit] || 1);
   }
 
+  /**
+   * Handles the dragover event to allow file drop.
+   * @param {DragEvent} event - The dragover event.
+   */
   private handleDragOver(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
   }
 
+  /**
+   * Handles the dragenter event when a file enters the drop area.
+   * @param {DragEvent} event - The dragenter event.
+   */
   private handleDragEnter(event: DragEvent): void {
     event.preventDefault();
     this.isDragOver = true;
   }
 
+  /**
+   * Handles the dragleave event when a file leaves the drop area.
+   * @param {DragEvent} event - The dragleave event.
+   */
   private handleDragLeave(event: DragEvent): void {
     event.preventDefault();
     this.isDragOver = false;
   }
 
+  /**
+   * Handles the drop event when a file is dropped in the drop area.
+   * @param {DragEvent} event - The drop event.
+   */
   private handleDrop(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     this.isDragOver = false;
-
     const droppedFiles = Array.from(event.dataTransfer?.files || []);
     this.addFiles(droppedFiles);
+    this.dispatchFilesEvent(droppedFiles);
   }
 
+  /**
+   * Handles the click event to simulate file input selection.
+   */
   private handleClick(): void {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -192,15 +303,23 @@ export class FileInput extends LitElement {
     fileInput.click();
   }
 
+  /**
+   * Handles the selection of files through the file input element.
+   * @param {Event} event - The change event of the file input.
+   */
   private handleFileSelect(event: Event): void {
     const input = event.target as HTMLInputElement;
     const selectedFiles = Array.from(input.files || []);
     this.addFiles(selectedFiles);
+    this.dispatchFilesEvent(selectedFiles);
   }
 
+  /**
+   * Adds the selected files to the list of files to be uploaded.
+   * @param {File[]} newFiles - List of newly selected files.
+   */
   private addFiles(newFiles: File[]): void {
     const maxSizeInBytes = this.parseFileSize(this.maxFileSize);
-
     const validFiles = newFiles.map((file) => {
       if (!this.isFileTypeAllowed(file)) {
         return { file, progress: 0, error: 'Invalid file type.' };
@@ -210,27 +329,55 @@ export class FileInput extends LitElement {
       }
       return { file, progress: 0 };
     });
-
     this.files = [...this.files, ...validFiles];
-
     setTimeout(() => this.forceReflow(), 0);
-
     this.simulateUploadProgress(validFiles.filter((file) => !file.error));
+    this.dispatchFilesEvent(newFiles);
   }
 
+  /**
+   * Dispatches a custom event with the selected files.
+   * @param {File[]} files - List of selected files.
+   */
+  private dispatchFilesEvent(files: File[]): void {
+    const event = new CustomEvent('file-selected', {
+      detail: { files },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
+  }
+
+  /**
+   * Checks if a file's type is allowed for upload.
+   * @param {File} file - The file to be checked.
+   * @returns {boolean} - True if the file type is allowed, false otherwise.
+   */
   private isFileTypeAllowed(file: File): boolean {
     return this.allowedFileTypes.includes(file.type);
   }
 
+  /**
+   * Forces a reflow to update progress bar rendering.
+   */
   private forceReflow(): void {
     const progressElements = this.shadowRoot?.querySelectorAll('.progress');
     progressElements?.forEach((el) => el.getBoundingClientRect());
   }
 
+  /**
+   * Removes a file from the list of files to be uploaded.
+   * @param {number} index - Index of the file to remove.
+   */
   private removeFile(index: number): void {
     this.files = this.files.filter((_, i) => i !== index);
   }
 
+  /**
+   * Formats the file size for display.
+   * @param {number} size - File size in bytes.
+   * @returns {string} - Formatted file size as a string.
+   */
   private formatFileSize(size: number): string {
     if (size < 1024) {
       return `${size} bytes`;
@@ -241,6 +388,10 @@ export class FileInput extends LitElement {
     }
   }
 
+  /**
+   * Simulates the upload progress for the provided files.
+   * @param {FileUploadProgress[]} files - Files for which to simulate upload progress.
+   */
   private simulateUploadProgress(files: FileUploadProgress[]): void {
     files.forEach((fileUpload) => {
       const interval = setInterval(() => {
