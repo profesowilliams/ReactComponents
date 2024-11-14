@@ -43,8 +43,8 @@ import customStyles from './Tooltip.scss?inline';
 
 export class Tooltip extends LitElement {
   @property({ type: String }) text = '';
-  @property({ type: String }) placement: Placement = 'bottom';
-  @property({ type: String }) strategy: Strategy = 'absolute';
+  @property({ type: String, reflect: true }) placement: Placement = 'bottom';
+  @property({ type: String, reflect: true }) strategy: Strategy = 'fixed';
 
   // Offset middleware properties
   @property({ type: Number }) offset:
@@ -93,6 +93,16 @@ export class Tooltip extends LitElement {
     return css`
       ${unsafeCSS(customStyles)}
     `;
+  }
+
+  updated(changedProperties: Map<string | number | symbol, unknown>) {
+    if (changedProperties.has('strategy')) {
+      this.style.setProperty('--tooltip-strategy', this.strategy);
+    }
+    if (changedProperties.has('hide')) {
+      const hideValue = this.hide ? 'none' : 'initial';
+      this.style.setProperty('--tooltip-hide', hideValue);
+    }
   }
 
   /**

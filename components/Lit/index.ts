@@ -51,3 +51,5 @@ export * from './Toast/ToastBody';
 export * from './Toast/ToastClose';
 export * from './Toast/ToastHeader';
 export * from './Toast/ToastLink';
+
+export * from './Tooltip';
