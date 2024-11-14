@@ -6,13 +6,13 @@
 
 ## **Design Spec**
 
-[Link to Checkbox Design Spec in Figma](https://www.figma.com/file/1a1hBVizk7aLH76IvrnPFs/Checkbox?node-id=1666-534&t=Y5ISi4tWguXRFMdP-0)
+[Link to Checkbox Design Spec in Figma](https://www.figma.com/proto/43D318SJ2qbknLYlNKoyu7/Documentation?page-id=1650%3A21287&node-id=1948-27074&node-type=frame&viewport=-5826%2C1267%2C0.55&t=FllCFtMiAHakM3kb-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2009%3A8986)
 
 <br />
 
 ## **Engineering Spec**
 
-DDS WC3 Checkbox extends from the [FAST Checkbox](https://explore.fast.design/components/fast-checkbox) and is intended to be as close to the DDS UI React 1 Checkbox implementation as possible. However, due to the nature of web components there will not be 100% parity between the two.
+DDS WC3 Checkbox has feature parity with the DDS UI React 1 Checkbox implementation but not direct parity.
 
 <br />
 
@@ -26,12 +26,6 @@ DDS WC3 Checkbox extends from the [FAST Checkbox](https://explore.fast.design/co
 
 <br />
 
-### **Component Template**
-
-FAST `checkboxTemplate`
-
-<br />
-
 ### **Variables**
 
 | Name                    | Description          | Type                                         |
@@ -39,21 +33,6 @@ FAST `checkboxTemplate`
 | `CheckboxLabelPosition` | label position types | `{ before: "before", after: "after" }`       |
 | `CheckboxShape`         | checkbox shape types | `{ square: "square", circular: "circular" }` |
 | `CheckboxSize`          | checkbox size types  | `{ medium: "medium", large: "large" }`       |
-
-<br />
-
-### **Methods**
-
-| Name              | Privacy | Description             |
-| ----------------- | ------- | ----------------------- |
-| `keypressHandler` | public  | fires on keyboard press |
-| `clickHandler `   | public  | fires on mouse click    |
-
-### **Events**
-
-| Name     | Type | Description                 | Inherited From |
-| -------- | ---- | --------------------------- | -------------- |
-| `change` |      | Fires a custom change event | `FASTCheckbox` |
 
 <br />
 
@@ -94,7 +73,7 @@ FAST `checkboxTemplate`
 
 ## **Accessibility**
 
-[W3C Checkbox Spec](https://w3c.github.io/html-reference/input.checkbox.html)
+[W3C Checkbox Spec](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/)
 
 <br />
 

@@ -4,7 +4,7 @@ The `Button` component allows users to commit a change or trigger an action via 
 
 ## **Design Spec**
 
-[Link to Button in Figma](https://www.figma.com/design/0kRReWOuX0Wv29hbxahsRr/Component-Library?node-id=3-3)
+[Link to Button in Figma](https://www.figma.com/proto/43D318SJ2qbknLYlNKoyu7/Documentation?page-id=1650%3A21287&node-id=1778-22596&node-type=frame&viewport=-5826%2C1267%2C0.55&t=FllCFtMiAHakM3kb-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2009%3A8986)
 
 <br />
 
