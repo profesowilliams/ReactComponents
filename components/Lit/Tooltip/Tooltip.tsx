@@ -83,7 +83,7 @@ export class Tooltip extends LitElement {
   @property({ type: Boolean }) arrow = true;
   @property({ type: Number }) arrowPadding = 0;
 
-  @property({ type: Boolean }) hide = true;
+  @property({ type: Boolean }) hide: boolean | undefined = undefined;
 
   private tooltipInstance: HTMLElement | null = null;
   private targetElement: HTMLElement | null = null;
@@ -100,7 +100,7 @@ export class Tooltip extends LitElement {
       this.style.setProperty('--tooltip-strategy', this.strategy);
     }
     if (changedProperties.has('hide')) {
-      const hideValue = this.hide ? 'none' : 'initial';
+      const hideValue = this.hide === true ? 'none' : 'initial';
       this.style.setProperty('--tooltip-hide', hideValue);
     }
   }
