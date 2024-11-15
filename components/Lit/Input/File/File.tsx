@@ -168,6 +168,7 @@ export class FileInput extends LitElement {
               theme="light"
               label="Button"
               color="teal"
+              compact
             >
               ${this.buttonText}
             </tds-button>
