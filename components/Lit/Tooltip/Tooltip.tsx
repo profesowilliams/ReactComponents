@@ -1,4 +1,5 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { property } from 'lit/decorators.js';
 import {
   computePosition,
@@ -16,35 +17,13 @@ import {
 } from '@floating-ui/dom';
 import customStyles from './Tooltip.scss?inline';
 
-/**
- * Tooltip component using Bootstrap styles and Floating UI for positioning.
- *
- * @prop {string} text - The tooltip text
- * @prop {Placement} placement - The tooltip placement (e.g., 'top', 'top-start', 'right-end', etc.)
- * @prop {Strategy} strategy - The positioning strategy, either 'absolute' or 'fixed'
- * @prop {number | object | function} offset - Offset options for distance, axes, or custom function
- * @prop {boolean} shift - Enables shifting to prevent overflow
- * @prop {boolean} shiftMainAxis - Controls shifting along the main axis (default: true)
- * @prop {boolean} shiftCrossAxis - Controls shifting along the cross axis (default: false)
- * @prop {number | function | object} shiftLimiterOffset - Offset for the shift limiter (can be a number, function, or object)
- * @prop {boolean} flip - Enables flipping to keep the tooltip in view
- * @prop {boolean} flipMainAxis - Checks overflow on the main axis to perform a flip
- * @prop {boolean} flipCrossAxis - Checks overflow on the cross axis to perform a flip
- * @prop {'none' | 'start' | 'end'} flipFallbackAxisSideDirection - Fallback direction along the opposite axis if no placements fit
- * @prop {boolean} flipAlignment - Controls flipping for aligned placements (e.g., 'top-start' to 'top-end')
- * @prop {Array<Placement>} flipFallbackPlacements - An explicit list of fallback placements to try
- * @prop {'bestFit' | 'initialPlacement'} flipFallbackStrategy - Strategy to use when no placements fit
- * @prop {boolean} arrow - Enables arrow positioning to point to the reference element
- * @prop {number} arrowPadding - Padding between the arrow and edges of the floating element
- *
- * @summary A custom tooltip component with Floating UI positioning and middleware options
- * @tag tds-tooltip
- */
-
 export class Tooltip extends LitElement {
-  @property({ type: String }) text = '';
+  @property({ type: String }) text: string | undefined = undefined;
   @property({ type: String, reflect: true }) placement: Placement = 'bottom';
   @property({ type: String, reflect: true }) strategy: Strategy = 'fixed';
+  @property({ type: String }) type: 'text' | 'html' = 'text';
+  @property({ type: String }) width: string | undefined = undefined;
+  @property({ type: String }) height: string | undefined = undefined;
 
   // Offset middleware properties
   @property({ type: Number }) offset:
@@ -83,7 +62,7 @@ export class Tooltip extends LitElement {
   @property({ type: Boolean }) arrow = true;
   @property({ type: Number }) arrowPadding = 0;
 
-  @property({ type: Boolean }) hide: boolean | undefined = undefined;
+  @property({ type: Boolean }) hide: boolean = false;
 
   private tooltipInstance: HTMLElement | null = null;
   private targetElement: HTMLElement | null = null;
@@ -100,14 +79,25 @@ export class Tooltip extends LitElement {
       this.style.setProperty('--tooltip-strategy', this.strategy);
     }
     if (changedProperties.has('hide')) {
-      const hideValue = this.hide === true ? 'none' : 'initial';
+      const hideValue = this.hide ? 'none' : 'initial';
       this.style.setProperty('--tooltip-hide', hideValue);
+    }
+    if (changedProperties.has('type')) {
+      const backgroundColor =
+        this.type === 'html' ? '#FFFFFF' : '#262626';
+      const textColor =
+        this.type === 'html' ? '#262626' : '#FFFFFF';
+      this.style.setProperty('--tooltip-background', backgroundColor);
+      this.style.setProperty('--tooltip-text-color', textColor);
+    }
+    if (changedProperties.has('width') && this.width) {
+      this.style.setProperty('--tooltip-width', this.width);
+    }
+    if (changedProperties.has('height') && this.height) {
+      this.style.setProperty('--tooltip-height', this.height);
     }
   }
 
-  /**
-   * Initializes the Floating UI tooltip on the first child element.
-   */
   firstUpdated() {
     this.targetElement = this.firstElementChild as HTMLElement;
     this.tooltipInstance = this.shadowRoot?.getElementById(
@@ -129,9 +119,6 @@ export class Tooltip extends LitElement {
     }
   }
 
-  /**
-   * Builds the middleware array based on component properties.
-   */
   private buildMiddleware() {
     const middleware = [];
 
@@ -203,9 +190,6 @@ export class Tooltip extends LitElement {
     return middleware;
   }
 
-  /**
-   * Displays the tooltip and uses Floating UI to position it.
-   */
   async showTooltip() {
     this.tooltipInstance!.classList.add('show');
     if (this.arrow && this.arrowElement) {
@@ -235,15 +219,12 @@ export class Tooltip extends LitElement {
           top: arrowY != null ? `${arrowY}px` : '',
           right: '',
           bottom: '',
-          [staticSide]: '-4px', // Adjust this value as needed for your design
+          [staticSide]: '-4px',
         });
       }
     });
   }
 
-  /**
-   * Hides the tooltip.
-   */
   hideTooltip() {
     this.tooltipInstance!.classList.remove('show');
     if (this.arrowElement) {
@@ -254,9 +235,19 @@ export class Tooltip extends LitElement {
   render() {
     return html`
       <slot></slot>
-      <div id="tooltip-content" class="tooltip" role="tooltip">
+      <div
+        id="tooltip-content"
+        class="tooltip"
+        role="tooltip"
+      >
         <div id="tooltip-arrow" class="tooltip-arrow" data-popper-arrow></div>
-        <div class="tooltip-inner">${this.text}</div>
+        <div class="tooltip-inner">
+          ${this.text
+            ? this.type === 'html'
+              ? unsafeHTML(this.text)
+              : html`${this.text}`
+            : ''}
+        </div>
       </div>
     `;
   }
