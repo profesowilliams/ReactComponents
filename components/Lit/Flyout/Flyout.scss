@@ -5,19 +5,22 @@
 
 :host(tds-flyout.offcanvas-backdrop) {
   background-color: rgba(38, 38, 38, 0.2) !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1200;
-    width: 100vw;
-    height: 100vh;
+  position: fixed;
+  top: var(--bs-offcanvas-backdrop-offset);
+  left: 0;
+  z-index: 1200;
+  width: 100vw;
+  height: 100vh;
 }
 
 .offcanvas {
   --bs-offcanvas-bg: var(--White, #ffffff);
   --bs-offcanvas-zindex: 1200;
+  --bs-offcanvas-height-offset: var(--flyout-offset, 0);
+  --bs-offcanvas-backdrop-offset: var(--flyout-offset, 0);
+  --bs-offcanvas-place-self: var(--flyout-offset-place-self, auto);
 
-  height: var(--bs-offcanvas-height);
+  height: calc(var(--bs-offcanvas-height-offset) + var(--bs-offcanvas-height));
   position: fixed;
   z-index: var(--bs-offcanvas-zindex, 1200);
   display: flex;
@@ -29,8 +32,10 @@
   outline: 0;
   visibility: hidden;
   width: var(--bs-offcanvas-width);
-  border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+  border-left: var(--bs-offcanvas-border-width) solid
+    var(--bs-offcanvas-border-color);
   box-shadow: var(--bs-offcanvas-box-shadow);
+  place-self: var(--bs-offcanvas-place-self);
 
   &-xl {
     --bs-offcanvas-width: min(95vw, 70.5rem);
@@ -66,12 +71,12 @@
 
     right: var(--bs-offcanvas-width);
     width: var(--bs-offcanvas-width);
-    border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+    border-left: var(--bs-offcanvas-border-width) solid
+      var(--bs-offcanvas-border-color);
     transform: translateX(100%);
-
   }
 
-    &-start {
+  &-start {
     --bs-offcanvas-height: 100vh;
     --bs-offcanvas-align-content: left;
     --bs-offcanvas-position-right: 0rem;
