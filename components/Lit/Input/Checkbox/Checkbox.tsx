@@ -16,7 +16,9 @@ import customStyles from './Checkbox.scss?inline';
  */
 export class Checkbox extends LitElement {
   static get styles() {
-    return css`${unsafeCSS(customStyles)}`;
+    return css`
+      ${unsafeCSS(customStyles)}
+    `;
   }
 
   @property({ type: Boolean, reflect: true }) checked = false;
@@ -73,7 +75,6 @@ export class Checkbox extends LitElement {
           ?disabled="${this.disabled}"
           aria-checked="${this.indeterminate ? 'mixed' : this.checked}"
           aria-disabled="${this.disabled}"
-          data-theme="dark"
           class="form-check-input"
         />
         ${this.label ? html`<span>${this.label}</span>` : html`<slot></slot>`}

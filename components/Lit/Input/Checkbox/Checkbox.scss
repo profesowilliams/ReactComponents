@@ -8,6 +8,10 @@
   height: 1rem;
 }
 
+:host span {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .form-check-input {
   --bs-form-check-bg: var(--bs-body-bg);
   --bs-border-color: rgba(0, 87, 88, 1);
