@@ -31,6 +31,15 @@ export class FlyoutClose extends LitElement {
           new CustomEvent('flyoutClosed', {
             detail: { flyout: flyoutElement },
             bubbles: true,
+            composed: true, // Ensures the event crosses shadow DOM boundaries
+          })
+        );
+
+        // Also trigger a close event on the flyout itself
+        flyoutElement.dispatchEvent(
+          new CustomEvent('close', {
+            detail: { reason: 'button' }, // Provide context if needed
+            bubbles: true,
             composed: true,
           })
         );

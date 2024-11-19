@@ -67,9 +67,27 @@ export class Flyout extends LitElement {
    */
   updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
+
     if (changedProperties.has('show')) {
       this._updateBackdropClass();
+
+      if (!this.show) {
+        this._closeFlyout(); // Dispatches the `close` event
+        this.dispatchEvent(
+          new CustomEvent('flyoutHidden', { bubbles: true, composed: true })
+        );
+      }
     }
+  }
+
+  /**
+   * Dispatches a close event when the Flyout is hidden or closed.
+   * @private
+   */
+  _closeFlyout() {
+    this.dispatchEvent(
+      new CustomEvent('close', { bubbles: true, composed: true })
+    );
   }
 
   /**
@@ -85,6 +103,27 @@ export class Flyout extends LitElement {
     } else {
       this.classList.remove('offcanvas-backdrop');
     }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('close', this._handleClose);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('close', this._handleClose);
+  }
+
+  private _handleClose(event: CustomEvent) {
+    // Perform any additional cleanup or state updates here
+    this.dispatchEvent(
+      new CustomEvent('onClose', {
+        detail: event.detail,
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   /**
