@@ -38,7 +38,15 @@ export class Checkbox extends LitElement {
     if (this.checked) {
       this.indeterminate = false; // Reset indeterminate state if checked
     }
-    this.dispatchEvent(new Event('change'));
+
+    // Dispatch a custom event to propagate the change
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: { checked: this.checked, indeterminate: this.indeterminate },
+        bubbles: true,
+        composed: true, // Ensures the event crosses shadow DOM boundaries
+      })
+    );
   }
 
   /**
