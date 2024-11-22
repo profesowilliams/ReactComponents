@@ -18,7 +18,11 @@
   --bs-offcanvas-zindex: 1200;
   --bs-offcanvas-height-offset: var(--flyout-offset, 0);
   --bs-offcanvas-backdrop-offset: var(--flyout-offset, 0);
-  --bs-offcanvas-place-self: var(--flyout-offset-place-self, auto);
+  --bs-offcanvas-place-self: var(--flyout-offcanvas-place-self, auto);
+  --bs-offcanvas-margin-top: var(--flyout-offcanvas-margin-top, 0);
+  --bs-offcanvas-margin-right: var(--flyout-offcanvas-margin-right, 0);
+  --bs-offcanvas-margin-bottom: var(--flyout-offcanvas-margin-bottom, 0);
+  --bs-offcanvas-margin-left: var(--flyout-offcanvas-margin-left, 0);
 
   height: calc(var(--bs-offcanvas-height-offset) + var(--bs-offcanvas-height));
   position: fixed;
@@ -36,6 +40,10 @@
     var(--bs-offcanvas-border-color);
   box-shadow: var(--bs-offcanvas-box-shadow);
   place-self: var(--bs-offcanvas-place-self);
+  margin-top: var(--bs-offcanvas-margin-top);
+  margin-right: var(--bs-offcanvas-margin-right);
+  margin-bottom: var(--bs-offcanvas-margin-bottom);
+  margin-left: var(--bs-offcanvas-margin-left);
 
   &-xl {
     --bs-offcanvas-width: min(95vw, 70.5rem);
