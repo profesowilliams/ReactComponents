@@ -1,7 +1,16 @@
 @use 'sass:map';
 
 .offcanvas-body {
+  --bs-offcanvas-body-height: var(--flyout-offcanvas-body-height, auto);
+  --bs-offcanvas-body-display: var(--flyout-offcanvas-body-display, block);
+  --bs-offcanvas-body-flex-direction: var(
+    --flyout-offcanvas-body-flex-direction,
+    column
+  );
   padding: 1rem;
+  height: var(--bs-offcanvas-body-height);
+  display: var(--bs-offcanvas-body-display);
+  flex-direction: var(--bs-offcanvas-body-flex-direction);
 }
 
 :host {
