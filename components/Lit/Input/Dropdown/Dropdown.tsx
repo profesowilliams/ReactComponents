@@ -10,30 +10,32 @@ export class Dropdown extends LitElement {
     `;
   }
 
-  @property({ type: Array }) options: Array<{ text: string; value: string }> =
-    [];
-  @property({ type: Array }) filteredResults: Array<{
+  @property({ type: Array, reflect: true }) options: Array<{
     text: string;
     value: string;
   }> = [];
-  @property({ type: Boolean }) isDropDownOpen = false;
-  @property({ type: Number }) currentListItemFocused = -1;
-  @property({ type: Array }) selectedValues: Array<string> = [];
+  @property({ type: Array, reflect: true }) filteredResults: Array<{
+    text: string;
+    value: string;
+  }> = [];
+  @property({ type: Boolean, reflect: true }) isDropDownOpen = false;
+  @property({ type: Number, reflect: true }) currentListItemFocused = -1;
+  @property({ type: Array, reflect: true }) selectedValues: Array<string> = [];
   @property({ type: String, reflect: true, attribute: 'value' }) value: string =
     '';
   @property({ type: Boolean }) multiselect: boolean = false;
 
   // New properties
-  @property({ type: String }) id: string = 'autocomplete-input';
-  @property({ type: String }) label: string = 'Choose a value';
-  @property({ type: Number }) minlength?: number;
-  @property({ type: Number }) maxlength?: number;
-  @property({ type: Number }) size?: number;
-  @property({ type: Boolean }) disabled: boolean = false;
-  @property({ type: Boolean }) required: boolean = false;
+  @property({ type: String, reflect: true }) id: string = 'autocomplete-input';
+  @property({ type: String, reflect: true }) label: string = 'Choose a value';
+  @property({ type: Number, reflect: true }) minlength?: number;
+  @property({ type: Number, reflect: true }) maxlength?: number;
+  @property({ type: Number, reflect: true }) size?: number;
+  @property({ type: Boolean, reflect: true }) disabled: boolean = false;
+  @property({ type: Boolean, reflect: true }) required: boolean = false;
 
-  @property({ type: String }) supporttext?: string;
-  @property({ type: String }) errormessage?: string;
+  @property({ type: String, reflect: true }) supporttext?: string;
+  @property({ type: String, reflect: true }) errormessage?: string;
 
   @query('#autocomplete-input') input!: HTMLInputElement;
   @query('#autocomplete-results') resultsList!: HTMLUListElement;
@@ -41,14 +43,20 @@ export class Dropdown extends LitElement {
   @query('.autocomplete__container') comboBox!: HTMLElement;
   @query('slot') slotElement!: HTMLSlotElement;
 
-  @property({ type: String }) optionTextKey: string = 'text';
-  @property({ type: String }) optionValueKey: string = 'value';
+  @property({ type: String, reflect: true }) optionTextKey: keyof {
+    text: string;
+    value: string;
+  } = 'text';
+  @property({ type: String, reflect: true }) optionValueKey: keyof {
+    text: string;
+    value: string;
+  } = 'value';
 
   debounceTimeout?: number;
   DEBOUNCE_TIMEOUT_MS = 100;
 
-  firstUpdated() {
-    super.firstUpdated();
+  firstUpdated(_changedProperties: Map<string | number | symbol, unknown>) {
+    super.firstUpdated(_changedProperties); // Pass the argument to the parent class method
 
     window.addEventListener('click', this.handleOutsideClick.bind(this));
     if (this.input) {
@@ -290,9 +298,7 @@ export class Dropdown extends LitElement {
   }
 
   selectValue(value: { text: string; value: string }) {
-
-    // Accessing using the correct keys defined in the properties
-    const selectedValue = value[this.optionValueKey];
+    const selectedValue = value[this.optionValueKey as 'text' | 'value'];
     if (!selectedValue) {
       console.error(
         `Value key "${this.optionValueKey}" not found in the selected item.`
@@ -300,21 +306,26 @@ export class Dropdown extends LitElement {
       return;
     }
 
-    this.value = selectedValue; // Set the value property
+    const selectedText = value[this.optionTextKey as 'text' | 'value'];
 
+    this.value = selectedValue;
     this.selectedValues = [selectedValue];
-    this.updateInputValue(); // Update input field to match selected value text
+    this.updateInputValue();
     this.closeDropdown();
-    this.errormessage = ''; // Clear any existing error message
+    this.errormessage = '';
 
-    // Emit a custom event when the value changes
     this.dispatchEvent(
       new CustomEvent('value-changed', {
-        detail: { value: this.value, text: value[this.optionTextKey] },
+        detail: { value: this.value, text: selectedText },
         bubbles: true,
         composed: true,
       })
     );
+
+    console.log('value-changed event emitted:', {
+      value: this.value,
+      text: selectedText,
+    });
   }
 
   onInput(event: InputEvent) {

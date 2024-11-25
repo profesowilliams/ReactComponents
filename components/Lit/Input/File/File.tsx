@@ -89,6 +89,13 @@ export class FileInput extends LitElement {
   allowedFileTypes: string[] = ['application/pdf']; // Default to PDFs only
 
   /**
+   * Clears all uploaded files.
+   */
+  public clearFiles(): void {
+    this.files = [];
+  }
+
+  /**
    * Mapping of MIME types to human-readable labels.
    * @type {Record<string, string>}
    */
@@ -104,19 +111,31 @@ export class FileInput extends LitElement {
       'file-upload-error',
       this.handleFileError as EventListener
     );
+
+    // Listen for clear file uploads event
+    this.addEventListener('clear-file-uploads', this.handleClearFiles);
   }
 
   /**
    * Lifecycle hook called when the element is removed from the DOM.
    */
   disconnectedCallback() {
-    // Clean up event listener when component is removed
+    // Clean up event listeners
     document.removeEventListener(
       'file-upload-error',
       this.handleFileError as EventListener
     );
+
+    this.removeEventListener('clear-file-uploads', this.handleClearFiles);
     super.disconnectedCallback();
   }
+
+  /**
+   * Event handler to clear all file uploads.
+   */
+  private handleClearFiles = (): void => {
+    this.clearFiles();
+  };
 
   /**
    * Handles the file-upload-error event by updating the error status of the specific file.
@@ -343,7 +362,7 @@ export class FileInput extends LitElement {
   private dispatchFilesEvent(files: File[]): void {
     const event = new CustomEvent('file-selected', {
       detail: { files },
-      bubbles: true,
+      bubbles: false,
       composed: true,
     });
     this.dispatchEvent(event);

@@ -5,7 +5,7 @@ import { PropertyValues } from 'lit';
 
 export class Icon extends LitElement {
   @property({ type: String, reflect: true }) name = '';
-  @property({ type: String, reflect: true }) state = '';
+  @property({ type: String, reflect: true }) state = 'default';
   @property({ type: String, reflect: true }) size = '24';
   @property({ type: String, reflect: true }) viewbox = '0 0 24 24';
   @property({ type: String, reflect: true }) flip = '';
