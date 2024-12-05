@@ -42,6 +42,7 @@
   box-shadow: var(--bs-toast-box-shadow);
   border-radius: var(--bs-toast-border-radius);
   border-left: 4px solid var(--bs-toast-border-left-color);
+  display: none;
 }
 
 [data-bs-state='error'] {

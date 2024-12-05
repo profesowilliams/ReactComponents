@@ -386,11 +386,20 @@ export class FileInput extends LitElement {
   }
 
   /**
-   * Removes a file from the list of files to be uploaded.
+   * Removes a file from the list of files to be uploaded and emits an event.
    * @param {number} index - Index of the file to remove.
    */
   private removeFile(index: number): void {
+    const removedFile = this.files[index]; // Get the file being removed
     this.files = this.files.filter((_, i) => i !== index);
+
+    // Emit a custom event with the removed file details
+    const event = new CustomEvent('file-removed', {
+      detail: { removedFile },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
   }
 
   /**
