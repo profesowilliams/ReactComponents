@@ -7,11 +7,47 @@
 
 @import 'bootstrap/scss/toasts';
 
+/**
+ * Root custom properties for toast styling.
+ *
+ * Defines CSS custom properties to control the appearance of toast components.
+ * These properties can be overridden for customization.
+ *
+ * @group Custom Properties
+ */
 :root {
   --bs-toast-header-bg: rgba(var(--bs-body-bg-rgb), 0.85);
   --bs-toast-bg: rgba(var(--bs-body-bg-rgb), 0.85);
 }
 
+/**
+ * Base toast styles.
+ *
+ * Defines the general appearance and layout for the toast component, including
+ * padding, size, border, box shadow, and typography settings. These styles serve
+ * as the foundation for all toast states.
+ *
+ * @group Toast Styles
+ * @since 1.0.0
+ *
+ * @param --bs-toast-zindex {number} Controls the z-index of the toast for layering.
+ * @param --bs-toast-padding-x {length} Horizontal padding inside the toast.
+ * @param --bs-toast-padding-y {length} Vertical padding inside the toast.
+ * @param --bs-toast-spacing {length} Spacing between stacked toasts.
+ * @param --bs-toast-max-width {length} Maximum width of the toast.
+ * @param --bs-toast-font-size {length} Font size of the toast content.
+ * @param --bs-toast-color {color} Text color of the toast content.
+ * @param --bs-toast-bg {color} Background color of the toast body.
+ * @param --bs-toast-border-width {length} Width of the toast border.
+ * @param --bs-toast-border-color {color} Color of the toast border.
+ * @param --bs-toast-border-left-color {color} Color of the left border accent.
+ * @param --bs-toast-border-radius {length} Border radius of the toast.
+ * @param --bs-toast-box-shadow {string} Box shadow for the toast.
+ * @param --bs-toast-header-color {color} Text color of the toast header.
+ * @param --bs-toast-header-bg {color} Background color of the toast header.
+ * @param --bs-toast-header-border-color {color} Border color of the toast header.
+ * @param --bs-toast-icon {url} URL for the icon displayed in the toast header.
+ */
 .toast {
   --bs-toast-zindex: 1090;
   --bs-toast-padding-x: 1.25rem;
@@ -42,9 +78,22 @@
   box-shadow: var(--bs-toast-box-shadow);
   border-radius: var(--bs-toast-border-radius);
   border-left: 4px solid var(--bs-toast-border-left-color);
-  display: none;
 }
 
+/**
+ * Error state styles.
+ *
+ * Customizes the appearance of the toast component when in the `error` state.
+ * Includes header background color, body background color, icon, and left border styling.
+ *
+ * @group Toast States
+ * @since 1.0.0
+ *
+ * @param --bs-toast-header-bg {color} The background color for the toast header in the `error` state.
+ * @param --bs-toast-bg {color} The background color for the toast body in the `error` state.
+ * @param --bs-toast-icon {url} The icon displayed for the `error` state.
+ * @param --bs-toast-border-left-color {color} The color of the left border for the `error` state.
+ */
 [data-bs-state='error'] {
   --bs-toast-header-bg: rgba(#fbecf0, 1);
   --bs-toast-bg: #fbecf0;
@@ -54,6 +103,20 @@
   border-left: 4px solid var(--bs-toast-border-left-color);
 }
 
+/**
+ * Information state styles.
+ *
+ * Defines the appearance of the toast when in the `information` state.
+ * Includes background colors, header colors, icon, and border styling.
+ *
+ * @group Toast States
+ * @since 1.0.0
+ *
+ * @param --bs-toast-header-bg {color} Background color for the toast header in the information state.
+ * @param --bs-toast-bg {color} Background color for the entire toast in the information state.
+ * @param --bs-toast-icon {url} URL to the icon representing the information state.
+ * @param --bs-toast-border-left-color {color} Color of the left border for the information state.
+ */
 [data-bs-state='information'] {
   --bs-toast-header-bg: rgba(#ebf3f9, 1);
   --bs-toast-bg: #ebf3f9;
@@ -63,6 +126,20 @@
   border-left: 4px solid var(--bs-toast-border-left-color);
 }
 
+/**
+ * Confirmation state styles.
+ *
+ * Defines the appearance of the toast when in the `confirmation` state.
+ * Includes background colors, header colors, icon, and border styling.
+ *
+ * @group Toast States
+ * @since 1.0.0
+ *
+ * @param --bs-toast-header-bg {color} Background color for the toast header in the confirmation state.
+ * @param --bs-toast-bg {color} Background color for the entire toast in the confirmation state.
+ * @param --bs-toast-icon {url} URL to the icon representing the confirmation state.
+ * @param --bs-toast-border-left-color {color} Color of the left border for the confirmation state.
+ */
 [data-bs-state='confirmation'] {
   --bs-toast-header-bg: rgba(#eff5ef, 1);
   --bs-toast-bg: #eff5ef;
@@ -72,6 +149,20 @@
   border-left: 4px solid var(--bs-toast-border-left-color);
 }
 
+/**
+ * Alert state styles.
+ *
+ * Defines the appearance of the toast when in the `alert` state.
+ * Includes background colors, header colors, icon, and border styling.
+ *
+ * @group Toast States
+ * @since 1.0.0
+ *
+ * @param --bs-toast-header-bg {color} Background color for the toast header in the alert state.
+ * @param --bs-toast-bg {color} Background color for the entire toast in the alert state.
+ * @param --bs-toast-icon {url} URL to the icon representing the alert state.
+ * @param --bs-toast-border-left-color {color} Color of the left border for the alert state.
+ */
 [data-bs-state='alert'] {
   --bs-toast-header-bg: rgba(#fef9eb, 1);
   --bs-toast-bg: #fef9eb;
