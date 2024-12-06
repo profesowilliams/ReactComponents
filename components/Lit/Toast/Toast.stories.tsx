@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { Meta, StoryFn } from '@storybook/web-components';
 import './Toast'; // Adjust the import path if necessary
 import './ToastHeader';
