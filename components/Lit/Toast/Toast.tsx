@@ -130,6 +130,13 @@ export class Toast extends LitElement {
   private autoCloseTimeout: number | null = null;
 
   /**
+   * Determines if the toast is persistent (does not auto-close).
+   * When `true`, the timeout functionality is ignored.
+   * @type {boolean}
+   */
+  @property({ type: Boolean }) persistent: boolean = false;
+
+  /**
    * CSS styles for the Toast component.
    */
   static get styles() {
@@ -155,10 +162,16 @@ export class Toast extends LitElement {
 
   /**
    * Starts the auto-close timer for the toast based on the `timeout` property.
+   * If `persistent` is true, this method does nothing.
    * Also removes the 'show' attribute from the parent element when the toast closes.
    * @private
    */
   startAutoClose() {
+    // If the toast is persistent, do not set a timeout.
+    if (this.persistent) {
+      return;
+    }
+
     this.clearAutoClose();
     this.autoCloseTimeout = window.setTimeout(() => {
       this.show = false; // Hide the toast after the timeout
