@@ -1,6 +1,6 @@
 import { html } from 'lit';
-import { Meta, StoryFn } from '@storybook/web-components';
-import './Toast'; // Adjust the import path if necessary
+import { Meta, StoryObj } from '@storybook/web-components';
+import './Toast';
 import './ToastHeader';
 import './ToastBody';
 import './ToastLink';
@@ -21,25 +21,26 @@ interface ToastProps {
     | 'bottom-right';
   show: boolean;
   timeout: number;
+  persistent: boolean;
   top: string;
   right: string;
   bottom: string;
   left: string;
 }
 
-export default {
+// Metadata for the Toast component
+const meta: Meta<ToastProps> = {
   title: 'Components/Toast',
   component: 'tds-toast',
-  args: {
-    variant: 'default',
-    size: 'medium',
-    placement: 'top-center',
-    show: true,
-    timeout: 5000,
-    top: '',
-    right: '',
-    bottom: '',
-    left: '',
+  parameters: {
+    controls: {
+      expanded: true,
+    },
+    docs: {
+      story: {
+        height: '150px',
+      },
+    },
   },
   argTypes: {
     variant: {
@@ -82,6 +83,12 @@ export default {
       description:
         'Specifies how long (in milliseconds) the toast remains visible before auto-closing.',
     },
+    persistent: {
+      control: 'boolean',
+      defaultValue: { summary: false },
+      description:
+        'When true, the toast does not auto-close and ignores the timeout property.',
+    },
     top: {
       control: 'text',
       defaultValue: { summary: '' },
@@ -107,14 +114,18 @@ export default {
         'Specifies the left position when placement is set to "custom".',
     },
   },
-} as Meta<ToastProps>;
+};
 
-const Template: StoryFn<ToastProps> = ({
+export default meta;
+
+// Template definition
+const Template = ({
   variant,
   size,
   placement,
   show,
   timeout,
+  persistent,
   top,
   right,
   bottom,
@@ -126,6 +137,7 @@ const Template: StoryFn<ToastProps> = ({
     placement="${placement}"
     ?show="${show}"
     timeout="${timeout}"
+    ?persistent="${persistent}"
     style="
       ${placement === 'custom'
       ? `top: ${top}; right: ${right}; bottom: ${bottom}; left: ${left};`
@@ -138,47 +150,61 @@ const Template: StoryFn<ToastProps> = ({
   </tds-toast>
 `;
 
-export const Default = Template.bind({});
-Default.args = {
-  variant: 'default',
-  size: 'medium',
-  placement: 'top-center',
-  show: true,
-  timeout: 5000,
-  top: '',
-  right: '',
-  bottom: '',
-  left: '',
+// Stories definition
+export const Default: StoryObj<ToastProps> = {
+  args: {
+    variant: 'default',
+    size: 'medium',
+    placement: 'top-center',
+    show: true,
+    timeout: 5000,
+    persistent: true,
+    top: '',
+    right: '',
+    bottom: '',
+    left: '',
+  },
+  render: Template,
 };
 
-export const Information = Template.bind({});
-Information.args = {
-  ...Default.args,
-  variant: 'information',
+export const Information: StoryObj<ToastProps> = {
+  args: {
+    ...Default.args,
+    variant: 'information',
+  },
+  render: Template,
 };
 
-export const Confirmation = Template.bind({});
-Confirmation.args = {
-  ...Default.args,
-  variant: 'confirmation',
+export const Confirmation: StoryObj<ToastProps> = {
+  args: {
+    ...Default.args,
+    variant: 'confirmation',
+  },
+  render: Template,
 };
 
-export const Alert = Template.bind({});
-Alert.args = {
-  ...Default.args,
-  variant: 'alert',
+export const Alert: StoryObj<ToastProps> = {
+  args: {
+    ...Default.args,
+    variant: 'alert',
+  },
+  render: Template,
 };
 
-export const Error = Template.bind({});
-Error.args = {
-  ...Default.args,
-  variant: 'error',
+export const Error: StoryObj<ToastProps> = {
+  args: {
+    ...Default.args,
+    variant: 'error',
+  },
+  render: Template,
 };
 
-export const CustomPlacement = Template.bind({});
-CustomPlacement.args = {
-  ...Default.args,
-  placement: 'custom',
-  top: '10px',
-  left: '10px',
+export const CustomPlacement: StoryObj<ToastProps> = {
+  args: {
+    ...Default.args,
+    placement: 'custom',
+    top: '10px',
+    left: '10px',
+  },
+  render: Template,
 };
