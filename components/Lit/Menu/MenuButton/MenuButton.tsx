@@ -27,7 +27,7 @@ export class MenuButton extends LitElement {
   @property({ attribute: false }) onClick = () => {};
 
   render() {
-    return html` <tds-button .primary=${this.primary} .disabled=${this.disabled} .type=${this.type} .link=${this.link} .variant=${this.variant} .theme=${this.theme} .minimal=${this.minimal} .id=${this.id} .name=${this.name} .className=${this.className} .label=${this.label} .color=${this.color} .size=${this.size} .backgroundColor=${this.backgroundColor} .onClick=${this._handleClick.bind(this)}><slot></slot></tds-button> `;
+    return html`<slot></slot>`;
   }
 
   firstUpdated(changedProperties: PropertyValues) {
