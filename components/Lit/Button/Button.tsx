@@ -10,7 +10,7 @@ import customStyles from './Button.scss?inline';
  * @prop {string} link - The URL link for the button if type is 'link'
  * @prop {string} variant - The variant of the button (e.g., 'primary', 'secondary')
  * @prop {string} theme - The theme of the button
- * @prop {boolean} minimal - Indicates if the button should be minimal
+ * @prop {boolean} compact - Indicates if the button should be compact
  * @prop {string} id - The id of the button
  * @prop {string} name - The name of the button
  * @prop {string} className - The class of the button
@@ -35,7 +35,6 @@ export interface ButtonProps {
   target?: string;
   variant?: string;
   theme?: string;
-  minimal?: boolean;
   id?: string;
   name?: string;
   className?: string;
@@ -61,12 +60,11 @@ export class Button extends LitElement {
   @property({ type: String, reflect: true }) target = '';
   @property({ type: String, reflect: true }) variant = 'primary';
   @property({ type: String, reflect: true }) theme = 'light';
-  @property({ type: Boolean, reflect: true }) minimal = false;
   @property({ type: String, reflect: true }) id = '';
   @property({ type: String, reflect: true }) name = '';
   @property({ type: String, reflect: true }) className = '';
   @property({ type: String, reflect: true }) color = '';
-  @property({ type: Boolean, reflect: true }) compact = false; // Add compact property
+  @property({ type: Boolean, reflect: true }) compact = false;
 
   constructor() {
     super();
@@ -74,6 +72,7 @@ export class Button extends LitElement {
     this.label = 'Button';
     this.theme = 'light';
     this.variant = 'primary';
+    this.compact = false;
     this.disabled = false;
   }
 

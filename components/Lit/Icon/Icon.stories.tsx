@@ -9,14 +9,38 @@ export default {
     state: { control: 'text' },
     size: { control: 'text' },
     viewbox: { control: 'text' },
-    flip: { control: 'text' },
-    rotate: { control: 'text' },
+    flip: {
+      control: 'radio',
+      options: ['horizontal', 'vertical'], // Limits flip options to valid values
+    },
+    rotate: { control: 'number' },
     width: { control: 'text' },
     height: { control: 'text' },
+    svgContent: { control: 'text', table: { disable: true } }, // Non-configurable in stories
   },
 };
 
-const Template = ({ name, state, size, viewbox, flip, rotate, width, height }) => html` <tds-icon .name=${name} .state=${state} .size=${size} .viewbox=${viewbox} .flip=${flip} .rotate=${rotate} .width=${width} .height=${height}></tds-icon> `;
+const Template = ({
+  name,
+  state,
+  size,
+  viewbox,
+  flip,
+  rotate,
+  width,
+  height,
+}) => html`
+  <tds-icon
+    .name=${name}
+    .state=${state}
+    .size=${size}
+    .viewbox=${viewbox}
+    .flip=${flip}
+    .rotate=${rotate}
+    .width=${width}
+    .height=${height}
+  ></tds-icon>
+`;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -61,7 +85,19 @@ RotatedIcon.args = {
   size: '24',
   viewbox: '0 0 24 24',
   flip: '',
-  rotate: '45',
+  rotate: 45,
   width: '',
   height: '',
+};
+
+export const CustomDimensions = Template.bind({});
+CustomDimensions.args = {
+  name: 'person',
+  state: 'default',
+  size: '24',
+  viewbox: '0 0 24 24',
+  flip: '',
+  rotate: '',
+  width: '48',
+  height: '48',
 };

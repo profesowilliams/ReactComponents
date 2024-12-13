@@ -3,6 +3,31 @@ import { property } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { PropertyValues } from 'lit';
 
+// Cache to store SVG content
+const svgCache: { [key: string]: string } = {};
+
+// Function to preload SVGs
+export async function preloadIcons(icons: { state: string; name: string }[]) {
+  const server = window.location.origin;
+
+  for (const icon of icons) {
+    const iconPath = `${server}/content/dam/global-shared/icons/${icon.state}/${icon.name}.svg`;
+
+    if (!svgCache[iconPath]) {
+      try {
+        const response = await fetch(iconPath);
+        if (response.ok) {
+          svgCache[iconPath] = await response.text();
+        } else {
+          console.warn(`Failed to preload icon: ${iconPath}`);
+        }
+      } catch (error) {
+        console.error(`Error preloading icon: ${iconPath}`, error);
+      }
+    }
+  }
+}
+
 export class Icon extends LitElement {
   @property({ type: String, reflect: true }) name = '';
   @property({ type: String, reflect: true }) state = 'default';
@@ -44,6 +69,12 @@ export class Icon extends LitElement {
   }
 
   async loadSVG() {
+    if (svgCache[this.iconPath]) {
+      // Load from cache if available
+      this.svgContent = svgCache[this.iconPath];
+      return;
+    }
+
     try {
       const response = await fetch(this.iconPath);
       if (response.ok) {
@@ -60,7 +91,9 @@ export class Icon extends LitElement {
           svgElement.setAttribute('viewBox', this.viewbox);
         }
 
+        // Cache the SVG content for future use
         this.svgContent = tempContainer.innerHTML;
+        svgCache[this.iconPath] = this.svgContent;
       } else {
         console.error('SVG not found:', this.iconPath);
         this.svgContent = '';
@@ -82,15 +115,7 @@ export class Icon extends LitElement {
     const width = this.width || this.size;
     const height = this.height || this.size;
 
-    return html`
-      <div
-        class="icon-container"
-        style="--icon-width: ${width}px; --icon-height: ${height}px; --icon-transform: ${this
-          .computedTransform};     vertical-align: middle;"
-      >
-        ${unsafeSVG(this.svgContent)}
-      </div>
-    `;
+    return html` <div class="icon-container" style="--icon-width: ${width}px; --icon-height: ${height}px; --icon-transform: ${this.computedTransform}; vertical-align: middle;">${unsafeSVG(this.svgContent)}</div> `;
   }
 }
 

@@ -1,20 +1,7 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { property } from 'lit/decorators.js';
-import {
-  computePosition,
-  offset,
-  arrow,
-  shift,
-  limitShift,
-  flip,
-  autoPlacement,
-  size,
-  hide,
-  inline,
-  Placement,
-  Strategy,
-} from '@floating-ui/dom';
+import { computePosition, offset, arrow, shift, limitShift, flip, autoPlacement, size, hide, inline, Placement, Strategy } from '@floating-ui/dom';
 import customStyles from './Tooltip.scss?inline';
 
 export class Tooltip extends LitElement {
@@ -26,33 +13,22 @@ export class Tooltip extends LitElement {
   @property({ type: String }) height: string | undefined = undefined;
 
   // Offset middleware properties
-  @property({ type: Number }) offset:
-    | number
-    | { mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null }
-    | ((args: { rects: any }) => any) = 10;
+  @property({ type: Number }) offset: number | { mainAxis?: number; crossAxis?: number; alignmentAxis?: number | null } | ((args: { rects: any }) => any) = 10;
 
   // Shift middleware properties
   @property({ type: Boolean }) shift = true;
   @property({ type: Boolean }) shiftMainAxis = true;
   @property({ type: Boolean }) shiftCrossAxis = false;
-  @property({ type: Number }) shiftLimiterOffset:
-    | number
-    | { mainAxis?: number; crossAxis?: number }
-    | ((args: { rects: any; placement: Placement }) => any) = 0;
+  @property({ type: Number }) shiftLimiterOffset: number | { mainAxis?: number; crossAxis?: number } | ((args: { rects: any; placement: Placement }) => any) = 0;
 
   // Flip middleware properties
   @property({ type: Boolean }) flip = true;
   @property({ type: Boolean }) flipMainAxis = true;
   @property({ type: Boolean }) flipCrossAxis = true;
-  @property({ type: String }) flipFallbackAxisSideDirection:
-    | 'none'
-    | 'start'
-    | 'end' = 'none';
+  @property({ type: String }) flipFallbackAxisSideDirection: 'none' | 'start' | 'end' = 'none';
   @property({ type: Boolean }) flipAlignment = true;
   @property({ type: Array }) flipFallbackPlacements: Array<Placement> = [];
-  @property({ type: String }) flipFallbackStrategy:
-    | 'bestFit'
-    | 'initialPlacement' = 'bestFit';
+  @property({ type: String }) flipFallbackStrategy: 'bestFit' | 'initialPlacement' = 'bestFit';
 
   @property({ type: Boolean }) autoPlacement = false;
   @property({ type: Boolean }) size = false;
@@ -83,10 +59,8 @@ export class Tooltip extends LitElement {
       this.style.setProperty('--tooltip-hide', hideValue);
     }
     if (changedProperties.has('type')) {
-      const backgroundColor =
-        this.type === 'html' ? '#FFFFFF' : '#262626';
-      const textColor =
-        this.type === 'html' ? '#262626' : '#FFFFFF';
+      const backgroundColor = this.type === 'html' ? '#FFFFFF' : '#262626';
+      const textColor = this.type === 'html' ? '#262626' : '#FFFFFF';
       this.style.setProperty('--tooltip-background', backgroundColor);
       this.style.setProperty('--tooltip-text-color', textColor);
     }
@@ -100,20 +74,12 @@ export class Tooltip extends LitElement {
 
   firstUpdated() {
     this.targetElement = this.firstElementChild as HTMLElement;
-    this.tooltipInstance = this.shadowRoot?.getElementById(
-      'tooltip-content'
-    ) as HTMLElement;
-    this.arrowElement = this.shadowRoot?.getElementById(
-      'tooltip-arrow'
-    ) as HTMLElement;
+    this.tooltipInstance = this.shadowRoot?.getElementById('tooltip-content') as HTMLElement;
+    this.arrowElement = this.shadowRoot?.getElementById('tooltip-arrow') as HTMLElement;
 
     if (this.targetElement) {
-      this.targetElement.addEventListener('mouseenter', () =>
-        this.showTooltip()
-      );
-      this.targetElement.addEventListener('mouseleave', () =>
-        this.hideTooltip()
-      );
+      this.targetElement.addEventListener('mouseenter', () => this.showTooltip());
+      this.targetElement.addEventListener('mouseleave', () => this.hideTooltip());
       this.targetElement.addEventListener('focus', () => this.showTooltip());
       this.targetElement.addEventListener('blur', () => this.hideTooltip());
     }
@@ -124,11 +90,7 @@ export class Tooltip extends LitElement {
 
     // Offset middleware
     if (this.offset !== undefined) {
-      middleware.push(
-        typeof this.offset === 'function'
-          ? offset(this.offset)
-          : offset(this.offset)
-      );
+      middleware.push(typeof this.offset === 'function' ? offset(this.offset) : offset(this.offset));
     }
 
     // Shift middleware with custom limiter options
@@ -152,10 +114,7 @@ export class Tooltip extends LitElement {
           crossAxis: this.flipCrossAxis,
           fallbackAxisSideDirection: this.flipFallbackAxisSideDirection,
           flipAlignment: this.flipAlignment,
-          fallbackPlacements:
-            this.flipFallbackPlacements.length > 0
-              ? this.flipFallbackPlacements
-              : undefined,
+          fallbackPlacements: this.flipFallbackPlacements.length > 0 ? this.flipFallbackPlacements : undefined,
           fallbackStrategy: this.flipFallbackStrategy,
         })
       );
@@ -180,9 +139,7 @@ export class Tooltip extends LitElement {
 
     // Arrow middleware for pointing the arrow element
     if (this.arrow) {
-      middleware.push(
-        arrow({ element: this.arrowElement!, padding: this.arrowPadding })
-      );
+      middleware.push(arrow({ element: this.arrowElement!, padding: this.arrowPadding }));
     }
 
     if (this.hide) middleware.push(hide());
@@ -235,19 +192,9 @@ export class Tooltip extends LitElement {
   render() {
     return html`
       <slot></slot>
-      <div
-        id="tooltip-content"
-        class="tooltip"
-        role="tooltip"
-      >
+      <div id="tooltip-content" class="tooltip" role="tooltip">
         <div id="tooltip-arrow" class="tooltip-arrow" data-popper-arrow></div>
-        <div class="tooltip-inner">
-          ${this.text
-            ? this.type === 'html'
-              ? unsafeHTML(this.text)
-              : html`${this.text}`
-            : ''}
-        </div>
+        <div class="tooltip-inner">${this.text ? (this.type === 'html' ? unsafeHTML(this.text) : html`${this.text}`) : ''}</div>
       </div>
     `;
   }
