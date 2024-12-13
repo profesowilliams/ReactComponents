@@ -32,6 +32,11 @@ export * from './Input';
 
 export * from './Logo';
 
+export * from './Menu';
+export * from './Menu/MenuItem';
+export * from './Menu/MenuIcon';
+export * from './Menu/MenuButton';
+
 export * from './Modal';
 export * from './Modal/ModalBody';
 export * from './Modal/ModalButton';
