@@ -8,10 +8,12 @@ interface NotificationArgs {
   link: string;
   url: string;
   show: boolean;
+  backgroundColor?: string;
+  onClick?: () => void;
 }
 
 const renderNotification = (args: NotificationArgs): TemplateResult => html`
-  <tds-notification variant=${args.variant} .show=${args.show}>
+  <tds-notification variant=${args.variant} .show=${args.show} style="background-color: ${args.backgroundColor || 'inherit'}" @click=${args.onClick}>
     This is a ${args.variant} notification—check it out!
     <tds-notification-link type="link" variant="link" theme="light" label="Button" color="teal" url=${args.url}> ${args.link} </tds-notification-link>
     <tds-notification-close data-bs-dismiss="alert"></tds-notification-close>
@@ -29,12 +31,16 @@ export default {
       control: 'select',
       options: ['alert', 'confirmation', 'information', 'error', 'default'],
       description: 'Select the variant of the notification.',
-      defaultValue: { summary: 'default' },
+      table: {
+        defaultValue: { summary: 'default' },
+        type: { summary: 'string' },
+      },
     },
     link: {
       control: 'text',
       description: 'Text for the hyperlink in the notification.',
       table: {
+        defaultValue: { summary: '' },
         type: { summary: 'string' },
       },
     },
@@ -42,6 +48,7 @@ export default {
       control: 'text',
       description: 'URL for the hyperlink in the notification.',
       table: {
+        defaultValue: { summary: '' },
         type: { summary: 'string' },
       },
     },
@@ -49,15 +56,8 @@ export default {
       control: 'boolean',
       description: 'Determines if the notification is shown.',
       table: {
-        type: { summary: 'boolean' },
         defaultValue: { summary: false },
-      },
-    },
-    backgroundColor: {
-      control: 'color',
-      description: 'Background color of the notification.',
-      table: {
-        type: { summary: 'string' },
+        type: { summary: 'boolean' },
       },
     },
     onClick: {
@@ -72,7 +72,6 @@ export default {
     variant: 'default',
     link: 'Hyperlink',
     url: 'https://www.google.com',
-    dismissible: false,
     show: true,
   },
 };
@@ -84,7 +83,6 @@ export const Default = {
     url: 'https://www.google.com',
     show: true,
   },
-  render: (args: NotificationArgs) => renderNotification(args),
 };
 
 export const Alert = {
@@ -94,7 +92,6 @@ export const Alert = {
     url: 'https://www.google.com',
     show: true,
   },
-  render: (args: NotificationArgs) => renderNotification(args),
 };
 
 export const Confirmation = {
@@ -104,7 +101,6 @@ export const Confirmation = {
     url: 'https://www.google.com',
     show: true,
   },
-  render: (args: NotificationArgs) => renderNotification(args),
 };
 
 export const Information = {
@@ -114,7 +110,6 @@ export const Information = {
     url: 'https://www.google.com',
     show: true,
   },
-  render: (args: NotificationArgs) => renderNotification(args),
 };
 
 export const Error = {
@@ -124,5 +119,4 @@ export const Error = {
     url: 'https://www.google.com',
     show: true,
   },
-  render: (args: NotificationArgs) => renderNotification(args),
 };
