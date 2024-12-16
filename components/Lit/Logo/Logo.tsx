@@ -41,8 +41,17 @@ export class Logo extends LitElement {
 
         const svgElement = tempContainer.querySelector('svg');
         if (svgElement) {
-          if (this.width) svgElement.setAttribute('width', this.width);
-          if (this.height) svgElement.setAttribute('height', this.height);
+          if (this.width && this.width !== 'auto') {
+            svgElement.setAttribute('width', this.width);
+          } else {
+            svgElement.removeAttribute('width');
+          }
+
+          if (this.height && this.height !== 'auto') {
+            svgElement.setAttribute('height', this.height);
+          } else {
+            svgElement.removeAttribute('height');
+          }
         }
 
         this.svgContent = tempContainer.innerHTML;
@@ -67,7 +76,14 @@ export class Logo extends LitElement {
     const width = this.width || 'auto';
     const height = this.height || 'auto';
 
-    return html` <div class="icon-container" style="--icon-width: ${width}; --icon-height: ${height};">${unsafeSVG(this.svgContent)}</div> `;
+    return html`
+      <div
+        class="icon-container"
+        style="--icon-width: ${width}; --icon-height: ${height};"
+      >
+        ${unsafeSVG(this.svgContent)}
+      </div>
+    `;
   }
 }
 
