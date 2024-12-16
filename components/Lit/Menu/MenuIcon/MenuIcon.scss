@@ -1,3 +1,11 @@
 :host {
-  flex: var(--bs-btn-d-flex, 1);
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  place-content: center;
+  align-items: center;
+
+  tds-icon {
+    height: 100%;
+  }
 }
