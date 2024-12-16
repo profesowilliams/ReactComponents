@@ -1,2 +1,6 @@
 // src/components/Lit/Accordion/index.ts
-export { Accordion } from "./Accordion";
+export * from './Accordion';
+export * from './AccordionBody';
+export * from './AccordionButton';
+export * from './AccordionHeader';
+export * from './AccordionItem';

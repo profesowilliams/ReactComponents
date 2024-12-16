@@ -1,2 +1,5 @@
 // src/components/Lit/Card/index.ts
-export { Card } from './Card';
+export * from './Card';
+export * from './CardBody';
+export * from './CardText';
+export * from './CardTitle';

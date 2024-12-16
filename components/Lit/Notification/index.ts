@@ -1,2 +1,4 @@
 // src/components/Lit/Notification/index.ts
-export { default as Notification } from "./Notification";
+export * from './Notification';
+export * from './NotificationClose';
+export * from './NotificationLink';
