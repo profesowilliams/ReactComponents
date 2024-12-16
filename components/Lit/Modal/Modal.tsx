@@ -16,7 +16,7 @@ export class Modal extends LitElement {
   @property({ type: Boolean, reflect: true }) show: boolean = false;
   @property({ type: Boolean, reflect: true }) fade: boolean = false;
   @property({ type: Boolean }) backdrop: boolean | 'static' = false;
-  @property({ type: String }) size: string = 'md';
+  @property({ type: String, reflect: true }) size: string = 'md';
   @property({ type: Boolean, reflect: true }) centered: boolean = false;
   @property({ type: Boolean, reflect: true }) fullscreen: boolean = false;
   @property({ type: Boolean, reflect: true }) scrollable: boolean = false;
