@@ -46,6 +46,13 @@ export class Flyout extends LitElement {
     'start';
 
   /**
+   * Specifies the unique ID for the Flyout component.
+   * @type {string}
+   * @default ''
+   */
+  @property({ type: String }) id: string = '';
+
+  /**
    * Provides the styles for the Flyout component, including custom styles.
    * @returns {CSSResultGroup} The component's CSS styles.
    */
@@ -107,12 +114,12 @@ export class Flyout extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('close', this._handleClose);
+    this.addEventListener('close', this._handleClose as EventListener);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('close', this._handleClose);
+    this.removeEventListener('close', this._handleClose as EventListener);
   }
 
   private _handleClose(event: CustomEvent) {
@@ -133,11 +140,10 @@ export class Flyout extends LitElement {
   render() {
     return html`
       <div
-        class="offcanvas offcanvas-${this.size} offcanvas-${this
-          .placement} ${this.show ? 'show' : ''}"
+        id=${this.id}
+        class="offcanvas offcanvas-${this.size} offcanvas-${this.placement}
+        ${this.show ? 'show' : ''}"
         tabindex="-1"
-        id="offcanvas"
-        aria-labelledby="offcanvasLabel"
       >
         <slot></slot>
       </div>
