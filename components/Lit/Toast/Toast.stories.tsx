@@ -150,12 +150,40 @@ const Template = ({
   </tds-toast>
 `;
 
+const SansLink = ({
+  variant,
+  size,
+  placement,
+  show,
+  timeout,
+  persistent,
+  top,
+  right,
+  bottom,
+  left,
+}: ToastProps) => html`
+  <tds-toast
+    variant="${variant}"
+    size="${size}"
+    placement="${placement}"
+    ?show="${show}"
+    timeout="${timeout}"
+    ?persistent="${persistent}"
+    style="
+      ${placement === 'custom'
+      ? `top: ${top}; right: ${right}; bottom: ${bottom}; left: ${left};`
+      : ''}"
+  >
+    <tds-toast-header>This is a ${variant} toast.</tds-toast-header>
+  </tds-toast>
+`;
+
 // Stories definition
 export const Default: StoryObj<ToastProps> = {
   args: {
     variant: 'default',
     size: 'medium',
-    placement: 'top-center',
+    placement: 'middle-center',
     show: true,
     timeout: 5000,
     persistent: true,
@@ -167,10 +195,27 @@ export const Default: StoryObj<ToastProps> = {
   render: Template,
 };
 
+export const NoLink: StoryObj<ToastProps> = {
+  args: {
+    variant: 'default',
+    size: 'medium',
+    placement: 'middle-center',
+    show: true,
+    timeout: 5000,
+    persistent: true,
+    top: '',
+    right: '',
+    bottom: '',
+    left: '',
+  },
+  render: SansLink,
+};
+
 export const Information: StoryObj<ToastProps> = {
   args: {
     ...Default.args,
     variant: 'information',
+    placement: 'middle-center',
   },
   render: Template,
 };
@@ -179,6 +224,7 @@ export const Confirmation: StoryObj<ToastProps> = {
   args: {
     ...Default.args,
     variant: 'confirmation',
+    placement: 'middle-center',
   },
   render: Template,
 };
@@ -187,6 +233,7 @@ export const Alert: StoryObj<ToastProps> = {
   args: {
     ...Default.args,
     variant: 'alert',
+    placement: 'middle-center',
   },
   render: Template,
 };
@@ -195,6 +242,7 @@ export const Error: StoryObj<ToastProps> = {
   args: {
     ...Default.args,
     variant: 'error',
+    placement: 'middle-center',
   },
   render: Template,
 };
